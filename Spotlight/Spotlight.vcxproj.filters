@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Platform">
+      <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\Windows">
+      <UniqueIdentifier>{64FBD71A-50F4-F66C-7926-DCF1657ED678}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Spotlight">
+      <UniqueIdentifier>{43BF368A-AF29-EB00-F867-9CA66411C955}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Spotlight\Core">
+      <UniqueIdentifier>{7BE50885-67B3-FC8A-5047-6DB13CB4D8EF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Spotlight\Core\Events">
+      <UniqueIdentifier>{FF388CBE-6BA5-47B9-3499-DF16A0C46921}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Platform\Windows\WinWindow.h">
+      <Filter>Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spotlight.h" />
+    <ClInclude Include="src\Spotlight\Core\Application.h">
+      <Filter>Spotlight\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spotlight\Core\Core.h">
+      <Filter>Spotlight\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spotlight\Core\EntryPoint.h">
+      <Filter>Spotlight\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spotlight\Core\Events\AppEvent.h">
+      <Filter>Spotlight\Core\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spotlight\Core\Events\Event.h">
+      <Filter>Spotlight\Core\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spotlight\Core\Events\KeyEvent.h">
+      <Filter>Spotlight\Core\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spotlight\Core\Events\MouseEvent.h">
+      <Filter>Spotlight\Core\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spotlight\Core\Layer.h">
+      <Filter>Spotlight\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spotlight\Core\LayerStack.h">
+      <Filter>Spotlight\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spotlight\Core\Log.h">
+      <Filter>Spotlight\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spotlight\Core\Window.h">
+      <Filter>Spotlight\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\splpch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Platform\Windows\WinWindow.cpp">
+      <Filter>Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spotlight\Core\Application.cpp">
+      <Filter>Spotlight\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spotlight\Core\Layer.cpp">
+      <Filter>Spotlight\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spotlight\Core\LayerStack.cpp">
+      <Filter>Spotlight\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spotlight\Core\Log.cpp">
+      <Filter>Spotlight\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\splpch.cpp" />
+  </ItemGroup>
+</Project>

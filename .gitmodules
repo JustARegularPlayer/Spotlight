@@ -1,0 +1,9 @@
+[submodule "Spotlight/vendor/spdlog"]
+	path = Spotlight/vendor/spdlog
+	url = https://github.com/JustARegularPlayer/spdlog
+[submodule "Spotlight/vendor/GLFW"]
+	path = Spotlight/vendor/GLFW
+	url = https://github.com/TheCherno/glfw
+[submodule "Spotlight/vendor/ImGui"]
+	path = Spotlight/vendor/ImGui
+	url = https://github.com/JustARegularPlayer/imgui

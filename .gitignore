@@ -1,0 +1,7 @@
+#DIRECTORIES
+.vs/
+bin/
+bin-int/
+
+#EXTENSIONS
+*.user
