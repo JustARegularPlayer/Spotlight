@@ -56,6 +56,10 @@
       <Filter>Spotlight\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\splpch.h" />
+    <ClInclude Include="src\Spotlight\Core\Input.h" />
+    <ClInclude Include="src\Platform\Windows\WinInput.h" />
+    <ClInclude Include="src\Spotlight\Core\KeyCodes.h" />
+    <ClInclude Include="src\Spotlight\Core\MouseButtonCodes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\Windows\WinWindow.cpp">
@@ -74,5 +78,6 @@
       <Filter>Spotlight\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\splpch.cpp" />
+    <ClCompile Include="src\Platform\Windows\WinInput.cpp" />
   </ItemGroup>
 </Project>

@@ -17,6 +17,10 @@ namespace Spotlight
 
 		void OnEvent(Event& e);
 		void Run();
+
+		inline Window& GetWindow() { return *m_Window; }
+
+		static inline SpotlightApp& Get() { return *sm_Instance; }
 	private:
 		bool OnWindowClose(Event_WindowClosed& e);
 

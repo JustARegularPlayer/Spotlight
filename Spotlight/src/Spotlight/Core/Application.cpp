@@ -1,6 +1,9 @@
 #include "splpch.h"
 #include "Application.h"
+#include "Spotlight/Core/Input.h"
+#include "Spotlight/Core/KeyCodes.h"
 
+// This has to go... probably later.
 #include <glad/glad.h>
 
 namespace Spotlight
@@ -31,6 +34,8 @@ namespace Spotlight
 			if (e.IsHandled)
 				break;
 		}
+		if (Input::IsKeyPressed(SPL_KEY_ENTER))
+			SPL_INFO("Enter Key!");
 	}
 
 	void SpotlightApp::Run()

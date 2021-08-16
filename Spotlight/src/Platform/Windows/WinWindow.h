@@ -22,6 +22,7 @@ namespace Spotlight
 		void SetVSync(bool isEnabled) override;
 		bool IsVSync() const override;
 
+		inline virtual void* GetNativeWindow() const { return m_Window; }
 	private:
 		void Init();
 		void Shutdown();

@@ -158,11 +158,15 @@
     <ClInclude Include="src\Spotlight\Core\Events\Event.h" />
     <ClInclude Include="src\Spotlight\Core\Events\KeyEvent.h" />
     <ClInclude Include="src\Spotlight\Core\Events\MouseEvent.h" />
+    <ClInclude Include="src\Spotlight\Core\Input.h" />
+    <ClInclude Include="src\Spotlight\Core\KeyCodes.h" />
     <ClInclude Include="src\Spotlight\Core\Layer.h" />
     <ClInclude Include="src\Spotlight\Core\LayerStack.h" />
     <ClInclude Include="src\Spotlight\Core\Log.h" />
+    <ClInclude Include="src\Spotlight\Core\MouseButtonCodes.h" />
     <ClInclude Include="src\Spotlight\Core\Window.h" />
     <ClInclude Include="src\splpch.h" />
+    <ClInclude Include="src\Platform\Windows\WinInput.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\Windows\WinWindow.cpp" />
@@ -173,6 +177,7 @@
     <ClCompile Include="src\splpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\Platform\Windows\WinInput.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="vendor\Glad\Glad.vcxproj">
