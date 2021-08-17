@@ -149,15 +149,14 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.h" />
+    <ClInclude Include="src\Spotlight\ImGui\Layer_ImGui.h" />
+    <ClInclude Include="src\Platform\Windows\WinInput.h" />
     <ClInclude Include="src\Platform\Windows\WinWindow.h" />
     <ClInclude Include="src\Spotlight.h" />
     <ClInclude Include="src\Spotlight\Core\Application.h" />
     <ClInclude Include="src\Spotlight\Core\Core.h" />
     <ClInclude Include="src\Spotlight\Core\EntryPoint.h" />
-    <ClInclude Include="src\Spotlight\Core\Events\AppEvent.h" />
-    <ClInclude Include="src\Spotlight\Core\Events\Event.h" />
-    <ClInclude Include="src\Spotlight\Core\Events\KeyEvent.h" />
-    <ClInclude Include="src\Spotlight\Core\Events\MouseEvent.h" />
     <ClInclude Include="src\Spotlight\Core\Input.h" />
     <ClInclude Include="src\Spotlight\Core\KeyCodes.h" />
     <ClInclude Include="src\Spotlight\Core\Layer.h" />
@@ -165,10 +164,16 @@
     <ClInclude Include="src\Spotlight\Core\Log.h" />
     <ClInclude Include="src\Spotlight\Core\MouseButtonCodes.h" />
     <ClInclude Include="src\Spotlight\Core\Window.h" />
+    <ClInclude Include="src\Spotlight\Events\AppEvent.h" />
+    <ClInclude Include="src\Spotlight\Events\Event.h" />
+    <ClInclude Include="src\Spotlight\Events\KeyEvent.h" />
+    <ClInclude Include="src\Spotlight\Events\MouseEvent.h" />
     <ClInclude Include="src\splpch.h" />
-    <ClInclude Include="src\Platform\Windows\WinInput.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.cpp" />
+    <ClCompile Include="src\Spotlight\ImGui\Layer_ImGui.cpp" />
+    <ClCompile Include="src\Platform\Windows\WinInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WinWindow.cpp" />
     <ClCompile Include="src\Spotlight\Core\Application.cpp" />
     <ClCompile Include="src\Spotlight\Core\Layer.cpp" />
@@ -177,7 +182,6 @@
     <ClCompile Include="src\splpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\Platform\Windows\WinInput.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="vendor\Glad\Glad.vcxproj">

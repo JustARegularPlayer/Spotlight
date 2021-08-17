@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Spotlight/Core/Core.h"
-#include "Spotlight/Core/Events/Event.h"
+#include "Spotlight/Events/Event.h"
 
 namespace Spotlight
 {
@@ -12,8 +12,8 @@ namespace Spotlight
 		Layer();
 		virtual ~Layer();
 
-		virtual void Attach() {}
-		virtual void Detach() {}
+		virtual void OnAttach() {}
+		virtual void OnDetach() {}
 		virtual void OnUpdate() {}
 		virtual void OnEvent(Event& e) {}
 	};

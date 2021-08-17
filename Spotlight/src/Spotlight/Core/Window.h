@@ -2,7 +2,7 @@
 
 #include "splpch.h"
 #include "Spotlight/Core/Core.h"
-#include "Spotlight/Core/Events/Event.h"
+#include "Spotlight/Events/Event.h"
 
 namespace Spotlight
 {

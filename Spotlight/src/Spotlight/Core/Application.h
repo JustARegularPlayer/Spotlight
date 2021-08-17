@@ -2,8 +2,8 @@
 
 #include "Spotlight/Core/Core.h"
 #include "Spotlight/Core/Window.h"
-#include "Spotlight/Core/Events/Event.h"
-#include "Spotlight/Core/Events/AppEvent.h"
+#include "Spotlight/Events/Event.h"
+#include "Spotlight/Events/AppEvent.h"
 #include "Spotlight/Core/LayerStack.h"
 
 namespace Spotlight
@@ -17,6 +17,9 @@ namespace Spotlight
 
 		void OnEvent(Event& e);
 		void Run();
+
+		void PushLayer(Layer* layer);
+		void PushOverlay(Layer* overlay);
 
 		inline Window& GetWindow() { return *m_Window; }
 

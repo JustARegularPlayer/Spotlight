@@ -51,6 +51,18 @@ namespace Spotlight
 		}
 	}
 
+	void SpotlightApp::PushLayer(Layer* layer)
+	{
+		m_LayerStack.PushLayer(layer);
+		layer->OnAttach();
+	}
+
+	void SpotlightApp::PushOverlay(Layer* overlay)
+	{
+		m_LayerStack.PushOverlay(overlay);
+		overlay->OnAttach();
+	}
+
 	bool SpotlightApp::OnWindowClose(Event_WindowClosed &e)
 	{
 		m_IsRunning = false;

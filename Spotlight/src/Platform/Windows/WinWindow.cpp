@@ -3,9 +3,9 @@
 
 #include <glad/glad.h>
 
-#include "Spotlight/Core/Events/AppEvent.h"
-#include "Spotlight/Core/Events/KeyEvent.h"
-#include "Spotlight/Core/Events/MouseEvent.h"
+#include "Spotlight/Events/AppEvent.h"
+#include "Spotlight/Events/KeyEvent.h"
+#include "Spotlight/Events/MouseEvent.h"
 
 namespace Spotlight
 {
