@@ -1,16 +1,17 @@
 #include "splpch.h"
 #include "Application.h"
 #include "Spotlight/Core/Input.h"
-#include "Spotlight/Core/KeyCodes.h"
 
 // This has to go... probably later.
 #include <glad/glad.h>
+
+#include <glm/glm.hpp>
 
 namespace Spotlight
 {
 
 	SpotlightApp *SpotlightApp::sm_Instance = nullptr;
-
+	
 	SpotlightApp::SpotlightApp()
 	{
 		SPL_CORE_ASSERT(!sm_Instance, "Application already exists!");
@@ -18,6 +19,12 @@ namespace Spotlight
 		Log::LogInit();
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(SPL_BIND_FUNC(SpotlightApp::OnEvent));
+
+		m_ImGuiLayer = new Layer_ImGui();
+		PushOverlay(m_ImGuiLayer);
+
+		glm::vec2 vec(1.0f, 3.0f);
+		SPL_INFO("Vector: ({0}, {1})", vec.x, vec.y);
 	}
 
 	SpotlightApp::~SpotlightApp()
@@ -34,8 +41,6 @@ namespace Spotlight
 			if (e.IsHandled)
 				break;
 		}
-		if (Input::IsKeyPressed(SPL_KEY_ENTER))
-			SPL_INFO("Enter Key!");
 	}
 
 	void SpotlightApp::Run()
@@ -47,6 +52,14 @@ namespace Spotlight
 			glClear(GL_COLOR_BUFFER_BIT);
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
+
+			m_ImGuiLayer->Begin();
+			{
+				for (Layer* layer : m_LayerStack)
+					layer->OnUIRender();
+			}
+			m_ImGuiLayer->End();
+
 			m_Window->OnUpdate();
 		}
 	}

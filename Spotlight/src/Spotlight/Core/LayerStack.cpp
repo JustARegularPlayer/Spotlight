@@ -6,7 +6,6 @@ namespace Spotlight
 
 	LayerStack::LayerStack()
 	{
-		m_LayerIterator = begin();
 	}
 
 	LayerStack::~LayerStack()
@@ -17,7 +16,8 @@ namespace Spotlight
 
 	void LayerStack::PushLayer(Layer* layer)
 	{
-		m_LayerIterator = m_LayerArray.emplace(m_LayerIterator, layer);
+		m_LayerArray.emplace(m_LayerArray.begin() + m_LayerIteratorIndex, layer);
+		m_LayerIteratorIndex++;
 	}
 
 	void LayerStack::PushOverlay(Layer* overlay)
@@ -31,7 +31,7 @@ namespace Spotlight
 		if (it != m_LayerArray.end())
 		{
 			m_LayerArray.erase(it);
-			m_LayerIterator--;
+			m_LayerIteratorIndex--;
 		}
 	}
 

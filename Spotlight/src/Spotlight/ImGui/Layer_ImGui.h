@@ -14,19 +14,12 @@ namespace Spotlight
 		Layer_ImGui();
 		~Layer_ImGui();
 
-		void OnAttach() override;
-		void OnDetach() override;
-		void OnUpdate() override;
-		void OnEvent(Event& e) override;
+		virtual void OnAttach() override;
+		virtual void OnDetach() override;
+		virtual void OnUIRender() override;
 
-		bool OnMouseMoved(Event_MouseMoved& e);
-		bool OnMouseScrolled(Event_MouseScrolled& e);
-		bool OnMouseButtonPressed(Event_MouseButtonPressed& e);
-		bool OnMouseButtonReleased(Event_MouseButtonReleased& e);
-		bool OnCharTyped(Event_CharTyped& e);
-		bool OnKeyPressed(Event_KeyPressed& e);
-		bool OnKeyReleased(Event_KeyReleased& e);
-		bool OnWindowResized(Event_WindowResized& e);
+		void Begin();
+		void End();
 	private:
 		float m_Time = 0.0f;
 	};

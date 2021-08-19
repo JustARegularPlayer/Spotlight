@@ -6,6 +6,8 @@
 #include "Spotlight/Events/AppEvent.h"
 #include "Spotlight/Core/LayerStack.h"
 
+#include "Spotlight/ImGui/Layer_ImGui.h"
+
 namespace Spotlight
 {
 	
@@ -30,6 +32,7 @@ namespace Spotlight
 		static SpotlightApp* sm_Instance;
 
 		std::unique_ptr<Window> m_Window;
+		Layer_ImGui* m_ImGuiLayer;
 		bool m_IsRunning = true;
 
 		LayerStack m_LayerStack;

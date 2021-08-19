@@ -7,3 +7,6 @@
 [submodule "Spotlight/vendor/ImGui"]
 	path = Spotlight/vendor/ImGui
 	url = https://github.com/JustARegularPlayer/imgui
+[submodule "Spotlight/vendor/glm"]
+	path = Spotlight/vendor/glm
+	url = https://github.com/g-truc/glm

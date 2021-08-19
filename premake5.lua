@@ -30,7 +30,10 @@ project "Spotlight"
 	files
 	{
 		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp"
+		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/vendor/glm/glm/**.hpp",
+		"%{prj.name}/vendor/glm/glm/**.inl",
+		"%{prj.name}/vendor/glm/glm/**.h",
 	}
 	
 	includedirs
@@ -39,7 +42,8 @@ project "Spotlight"
 		"%{prj.name}/vendor/spdlog/include",
 		"%{prj.name}/vendor/Glad/include",
 		"%{prj.name}/vendor/GLFW/include",
-		"%{prj.name}/vendor/ImGui"
+		"%{prj.name}/vendor/ImGui",
+		"%{prj.name}/vendor/glm"
 	}
 
 	filter "system:windows"
@@ -98,9 +102,10 @@ project "CenterStage"
 
 	includedirs
 	{
-		"%{prj.name}/src",
 		"Spotlight/src",
-		"Spotlight/vendor/spdlog/include"
+		"Spotlight/vendor/spdlog/include",
+		"Spotlight/vendor/ImGui",
+		"Spotlight/vendor/glm"
 	}
 
 	links

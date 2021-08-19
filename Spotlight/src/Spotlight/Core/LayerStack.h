@@ -22,7 +22,7 @@ namespace Spotlight
 		inline LayerPtrVector::iterator end() { return m_LayerArray.end(); }
 	private:
 		LayerPtrVector m_LayerArray;
-		LayerPtrVector::iterator m_LayerIterator;
+		unsigned int m_LayerIteratorIndex = 0;
 	};
 
 }
