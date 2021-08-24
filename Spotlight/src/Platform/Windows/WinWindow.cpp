@@ -1,11 +1,11 @@
 #include "splpch.h"
 #include "WinWindow.h"
 
-#include <glad/glad.h>
-
 #include "Spotlight/Events/AppEvent.h"
 #include "Spotlight/Events/KeyEvent.h"
 #include "Spotlight/Events/MouseEvent.h"
+
+#include "Platform/OpenGL/OpenGLContext.h"
 
 namespace Spotlight
 {
@@ -52,9 +52,9 @@ namespace Spotlight
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 		m_Window = glfwCreateWindow(m_Data.Width, m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
-		glfwMakeContextCurrent(m_Window);
 
-		SPL_CORE_ASSERT(gladLoadGLLoader((GLADloadproc)glfwGetProcAddress), "Could not initialize Glad!");
+		m_Context = new OpenGLContext(m_Window);
+		m_Context->Init();
 
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
@@ -162,7 +162,7 @@ namespace Spotlight
 	void WinWindow::OnUpdate()
 	{
 		glfwPollEvents();
-		glfwSwapBuffers(m_Window);
+		m_Context->SwapBuffers();
 	}
 
 	void WinWindow::SetVSync(bool isEnabled)
