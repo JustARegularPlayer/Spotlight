@@ -171,13 +171,7 @@ namespace Spotlight
 			glfwSwapInterval(1);
 		else
 			glfwSwapInterval(0);
-
 		m_Data.VSync = isEnabled;
-	}
-
-	bool WinWindow::IsVSync() const
-	{
-		return m_Data.VSync;
 	}
 
 }

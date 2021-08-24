@@ -31,9 +31,9 @@ namespace Spotlight
 
 		virtual void SetEventCallback(const EventCallbackFunc& func) = 0;
 		virtual void SetVSync(bool isEnabled) = 0;
-		virtual bool IsVSync() const = 0;
+		virtual inline bool IsVSync() const = 0;
 
-		virtual void* GetNativeWindow() const = 0;
+		virtual inline void* GetNativeWindow() const = 0;
 
 		static Window* Create(const WindowProperties& props = WindowProperties());
 	};

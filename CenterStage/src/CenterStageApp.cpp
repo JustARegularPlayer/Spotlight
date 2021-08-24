@@ -14,17 +14,19 @@ public:
 		ImGui::Begin("Test");
 		{
 			ImGui::Text("Hello World!");
-			ImGui::SliderInt("Integer Slider Test", &m_Number, 1, 100);
+			ImGui::SliderInt("Integer Slider Test 1", &m_Number1, 0, 100);
+			ImGui::SliderInt("Integer Slider Test 2", &m_Number2, 0, 100);
 		}
 		ImGui::End();
 	}
-
+	
 	void OnEvent(Spotlight::Event& e) override
 	{
 	}
 
 private:
-	int m_Number = 1;
+	int m_Number1 = 0;
+	int m_Number2 = 0;
 };
 
 class CenterStage : public Spotlight::SpotlightApp

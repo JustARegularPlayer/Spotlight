@@ -20,9 +20,9 @@ namespace Spotlight
 
 		void SetEventCallback(const EventCallbackFunc& func) override { m_Data.EventCallback = func; }
 		void SetVSync(bool isEnabled) override;
-		bool IsVSync() const override;
+		bool inline IsVSync() const override { return m_Data.VSync; }
 
-		inline virtual void* GetNativeWindow() const { return m_Window; }
+		virtual inline void* GetNativeWindow() const { return m_Window; }
 	private:
 		void Init();
 		void Shutdown();

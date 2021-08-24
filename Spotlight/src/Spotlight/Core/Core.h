@@ -1,11 +1,15 @@
 #pragma once
 
 #if defined SPL_PLATFORM_WINDOWS
+#if defined SPL_DYNAMIC_LINK
 	#ifdef SPL_BUILD_DLL
 		#define SPOTLIGHT_API __declspec(dllexport)
 	#else 
 		#define	SPOTLIGHT_API __declspec(dllimport)
 	#endif
+#else
+	#define SPOTLIGHT_API
+#endif
 #else
 	#error This engine only supports the following platforms: Windows
 #endif

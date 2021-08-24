@@ -2,12 +2,10 @@
 #include "Layer_ImGui.h"
 
 #include <imgui.h>
-#include "Spotlight/Core/Application.h"
-#include "Spotlight/Core/KeyCodes.h"
-
-#define IMGUI_IMPL_API
 #include <backends/imgui_impl_glfw.h>
 #include <backends/imgui_impl_opengl3.h>
+
+#include "Spotlight/Core/Application.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>

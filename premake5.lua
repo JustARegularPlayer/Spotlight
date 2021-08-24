@@ -17,9 +17,10 @@ include "Spotlight/vendor/ImGui"
 
 project "Spotlight"
 	location "Spotlight"
-	kind "SharedLib"
+	kind "StaticLib"
 	language "C++"
-	staticruntime "off"
+	cppdialect "C++17"
+	staticruntime "on"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -35,6 +36,11 @@ project "Spotlight"
 		"%{prj.name}/vendor/glm/glm/**.inl",
 		"%{prj.name}/vendor/glm/glm/**.h",
 	}
+
+	defines
+	{
+		"_CRT_SECURE_NO_WARNINGS"
+	}
 	
 	includedirs
 	{
@@ -47,7 +53,6 @@ project "Spotlight"
 	}
 
 	filter "system:windows"
-		cppdialect "C++17"
 		systemversion "latest"
 
 		defines
@@ -55,11 +60,6 @@ project "Spotlight"
 			"SPL_PLATFORM_WINDOWS",
 			"SPL_BUILD_DLL",
 			"GLFW_INCLUDE_NONE"
-		}
-
-		postbuildcommands
-		{
-			("{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/CenterStage/\"")
 		}
 
 		links
@@ -73,23 +73,24 @@ project "Spotlight"
 	filter "configurations:Debug"
 		defines "SPL_DEBUG"
 		runtime "Debug"
-		symbols "On"
+		symbols "on"
 
 	filter "configurations:Release"
 		defines "SPL_RELEASE"
 		runtime "Release"
-		optimize "On"
+		optimize "on"
 
 	filter "configurations:Dist"
 		defines "SPL_DIST"
 		runtime "Release"
-		optimize "On"
+		optimize "on"
 
 project "CenterStage"
 	location "CenterStage"
 	kind "ConsoleApp"
 	language "C++"
-	staticruntime "off"
+	cppdialect "C++17"
+	staticruntime "on"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -114,7 +115,6 @@ project "CenterStage"
 	}
 
 	filter "system:windows"
-		cppdialect "C++17"
 		systemversion "latest"
 
 		defines
@@ -125,14 +125,14 @@ project "CenterStage"
 	filter "configurations:Debug"
 		defines "SPL_DEBUG"
 		runtime "Debug"
-		symbols "On"
+		symbols "on"
 
 	filter "configurations:Release"
 		defines "SPL_RELEASE"
 		runtime "Release"
-		optimize "On"
+		optimize "on"
 
 	filter "configurations:Dist"
 		defines "SPL_DIST"
 		runtime "Release"
-		optimize "On"
+		optimize "on"

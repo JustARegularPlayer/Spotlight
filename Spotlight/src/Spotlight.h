@@ -8,5 +8,3 @@
 #include "Spotlight/Core/Input.h"
 #include "Spotlight/Core/KeyCodes.h"
 #include "Spotlight/Core/MouseButtonCodes.h"
-
-#include "Spotlight/ImGui/Layer_ImGui.h"

@@ -4,7 +4,6 @@
 
 // This has to go... probably later.
 #include <glad/glad.h>
-
 #include <glm/glm.hpp>
 
 namespace Spotlight
@@ -16,15 +15,14 @@ namespace Spotlight
 	{
 		SPL_CORE_ASSERT(!sm_Instance, "Application already exists!");
 		sm_Instance = this;
+
 		Log::LogInit();
+
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(SPL_BIND_FUNC(SpotlightApp::OnEvent));
 
 		m_ImGuiLayer = new Layer_ImGui();
 		PushOverlay(m_ImGuiLayer);
-
-		glm::vec2 vec(1.0f, 3.0f);
-		SPL_INFO("Vector: ({0}, {1})", vec.x, vec.y);
 	}
 
 	SpotlightApp::~SpotlightApp()
@@ -46,7 +44,8 @@ namespace Spotlight
 	void SpotlightApp::Run()
 	{
 		glClearColor(0.2f, 0.5f, 0.3f, 1.0f);
-		
+		SPL_INFO("Application size in bytes: {0}", sizeof(SpotlightApp));
+
 		while (m_IsRunning)
 		{
 			glClear(GL_COLOR_BUFFER_BIT);

@@ -22,17 +22,17 @@ namespace Spotlight
 		EventCategoryMouseButton	= 1 << 4
 	};
 
-	#define EVENT_CLASS_TYPE(type)	static EventType GetStaticType() { return EventType::##type; }					\
-									virtual EventType GetEventType() const override { return GetStaticType(); }
+	#define EVENT_CLASS_TYPE(type)	static inline EventType GetStaticType() { return EventType::##type; }					\
+									virtual inline EventType GetEventType() const override { return GetStaticType(); }
 	
-	#define EVENT_CLASS_CATEGORY(category) virtual int GetCategoryFlags() const override { return category; }
+	#define EVENT_CLASS_CATEGORY(category) virtual inline int GetCategoryFlags() const override { return category; }
 
 	// Event system
 	class SPOTLIGHT_API Event
 	{
 	public:
-		virtual EventType GetEventType() const = 0;
-		virtual int GetCategoryFlags() const = 0;
+		virtual inline EventType GetEventType() const = 0;
+		virtual inline int GetCategoryFlags() const = 0;
 
 		inline bool IsInCategory(int category)
 		{
