@@ -13,9 +13,7 @@ public:
 	{
 		ImGui::Begin("Test");
 		{
-			ImGui::Text("Hello World!");
-			ImGui::SliderInt("Integer Slider Test 1", &m_Number1, 0, 100);
-			ImGui::SliderInt("Integer Slider Test 2", &m_Number2, 0, 100);
+			ImGui::Text("A triangle?!");
 		}
 		ImGui::End();
 	}

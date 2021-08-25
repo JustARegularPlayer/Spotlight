@@ -11,7 +11,7 @@
 	#define SPOTLIGHT_API
 #endif
 #else
-	#error This engine only supports the following platforms: Windows
+	#error This engine only supports Windows at the moment!
 #endif
 
 #ifdef SPL_DEBUG

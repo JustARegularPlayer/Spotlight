@@ -36,6 +36,10 @@ namespace Spotlight
 		bool m_IsRunning = true;
 
 		LayerStack m_LayerStack;
+
+		unsigned int m_VAO;
+		unsigned int m_VBO;
+		unsigned int m_IBO;
 	};
 
 	SpotlightApp* CreateApp();

@@ -55,9 +55,6 @@ namespace Spotlight
 
 	void Layer_ImGui::OnUIRender()
 	{
-		static bool show = true;
-		ImGui::ShowDemoWindow(&show);
-		ImGui::ShowAboutWindow(&show);
 	}
 
 	void Layer_ImGui::End()

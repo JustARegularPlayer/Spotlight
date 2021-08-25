@@ -38,8 +38,6 @@ namespace Spotlight
 
 	void WinWindow::Init()
 	{
-		SPL_CORE_INFO("Creating {0} ({1}, {2})", m_Data.Title, m_Data.Width, m_Data.Height);
-
 		if (!s_GLFWInitialized)
 		{
 			SPL_CORE_ASSERT(glfwInit(), "Could not initialize GLFW!");
@@ -50,6 +48,8 @@ namespace Spotlight
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+		SPL_CORE_INFO("Creating {0} ({1}, {2})", m_Data.Title, m_Data.Width, m_Data.Height);
 
 		m_Window = glfwCreateWindow(m_Data.Width, m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
 
@@ -76,10 +76,13 @@ namespace Spotlight
 				data.EventCallback(e);
 			});
 
-		glfwSetWindowPosCallback(m_Window, [](GLFWwindow *window, int xPos, int yPos)
+		glfwSetWindowPosCallback(m_Window, [](GLFWwindow* window, int xPos, int yPos)
 			{
-				WindowData &data = *(WindowData*)glfwGetWindowUserPointer(window);
+				WindowData& data = *(WindowData*) glfwGetWindowUserPointer(window);
 				Event_WindowMoved e(xPos, yPos);
+				data.xPos = xPos;
+				data.yPos = yPos;
+
 				data.EventCallback(e);
 			});
 

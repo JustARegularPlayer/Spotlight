@@ -8,11 +8,7 @@ namespace Spotlight
 
 	void Log::LogInit()
 	{
-		#ifdef SPL_DEBUG
-			spdlog::set_pattern("[%T] %^%n: (+%oms) %v%$");
-		#else
-			spdlog::set_pattern("[%T] %^%n: %v%$");
-		#endif
+		spdlog::set_pattern("[%T] %^%n: %v%$");
 
 		sm_CoreLogger = spdlog::stdout_color_mt("SPOTLIGHT");
 		sm_CoreLogger->set_level(spdlog::level::trace);

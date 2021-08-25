@@ -37,11 +37,13 @@ namespace Spotlight
 			std::string Title;
 			unsigned int Width;
 			unsigned int Height;
+			int xPos;
+			int yPos;
 			bool VSync;
 			EventCallbackFunc EventCallback;
 
 			WindowData(const WindowProperties& props)
-				: Title(props.Title), Width(props.Width), Height(props.Height), VSync(false), EventCallback(nullptr) {}
+				: Title(props.Title), Width(props.Width), Height(props.Height), xPos(0), yPos(0), VSync(false), EventCallback(nullptr) {}
 		};
 
 		WindowData m_Data;
