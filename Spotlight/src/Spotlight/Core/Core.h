@@ -19,8 +19,8 @@
 #endif
 
 #ifdef SPL_ENABLE_ASSERTS
-	#define SPL_ASSERT(x, ...) if(!(x)) { SPL_ERROR("Assertion Failed! {0}", __VA_ARGS__); __debugbreak(); }
-	#define SPL_CORE_ASSERT(x, ...) if(!(x)) { SPL_CORE_ERROR("Assertion Failed! {0}", __VA_ARGS__); __debugbreak(); }
+	#define SPL_ASSERT(x, ...) if(!(x)) { SPL_FATAL("Assertion Failed! {0}", __VA_ARGS__); __debugbreak(); }
+	#define SPL_CORE_ASSERT(x, ...) if(!(x)) { SPL_CORE_FATAL("Assertion Failed! {0}", __VA_ARGS__); __debugbreak(); }
 #else
 	#define SPL_ASSERT(x, ...) x;
 	#define SPL_CORE_ASSERT(x, ...) x;

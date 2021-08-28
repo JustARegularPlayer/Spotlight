@@ -21,10 +21,6 @@ public:
 	void OnEvent(Spotlight::Event& e) override
 	{
 	}
-
-private:
-	int m_Number1 = 0;
-	int m_Number2 = 0;
 };
 
 class CenterStage : public Spotlight::SpotlightApp
