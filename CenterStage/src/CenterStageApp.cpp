@@ -13,7 +13,7 @@ public:
 	{
 		ImGui::Begin("Test");
 		{
-			ImGui::Text("A triangle?!");
+			ImGui::Text("This is a rectangle!");
 		}
 		ImGui::End();
 	}

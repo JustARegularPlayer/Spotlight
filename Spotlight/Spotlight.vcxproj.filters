@@ -7,6 +7,9 @@
     <Filter Include="src\Platform">
       <UniqueIdentifier>{21CA02E5-0D2D-9289-B6B2-CA3FA2F45D0C}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Platform\OpenGL">
+      <UniqueIdentifier>{35A49437-A105-7245-2A73-B8F796D3A804}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Platform\Windows">
       <UniqueIdentifier>{5B054582-4794-CE4B-F0B2-E246DC20DFF1}</UniqueIdentifier>
     </Filter>
@@ -21,6 +24,9 @@
     </Filter>
     <Filter Include="src\Spotlight\ImGui">
       <UniqueIdentifier>{C481F840-30E3-D54E-B950-1C0125B10C0E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Spotlight\Renderer">
+      <UniqueIdentifier>{004264C5-EC3B-8D17-D5A8-2328C141F383}</UniqueIdentifier>
     </Filter>
     <Filter Include="vendor">
       <UniqueIdentifier>{B3738122-9F15-ACF8-88D0-BF4C74113349}</UniqueIdentifier>
@@ -48,6 +54,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\Windows\WinInput.h">
       <Filter>src\Platform\Windows</Filter>
     </ClInclude>
@@ -101,6 +116,18 @@
     </ClInclude>
     <ClInclude Include="src\Spotlight\ImGui\Layer_ImGui.h">
       <Filter>src\Spotlight\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spotlight\Renderer\Buffer.h">
+      <Filter>src\Spotlight\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spotlight\Renderer\GraphicsContext.h">
+      <Filter>src\Spotlight\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spotlight\Renderer\Renderer.h">
+      <Filter>src\Spotlight\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spotlight\Renderer\Shader.h">
+      <Filter>src\Spotlight\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\splpch.h">
       <Filter>src</Filter>
@@ -1380,17 +1407,17 @@
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp">
       <Filter>vendor\glm\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\Spotlight\Renderer\GraphicsContext.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
-    <ClInclude Include="src\Spotlight\Renderer\Shader.h" />
-    <ClInclude Include="src\Spotlight\Renderer\Buffer.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
-    <ClInclude Include="src\Spotlight\Renderer\Renderer.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h" />
-    <ClInclude Include="src\Spotlight\Renderer\VertexArray.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\Windows\WinInput.cpp">
       <Filter>src\Platform\Windows</Filter>
     </ClCompile>
@@ -1415,16 +1442,17 @@
     <ClCompile Include="src\Spotlight\ImGui\Layer_ImGui.cpp">
       <Filter>src\Spotlight\ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="src\Spotlight\Renderer\Buffer.cpp">
+      <Filter>src\Spotlight\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spotlight\Renderer\Renderer.cpp">
+      <Filter>src\Spotlight\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spotlight\Renderer\Shader.cpp">
+      <Filter>src\Spotlight\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\splpch.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
-    <ClCompile Include="src\Spotlight\Renderer\Shader.cpp" />
-    <ClCompile Include="src\Spotlight\Renderer\Buffer.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
-    <ClCompile Include="src\Spotlight\Renderer\Renderer.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp" />
-    <ClCompile Include="src\Spotlight\Renderer\VertexArray.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp" />
   </ItemGroup>
 </Project>

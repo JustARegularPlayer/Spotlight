@@ -28,6 +28,8 @@ namespace Spotlight
 		glUseProgram(0);
 	}
 
+	// SHADER PROGRAM CREATION ==================================================================
+
 	ShaderSources OpenGLShader::ParseShader(const char* filepath)
 	{
 		enum class ShaderType
@@ -46,19 +48,19 @@ namespace Spotlight
 		{
 			if (line.find("#shader") != std::string::npos)
 			{
-				if (line.find("vertex") != std::string::npos)
-				{
+				if (line.find("vertex") != std::string::npos)	// if the read line is "#shader vertex",
+				{												// set type into 0
 					type = ShaderType::VERTEX;
 				}
-				else if (line.find("fragment") != std::string::npos)
-				{
+				else if (line.find("fragment") != std::string::npos)	// if line is "#shader fragment",
+				{														// set type into 1
 					type = ShaderType::FRAGMENT;
 				}
 			}
 			else
 			{
-				ss[(int)type] << line << std::endl;
-			}
+				ss[(int)type] << line << std::endl;	// ss[0] - Vertex shader source
+			}										// ss[1] - Fragment shader source
 		}
 
 		file.close();
@@ -84,7 +86,7 @@ namespace Spotlight
 
 			SPL_ERROR("Shader type: {}", (type == GL_VERTEX_SHADER ? "VertexShader" : "FragmentShader"));
 			SPL_ERROR("\t- {}", &log[0]);
-			SPL_CORE_ASSERT(false, "OpenGL shader compilation error!");
+			SPL_CORE_ASSERT(false, "OpenGL shader compilation error! (See message above for details)");
 		}
 		return shader;
 	}
@@ -104,4 +106,28 @@ namespace Spotlight
 
 		return program;
 	}
+
+	// UNIFORMS =================================================================================
+
+	void OpenGLShader::SetUniform4f(const std::string& name, float v0, float v1, float v2, float v3)
+	{
+		glUniform4f(GetUniformLocation(name), v0, v1, v2, v3);
+	}
+
+	int OpenGLShader::GetUniformLocation(const std::string& name)
+	{
+		if (m_UniformLocations.find(name) != m_UniformLocations.end())
+			return m_UniformLocations[name];
+
+		// If a uniform location is not currently saved in the map, get the location and save it.
+		int location = glGetUniformLocation(m_ProgramID, name.c_str());
+		m_UniformLocations[name] = location;
+
+		// If it does not exist, just warn the user. The missing location won't kill the program.
+		if (location == -1)
+			SPL_CORE_WARN("A shader uniform location cannot be found: {}", name);
+
+		return location;
+	}
+
 }

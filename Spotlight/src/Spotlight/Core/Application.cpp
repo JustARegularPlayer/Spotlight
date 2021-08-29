@@ -2,9 +2,8 @@
 #include "Application.h"
 #include "Spotlight/Core/Input.h"
 
-// This has to go... probably later.
+// Temporary header includes
 #include <glad/glad.h>
-#include <glm/glm.hpp>
 
 namespace Spotlight
 {
@@ -17,32 +16,56 @@ namespace Spotlight
 		sm_Instance = this;
 
 		Log::LogInit();
-
+		
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(SPL_BIND_FUNC(SpotlightApp::OnEvent));
 
 		m_ImGuiLayer = new Layer_ImGui();
 		PushOverlay(m_ImGuiLayer);
 
-		m_VAO.reset(VertexArray::Create());
-		
-		float vertices[3 * 3] =
+		float vertices[7 * 4] =
 		{
-			-0.5f, -0.5f, 0.0f,
-			 0.5f, -0.5f, 0.0f,
-			 0.0f,  0.5f, 0.0f
+			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+			 0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
+			 0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 
+			-0.5f,  0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f
 		};
 
+		uint32_t indices[3 * 2] = 
+		{
+			0, 1, 2,
+			2, 3, 0
+		};
+
+		glGenVertexArrays(1, &m_VAO);
+		glBindVertexArray(m_VAO);
 		m_VBO.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
 
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
+		{
+			BufferLayout layout = {
+				{ShaderDataType::Float3, "i_Position", false},
+				{ShaderDataType::Float4, "i_Color", false},
+			};
 
-		unsigned int indices[3] = {0, 1, 2};
+			m_VBO->SetLayout(layout);
+		}
 
-		m_IBO.reset(IndexBuffer::Create(indices, std::size(indices)));
-		m_Shader.reset(Shader::Create("res/Shaders/Basic.glsl"));
+		uint32_t i = 0;
+		const auto &layout = m_VBO->GetLayout();
+		for (const auto &element : layout)
+		{
+			glEnableVertexAttribArray(i);
+			glVertexAttribPointer(i,
+				element.GetComponentCount(),
+				GL_FLOAT,
+				element.Normalized,
+				layout.GetStride(),
+				(const void *) element.Offset);
+			i++;
+		}
 
+		m_IBO.reset(IndexBuffer::Create(indices, (uint32_t)std::size(indices)));
+		m_Shader.reset(Shader::Create("assets/Shaders/Basic.glsl"));
 	}
 
 	SpotlightApp::~SpotlightApp()
@@ -68,8 +91,9 @@ namespace Spotlight
 			glClearColor(0.08f, 0.08f, 0.08f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
 
+			glBindVertexArray(m_VAO);
 			m_Shader->Bind();
-			m_VAO->Bind();
+			m_Shader->SetUniform4f("u_Color", 0.2f, 0.3f, 0.8f, 1.0f);
 			glDrawElements(GL_TRIANGLES, m_IBO->GetCount(), GL_UNSIGNED_INT, nullptr);
 
 			for (Layer* layer : m_LayerStack)
@@ -84,6 +108,7 @@ namespace Spotlight
 
 			m_Window->OnUpdate();
 		}
+		glDeleteVertexArrays(1, &m_VAO);
 	}
 
 	void SpotlightApp::PushLayer(Layer* layer)
