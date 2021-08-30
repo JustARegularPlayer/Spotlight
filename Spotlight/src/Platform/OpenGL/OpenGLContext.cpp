@@ -16,7 +16,9 @@ namespace Spotlight
 	void OpenGLContext::Init()
 	{
 		glfwMakeContextCurrent(m_Handle);
-		SPL_CORE_ASSERT(gladLoadGLLoader((GLADloadproc) glfwGetProcAddress), "Could not initialize Glad!");
+		int success = gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
+		SPL_CORE_ASSERT(success, "Could not initialize Glad!");
+
 		SPL_CORE_INFO("OpenGL Driver Details:");
 		SPL_CORE_INFO("\t- Vendor: {}", glGetString(GL_VENDOR));
 		SPL_CORE_INFO("\t- Renderer: {}", glGetString(GL_RENDERER));

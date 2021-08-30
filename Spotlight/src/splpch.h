@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "Spotlight/Core/Log.h"
+#include <imgui.h>
 
 #if defined SPL_PLATFORM_WINDOWS
 	#include <Windows.h>

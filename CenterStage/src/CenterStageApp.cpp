@@ -1,34 +1,13 @@
 #include <Spotlight.h>
 
-#include <imgui.h>
-
-class Layer_Test : public Spotlight::Layer
-{
-public:
-	void OnUpdate() override
-	{
-	}
-
-	void OnUIRender() override
-	{
-		ImGui::Begin("Test");
-		{
-			ImGui::Text("This is a rectangle!");
-		}
-		ImGui::End();
-	}
-	
-	void OnEvent(Spotlight::Event& e) override
-	{
-	}
-};
+#include "Layers/Layer_Render.h"
 
 class CenterStage : public Spotlight::SpotlightApp
 {
 public:
 	CenterStage()
 	{
-		PushLayer(new Layer_Test());
+		PushLayer(new Layer_Render());
 	}
 
 	~CenterStage()

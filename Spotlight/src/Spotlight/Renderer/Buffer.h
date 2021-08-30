@@ -52,7 +52,7 @@ namespace Spotlight
 		BufferElement()
 			: Name("Unknown"), Type(ShaderDataType::None), Normalized(false), Size(0), Offset(0) {}
 		// Main constructor
-		BufferElement(ShaderDataType type, const std::string& name, bool isNormalized)
+		BufferElement(ShaderDataType type, const std::string& name, bool isNormalized = false)
 			: Name(name), Type(type), Normalized(isNormalized), Size(ShaderDataTypeToSize(type)), Offset(0) {}
 
 		uint32_t GetComponentCount() const

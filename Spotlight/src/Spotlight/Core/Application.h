@@ -7,6 +7,7 @@
 #include "Spotlight/Core/LayerStack.h"
 
 #include "Spotlight/Renderer/Buffer.h"
+#include "Spotlight/Renderer/VertexArray.h"
 #include "Spotlight/Renderer/Shader.h"
 
 #include "Spotlight/ImGui/Layer_ImGui.h"
@@ -31,7 +32,7 @@ namespace Spotlight
 		static inline SpotlightApp &Get() { return *sm_Instance; }
 	private:
 		bool OnWindowClose(Event_WindowClosed &e);
-
+	private:
 		static SpotlightApp *sm_Instance;
 
 		std::unique_ptr<Window> m_Window;
@@ -39,11 +40,6 @@ namespace Spotlight
 		bool m_IsRunning = true;
 
 		LayerStack m_LayerStack;
-
-		unsigned int m_VAO;
-		std::unique_ptr<Shader> m_Shader;
-		std::unique_ptr<VertexBuffer> m_VBO;
-		std::unique_ptr<IndexBuffer> m_IBO;
 	};
 
 	SpotlightApp *CreateApp();

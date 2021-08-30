@@ -132,6 +132,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\CenterStageApp.cpp" />
+    <ClCompile Include="src\Layers\Layer_Render.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Spotlight\Spotlight.vcxproj">
@@ -140,6 +141,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\Shaders\Basic.glsl" />
+    <None Include="assets\Shaders\Test.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Layers\Layer_Render.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
