@@ -42,7 +42,6 @@ namespace Spotlight
 	{
 		while (m_IsRunning)
 		{
-
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
 

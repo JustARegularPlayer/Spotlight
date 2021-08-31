@@ -21,7 +21,8 @@ namespace Spotlight
 		virtual void Bind() const override;
 		virtual void Unbind() const override;
 
-		virtual void SetUniform4f(const std::string& name, float v0, float v1, float v2, float v3) override;
+		virtual void UploadUniform4f(const std::string& name, float v0, float v1, float v2, float v3) override;
+		virtual void UploadUniformMat4(const std::string &name, const glm::mat4 &matrix) override;
 	private:
 		ShaderSources ParseShader(const char* filepath);
 		uint32_t CompileShader(const std::string& source, uint32_t type);

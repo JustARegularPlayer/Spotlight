@@ -1,11 +1,5 @@
 #pragma once
-
-#include <Spotlight/Core/Layer.h>
-
-#include <Spotlight/Renderer/Renderer.h>
-#include <Spotlight/Renderer/VertexArray.h>
-#include <Spotlight/Renderer/Buffer.h>
-#include <Spotlight/Renderer/Shader.h>
+#include <Spotlight.h>
 
 class Layer_Render : public Spotlight::Layer
 {
@@ -17,6 +11,10 @@ public:
 	void OnEvent(Spotlight::Event &e) override;
 
 private:
+	Spotlight::OrthoCamera m_Camera;
+	glm::vec3 m_CameraPosition;
+	float m_CameraRotation;
+
 	std::shared_ptr<Spotlight::VertexArray> m_VAO;
 	std::shared_ptr<Spotlight::Shader> m_Shader;
 

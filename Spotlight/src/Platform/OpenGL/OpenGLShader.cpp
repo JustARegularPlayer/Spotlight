@@ -3,6 +3,8 @@
 
 #include <glad/glad.h>
 
+#include <glm/gtc/type_ptr.hpp>
+
 namespace Spotlight
 {
 
@@ -109,9 +111,15 @@ namespace Spotlight
 
 	// UNIFORMS =================================================================================
 
-	void OpenGLShader::SetUniform4f(const std::string& name, float v0, float v1, float v2, float v3)
+	void OpenGLShader::UploadUniform4f(const std::string& name, float v0, float v1, float v2, float v3)
 	{
 		glUniform4f(GetUniformLocation(name), v0, v1, v2, v3);
+	}
+
+	void OpenGLShader::UploadUniformMat4(const std::string &name, const glm::mat4 &matrix)
+	{
+		glUseProgram(m_ProgramID);
+		glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, glm::value_ptr(matrix));
 	}
 
 	int OpenGLShader::GetUniformLocation(const std::string& name)

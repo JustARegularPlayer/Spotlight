@@ -1,4 +1,5 @@
 #include <Spotlight.h>
+#include <Spotlight/Core/EntryPoint.h>
 
 #include "Layers/Layer_Render.h"
 

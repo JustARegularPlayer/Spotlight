@@ -80,14 +80,14 @@ namespace Spotlight
 		}
 	};
 
-	// BUFFER LAYOUT ()
+	// BUFFER LAYOUT ====================================================================
 
 	class BufferLayout
 	{
 	public:
 		BufferLayout()
 			: m_Elements({BufferElement()}), m_Stride(0) {}
-		BufferLayout(const std::initializer_list<BufferElement>& element /*Take in multiple arrays of BufferElement as argument*/)
+		BufferLayout(const std::initializer_list<BufferElement>& element /*Take in one or multiple arrays of BufferElement as argument*/ )
 			: m_Elements(element), m_Stride(0)
 		{
 			ComputeOffsetAndStride();

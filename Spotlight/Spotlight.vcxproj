@@ -141,6 +141,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
+    <ClInclude Include="src\Spotlight\Renderer\OrthoCamera.h" />
     <ClInclude Include="src\Spotlight\Renderer\RenderCmd.h" />
     <ClInclude Include="src\Spotlight\Renderer\RendererAPI.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h" />
@@ -599,6 +600,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp" />
+    <ClCompile Include="src\Spotlight\Renderer\OrthoCamera.cpp" />
     <ClCompile Include="src\Spotlight\Renderer\RenderCmd.cpp" />
     <ClCompile Include="src\Spotlight\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp" />
