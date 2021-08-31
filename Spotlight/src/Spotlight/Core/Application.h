@@ -1,14 +1,11 @@
 #pragma once
 
-#include "Spotlight/Core/Core.h"
+#include "Core.h"
+
 #include "Spotlight/Core/Window.h"
 #include "Spotlight/Events/Event.h"
 #include "Spotlight/Events/AppEvent.h"
 #include "Spotlight/Core/LayerStack.h"
-
-#include "Spotlight/Renderer/Buffer.h"
-#include "Spotlight/Renderer/VertexArray.h"
-#include "Spotlight/Renderer/Shader.h"
 
 #include "Spotlight/ImGui/Layer_ImGui.h"
 

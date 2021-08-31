@@ -73,20 +73,21 @@ void Layer_Render::OnUpdate()
 	Spotlight::Renderer::EndScene();
 
 	if(Spotlight::Input::IsKeyPressed(SPL_KEY_W))
-		m_CameraPosition.y += 0.05f;
-	if(Spotlight::Input::IsKeyPressed(SPL_KEY_A))
-		m_CameraPosition.x -= 0.05f;
+		m_CameraPosition.y += m_CameraMoveSpeed;
 	if(Spotlight::Input::IsKeyPressed(SPL_KEY_S))
-		m_CameraPosition.y -= 0.05f;
+		m_CameraPosition.y -= m_CameraMoveSpeed;
+	
+	if(Spotlight::Input::IsKeyPressed(SPL_KEY_A))
+		m_CameraPosition.x -= m_CameraMoveSpeed;
 	if(Spotlight::Input::IsKeyPressed(SPL_KEY_D))
-		m_CameraPosition.x += 0.05f;
+		m_CameraPosition.x += m_CameraMoveSpeed;
 
 	m_Camera.SetPosition(m_CameraPosition);
 
 	if (Spotlight::Input::IsKeyPressed(SPL_KEY_Q))
-		m_CameraRotation += 2.0f;
+		m_CameraRotation -= m_CameraRotateSpeed;
 	if (Spotlight::Input::IsKeyPressed(SPL_KEY_E))
-		m_CameraRotation -= 2.0f;
+		m_CameraRotation += m_CameraRotateSpeed;
 
 	m_Camera.SetRotation(m_CameraRotation);
 }
