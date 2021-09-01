@@ -21,7 +21,7 @@ namespace Spotlight
 	{
 	public:
 		using EventCallbackFunc = std::function<void(Event&)>;
-
+	public:
 		virtual ~Window() {}
 
 		virtual void OnUpdate() = 0;

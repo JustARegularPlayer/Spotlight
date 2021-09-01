@@ -4,6 +4,8 @@
 #include "Spotlight/Core/Application.h"
 #include "Spotlight/Core/Log.h"
 
+#include "Spotlight/Core/Timestep.h"
+
 #include "Spotlight/Core/Input.h"
 #include "Spotlight/Core/KeyCodes.h"
 #include "Spotlight/Core/MouseButtonCodes.h"

@@ -8,6 +8,8 @@
 #include "Spotlight/Core/LayerStack.h"
 
 #include "Spotlight/ImGui/Layer_ImGui.h"
+#include "Spotlight/Core/Timestep.h"
+#include "Spotlight/Core/Time.h"
 
 namespace Spotlight
 {
@@ -33,10 +35,13 @@ namespace Spotlight
 		static SpotlightApp *sm_Instance;
 
 		std::unique_ptr<Window> m_Window;
+		std::unique_ptr<Time> m_AppTime;
 		Layer_ImGui *m_ImGuiLayer;
 		bool m_IsRunning = true;
 
 		LayerStack m_LayerStack;
+
+		float m_LastFrameTime = 0.0f;
 	};
 
 	SpotlightApp *CreateApp();

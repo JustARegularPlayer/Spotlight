@@ -141,6 +141,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
+    <ClInclude Include="src\Spotlight\Core\Time.h" />
+    <ClInclude Include="src\Spotlight\Core\Timestep.h" />
     <ClInclude Include="src\Spotlight\Renderer\OrthoCamera.h" />
     <ClInclude Include="src\Spotlight\Renderer\RenderCmd.h" />
     <ClInclude Include="src\Spotlight\Renderer\RendererAPI.h" />
@@ -597,6 +599,7 @@
     <ClInclude Include="vendor\glm\glm\vec4.hpp" />
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp" />
     <ClInclude Include="src\Spotlight\Renderer\VertexArray.h" />
+    <ClInclude Include="src\Platform\Windows\WinTime.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp" />
@@ -622,6 +625,7 @@
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\Spotlight\Renderer\VertexArray.cpp" />
+    <ClCompile Include="src\Platform\Windows\WinTime.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="vendor\Glad\Glad.vcxproj">

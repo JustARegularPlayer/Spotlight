@@ -3,6 +3,8 @@
 
 #include "Spotlight/Renderer/Renderer.h"
 
+#include <GLFW/glfw3.h>
+
 namespace Spotlight
 {
 
@@ -17,6 +19,8 @@ namespace Spotlight
 		
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(SPL_BIND_FUNC(SpotlightApp::OnEvent));
+
+		m_AppTime = std::unique_ptr<Time>(Time::Create());
 
 		m_ImGuiLayer = new Layer_ImGui();
 		PushOverlay(m_ImGuiLayer);
@@ -42,8 +46,13 @@ namespace Spotlight
 	{
 		while (m_IsRunning)
 		{
+			m_AppTime->UpdateTime();
+			SPL_CORE_TRACE("Time: {}", m_AppTime->GetTime());
+			Timestep timestep = m_AppTime->GetTime() - m_LastFrameTime;
+			m_LastFrameTime = m_AppTime->GetTime();
+
 			for (Layer* layer : m_LayerStack)
-				layer->OnUpdate();
+				layer->OnUpdate(timestep);
 
 			m_ImGuiLayer->Begin();
 			{

@@ -47,6 +47,7 @@ namespace Spotlight
 	
 	void Layer_ImGui::Begin()
 	{
+
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();

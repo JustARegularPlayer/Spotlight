@@ -60,7 +60,7 @@ Layer_Render::Layer_Render()
 	m_SquareShader.reset(Spotlight::Shader::Create("assets/Shaders/Test.glsl"));
 }
 
-void Layer_Render::OnUpdate()
+void Layer_Render::OnUpdate(Spotlight::Timestep ts)
 {
 	Spotlight::RenderCmd::SetClearColor({0.08f, 0.08f, 0.08f, 1.0f});
 	Spotlight::RenderCmd::Clear();
@@ -73,21 +73,21 @@ void Layer_Render::OnUpdate()
 	Spotlight::Renderer::EndScene();
 
 	if(Spotlight::Input::IsKeyPressed(SPL_KEY_W))
-		m_CameraPosition.y += m_CameraMoveSpeed;
+		m_CameraPosition.y += m_CameraMoveSpeed * ts;
 	if(Spotlight::Input::IsKeyPressed(SPL_KEY_S))
-		m_CameraPosition.y -= m_CameraMoveSpeed;
+		m_CameraPosition.y -= m_CameraMoveSpeed * ts;
 	
 	if(Spotlight::Input::IsKeyPressed(SPL_KEY_A))
-		m_CameraPosition.x -= m_CameraMoveSpeed;
+		m_CameraPosition.x -= m_CameraMoveSpeed * ts;
 	if(Spotlight::Input::IsKeyPressed(SPL_KEY_D))
-		m_CameraPosition.x += m_CameraMoveSpeed;
+		m_CameraPosition.x += m_CameraMoveSpeed * ts;
 
 	m_Camera.SetPosition(m_CameraPosition);
 
 	if (Spotlight::Input::IsKeyPressed(SPL_KEY_Q))
-		m_CameraRotation -= m_CameraRotateSpeed;
+		m_CameraRotation -= m_CameraRotateSpeed * ts;
 	if (Spotlight::Input::IsKeyPressed(SPL_KEY_E))
-		m_CameraRotation += m_CameraRotateSpeed;
+		m_CameraRotation += m_CameraRotateSpeed * ts;
 
 	m_Camera.SetRotation(m_CameraRotation);
 }
