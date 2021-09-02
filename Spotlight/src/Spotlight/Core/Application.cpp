@@ -47,7 +47,6 @@ namespace Spotlight
 		while (m_IsRunning)
 		{
 			m_AppTime->UpdateTime();
-			SPL_CORE_TRACE("Time: {}", m_AppTime->GetTime());
 			Timestep timestep = m_AppTime->GetTime() - m_LastFrameTime;
 			m_LastFrameTime = m_AppTime->GetTime();
 

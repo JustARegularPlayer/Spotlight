@@ -1,7 +1,11 @@
 #include "Layer_Render.h"
 
+#include <glm/gtc/matrix_transform.hpp>
+
 Layer_Render::Layer_Render()
-	: m_Camera({-1.6f, 1.6f, -0.9f, 0.9f}), m_CameraPosition(m_Camera.GetPosition()), m_CameraRotation(m_Camera.GetRotation())
+	: m_Camera({-1.6f, 1.6f, -0.9f, 0.9f}), 
+	m_CameraPosition(m_Camera.GetPosition()), 
+	m_CameraRotation(m_Camera.GetRotation())
 {
 	float vertices[7 * 3] =
 	{
@@ -31,10 +35,10 @@ Layer_Render::Layer_Render()
 
 	float squareVertices[3 * 4] =
 	{
-		-0.75f, -0.75f, 0.0f,
-		 0.75f, -0.75f, 0.0f,
-		 0.75f,  0.75f, 0.0f,
-		-0.75f,  0.75f, 0.0f,
+		-0.5f, -0.5f, 0.0f,
+		 0.5f, -0.5f, 0.0f,
+		 0.5f,  0.5f, 0.0f,
+		-0.5f,  0.5f, 0.0f,
 	};
 
 	uint32_t squareIndices[3 * 2] =
@@ -65,12 +69,25 @@ void Layer_Render::OnUpdate(Spotlight::Timestep ts)
 	Spotlight::RenderCmd::SetClearColor({0.08f, 0.08f, 0.08f, 1.0f});
 	Spotlight::RenderCmd::Clear();
 
+	glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
+	
 	Spotlight::Renderer::BeginScene(m_Camera);
 	{
-		Spotlight::Renderer::Submit(m_SquareShader, m_SquareVAO);
-		Spotlight::Renderer::Submit(m_Shader, m_VAO);
+		for (int y = 0; y < 10; y++)
+		{
+			for (int x = 0; x < 10; x++)
+			{
+				glm::vec3 pos(x * 0.11f, y * 0.11f, 0.0f);
+				glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
+				Spotlight::Renderer::Submit(m_SquareShader, m_SquareVAO, transform);
+
+			}
+		}
+		//Spotlight::Renderer::Submit(m_Shader, m_VAO);
 	}
 	Spotlight::Renderer::EndScene();
+	
+	// CONTROLS ========================================
 
 	if(Spotlight::Input::IsKeyPressed(SPL_KEY_W))
 		m_CameraPosition.y += m_CameraMoveSpeed * ts;
@@ -96,7 +113,7 @@ void Layer_Render::OnUIRender()
 {
 	ImGui::Begin("Render");
 	{
-		ImGui::Text("This is a rectangle AND a triangle! Wicked, right?");
+		ImGui::Text("ONE HUNDRED SQUARES?! Damn, son!");
 		ImGui::Text("Position: (%.2f, %.2f)", m_Camera.GetPosition().x, m_Camera.GetPosition().y);
 		ImGui::Text("Rotation: %.2f", m_Camera.GetRotation());
 		ImGui::Text("%.2ffps", ImGui::GetIO().Framerate);

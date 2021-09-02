@@ -16,11 +16,12 @@ namespace Spotlight
 	}
 
 	void Renderer::Submit(const std::shared_ptr<Shader>& shader,
-						  const std::shared_ptr<VertexArray> & vao)
+						  const std::shared_ptr<VertexArray> & vao,
+						  const glm::mat4& transform)
 	{
 		shader->Bind();
 		shader->UploadUniformMat4("u_ViewProj", sm_SceneData->ViewProjMatrix);
-
+		shader->UploadUniformMat4("u_Transform", transform);
 		vao->Bind();
 		RenderCmd::DrawIndexed(vao);
 	}
