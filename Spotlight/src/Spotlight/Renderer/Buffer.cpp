@@ -14,8 +14,8 @@ namespace Spotlight
 	{
 		switch (Renderer::GetCurrentAPI())
 		{
-			case RendererAPI::API::None:		SPL_CORE_ASSERT(false, "RendererAPI::None is currently selected!"); return nullptr;
-			case RendererAPI::API::OpenGL:	return new OpenGLVertexBuffer(vertices, size);
+			case RendererAPI::API::None:    SPL_CORE_ASSERT(false, "RendererAPI::None is currently selected!"); return nullptr;
+			case RendererAPI::API::OpenGL:  return new OpenGLVertexBuffer(vertices, size);
 		}
 
 		SPL_CORE_ASSERT(false, "Unknown value. No Renderer API is selected!");
@@ -28,8 +28,8 @@ namespace Spotlight
 	{
 		switch (Renderer::GetCurrentAPI())
 		{
-			case RendererAPI::API::None:		SPL_CORE_ASSERT(false, "RendererAPI::None is currently selected!"); return nullptr;
-			case RendererAPI::API::OpenGL:	return new OpenGLIndexBuffer(indices, count);
+			case RendererAPI::API::None:    SPL_CORE_ASSERT(false, "RendererAPI::None is currently selected!"); return nullptr;
+			case RendererAPI::API::OpenGL:  return new OpenGLIndexBuffer(indices, count);
 		}
 
 		SPL_CORE_ASSERT(false, "Unknown value. No Renderer API is selected!");

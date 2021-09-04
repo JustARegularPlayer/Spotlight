@@ -1,6 +1,9 @@
 #include "splpch.h"
 #include "Renderer.h"
 
+// Temporary includes
+#include "Platform/OpenGL/OpenGLShader.h"
+
 namespace Spotlight
 {
 
@@ -15,13 +18,13 @@ namespace Spotlight
 	{
 	}
 
-	void Renderer::Submit(const std::shared_ptr<Shader>& shader,
-						  const std::shared_ptr<VertexArray> & vao,
+	void Renderer::Submit(const Ref<Shader>& shader,
+						  const Ref<VertexArray>& vao,
 						  const glm::mat4& transform)
 	{
 		shader->Bind();
-		shader->UploadUniformMat4("u_ViewProj", sm_SceneData->ViewProjMatrix);
-		shader->UploadUniformMat4("u_Transform", transform);
+		std::dynamic_pointer_cast<OpenGLShader>(shader)->UploadUniformMat4("u_ViewProj", sm_SceneData->ViewProjMatrix);
+		std::dynamic_pointer_cast<OpenGLShader>(shader)->UploadUniformMat4("u_Transform", transform);
 		vao->Bind();
 		RenderCmd::DrawIndexed(vao);
 	}

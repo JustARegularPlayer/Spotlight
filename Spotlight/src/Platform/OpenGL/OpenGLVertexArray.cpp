@@ -54,7 +54,7 @@ namespace Spotlight
 		glBindVertexArray(0);
 	}
 
-	void OpenGLVertexArray::AddVertexBuffer(const std::shared_ptr<VertexBuffer> &vbo)
+	void OpenGLVertexArray::AddVertexBuffer(const Ref<VertexBuffer> &vbo)
 	{
 		glBindVertexArray(m_ArrayID);
 		vbo->Bind();
@@ -78,7 +78,7 @@ namespace Spotlight
 		m_VertexBuffers.push_back(vbo);
 	}
 
-	void OpenGLVertexArray::SetIndexBuffer(const std::shared_ptr<IndexBuffer> &ibo)
+	void OpenGLVertexArray::SetIndexBuffer(const Ref<IndexBuffer> &ibo)
 	{
 		glBindVertexArray(m_ArrayID);
 		ibo->Bind();

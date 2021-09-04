@@ -71,7 +71,7 @@ namespace Spotlight
 
 	uint32_t OpenGLShader::CompileShader(const std::string& source, uint32_t type)
 	{
-		const char* src = source.c_str();
+		const char* src = source.c_str(); // convert std::string to a const char* since OpenGL won't accept
 		uint32_t shader = glCreateShader(type);
 		glShaderSource(shader, 1, &src, nullptr);
 		glCompileShader(shader);
@@ -111,14 +111,38 @@ namespace Spotlight
 
 	// UNIFORMS =================================================================================
 
-	void OpenGLShader::UploadUniform4f(const std::string& name, float v0, float v1, float v2, float v3)
+	void OpenGLShader::UploadUniformInt(const std::string &name, int value)
 	{
-		glUniform4f(GetUniformLocation(name), v0, v1, v2, v3);
+		glUniform1i(GetUniformLocation(name), value);
+	}
+
+	void OpenGLShader::UploadUniformFloat(const std::string &name, float value)
+	{
+		glUniform1f(GetUniformLocation(name), value);
+	}
+
+	void OpenGLShader::UploadUniformFloat2(const std::string &name, const glm::vec2 &values)
+	{
+		glUniform2f(GetUniformLocation(name), values.x, values.y);
+	}
+
+	void OpenGLShader::UploadUniformFloat3(const std::string &name, const glm::vec3 &values)
+	{
+		glUniform3f(GetUniformLocation(name), values.x, values.y, values.z);
+	}
+
+	void OpenGLShader::UploadUniformFloat4(const std::string& name, const glm::vec4& values)
+	{
+		glUniform4f(GetUniformLocation(name), values.x, values.y, values.z, values.w);
+	}
+
+	void OpenGLShader::UploadUniformMat3(const std::string &name, const glm::mat3 &matrix)
+	{
+		glUniformMatrix3fv(GetUniformLocation(name), 1, GL_FALSE, glm::value_ptr(matrix));
 	}
 
 	void OpenGLShader::UploadUniformMat4(const std::string &name, const glm::mat4 &matrix)
 	{
-		glUseProgram(m_ProgramID);
 		glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, glm::value_ptr(matrix));
 	}
 

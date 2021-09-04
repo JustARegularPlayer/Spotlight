@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #if defined SPL_PLATFORM_WINDOWS
 #if defined SPL_DYNAMIC_LINK
 	#ifdef SPL_BUILD_DLL
@@ -27,3 +29,14 @@
 #endif
 
 #define SPL_BIND_FUNC(func) std::bind(&func, this, std::placeholders::_1)
+
+namespace Spotlight
+{
+
+	template<typename T>
+	using Scope = std::unique_ptr<T>;
+
+	template<typename T>
+	using Ref = std::shared_ptr<T>;
+	
+}

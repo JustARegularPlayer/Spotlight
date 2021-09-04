@@ -20,7 +20,7 @@ namespace Spotlight
 
 		static API GetAPI() { return sm_API; }
 
-		virtual void DrawIndexed(const std::shared_ptr<VertexArray>& vao) = 0;
+		virtual void DrawIndexed(const Ref<VertexArray>& vao) = 0;
 	private:
 		static API sm_API;
 	};

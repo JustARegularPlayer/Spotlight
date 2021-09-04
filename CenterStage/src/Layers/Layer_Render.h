@@ -14,12 +14,13 @@ private:
 	Spotlight::OrthoCamera m_Camera;
 	glm::vec3 m_CameraPosition;
 	float m_CameraRotation;
-	float m_CameraMoveSpeed = 5.0f;
+	float m_CameraMoveSpeed = 2.5f;
 	float m_CameraRotateSpeed = 45.0f;
 
-	std::shared_ptr<Spotlight::VertexArray> m_VAO;
-	std::shared_ptr<Spotlight::Shader> m_Shader;
+	Spotlight::Ref<Spotlight::VertexArray> m_VAO;
+	Spotlight::Ref<Spotlight::Shader> m_Shader;
 
-	std::shared_ptr<Spotlight::VertexArray> m_SquareVAO;
-	std::shared_ptr<Spotlight::Shader> m_SquareShader;
+	Spotlight::Ref<Spotlight::VertexArray> m_SolidColorVAO;
+	Spotlight::Ref<Spotlight::Shader> m_SolidColorShader;
+	glm::vec4 m_SolidColor;
 };

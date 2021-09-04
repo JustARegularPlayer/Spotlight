@@ -1,6 +1,10 @@
 #include "Layer_Render.h"
 
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
+// Temporary includes
+#include "Platform/OpenGL/OpenGLShader.h"
 
 Layer_Render::Layer_Render()
 	: m_Camera({-1.6f, 1.6f, -0.9f, 0.9f}), 
@@ -33,7 +37,7 @@ Layer_Render::Layer_Render()
 
 	m_Shader.reset(Spotlight::Shader::Create("assets/Shaders/Basic.glsl"));
 
-	float squareVertices[3 * 4] =
+	float solidColorVertices[3 * 4] =
 	{
 		-0.5f, -0.5f, 0.0f,
 		 0.5f, -0.5f, 0.0f,
@@ -41,27 +45,28 @@ Layer_Render::Layer_Render()
 		-0.5f,  0.5f, 0.0f,
 	};
 
-	uint32_t squareIndices[3 * 2] =
+	uint32_t solidColorIndices[3 * 2] =
 	{
 		0, 1, 2,
 		2, 3, 0
 	};
 
-	m_SquareVAO.reset(Spotlight::VertexArray::Create());
+	m_SolidColorVAO.reset(Spotlight::VertexArray::Create());
 
-	std::shared_ptr<Spotlight::VertexBuffer> SquareVBO;
-	SquareVBO.reset(Spotlight::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
+	std::shared_ptr<Spotlight::VertexBuffer> SolidColorVBO;
+	SolidColorVBO.reset(Spotlight::VertexBuffer::Create(solidColorVertices, sizeof(solidColorVertices)));
 
-	SquareVBO->SetLayout({
+	SolidColorVBO->SetLayout({
 		{Spotlight::ShaderDataType::Float3, "i_Position"}
 	});
-	m_SquareVAO->AddVertexBuffer(SquareVBO);
+	m_SolidColorVAO->AddVertexBuffer(SolidColorVBO);
 
-	std::shared_ptr<Spotlight::IndexBuffer> SquareIBO;
-	SquareIBO.reset(Spotlight::IndexBuffer::Create(squareIndices, (uint32_t)std::size(squareIndices)));
-	m_SquareVAO->SetIndexBuffer(SquareIBO);
+	std::shared_ptr<Spotlight::IndexBuffer> SolidColorIBO;
+	SolidColorIBO.reset(Spotlight::IndexBuffer::Create(solidColorIndices, (uint32_t)std::size(solidColorIndices)));
+	m_SolidColorVAO->SetIndexBuffer(SolidColorIBO);
 
-	m_SquareShader.reset(Spotlight::Shader::Create("assets/Shaders/Test.glsl"));
+	m_SolidColorShader.reset(Spotlight::Shader::Create("assets/Shaders/SolidColor.glsl"));
+	m_SolidColor = {0.8f, 0.2f, 0.3f, 1.0f};
 }
 
 void Layer_Render::OnUpdate(Spotlight::Timestep ts)
@@ -79,7 +84,8 @@ void Layer_Render::OnUpdate(Spotlight::Timestep ts)
 			{
 				glm::vec3 pos(x * 0.11f, y * 0.11f, 0.0f);
 				glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
-				Spotlight::Renderer::Submit(m_SquareShader, m_SquareVAO, transform);
+				std::dynamic_pointer_cast<Spotlight::OpenGLShader>(m_SolidColorShader)->UploadUniformFloat4("u_Color", m_SolidColor);
+				Spotlight::Renderer::Submit(m_SolidColorShader, m_SolidColorVAO, transform);
 
 			}
 		}
@@ -89,15 +95,19 @@ void Layer_Render::OnUpdate(Spotlight::Timestep ts)
 	
 	// CONTROLS ========================================
 
+	float speed = m_CameraMoveSpeed;
+	if (Spotlight::Input::IsKeyPressed(SPL_KEY_LEFT_SHIFT))
+		speed *= 2;
+
 	if(Spotlight::Input::IsKeyPressed(SPL_KEY_W))
-		m_CameraPosition.y += m_CameraMoveSpeed * ts;
+		m_CameraPosition.y += speed * ts;
 	if(Spotlight::Input::IsKeyPressed(SPL_KEY_S))
-		m_CameraPosition.y -= m_CameraMoveSpeed * ts;
+		m_CameraPosition.y -= speed * ts;
 	
 	if(Spotlight::Input::IsKeyPressed(SPL_KEY_A))
-		m_CameraPosition.x -= m_CameraMoveSpeed * ts;
+		m_CameraPosition.x -= speed * ts;
 	if(Spotlight::Input::IsKeyPressed(SPL_KEY_D))
-		m_CameraPosition.x += m_CameraMoveSpeed * ts;
+		m_CameraPosition.x += speed * ts;
 
 	m_Camera.SetPosition(m_CameraPosition);
 
@@ -117,7 +127,7 @@ void Layer_Render::OnUIRender()
 		ImGui::Text("Position: (%.2f, %.2f)", m_Camera.GetPosition().x, m_Camera.GetPosition().y);
 		ImGui::Text("Rotation: %.2f", m_Camera.GetRotation());
 		ImGui::Text("%.2ffps", ImGui::GetIO().Framerate);
-		ImGui::ArrowButton("Back", ImGuiDir_Left);
+		ImGui::ColorEdit3("Solid Color", glm::value_ptr(m_SolidColor));
 	}
 	ImGui::End();
 }

@@ -34,8 +34,8 @@ namespace Spotlight
 	private:
 		static SpotlightApp *sm_Instance;
 
-		std::unique_ptr<Window> m_Window;
-		std::unique_ptr<Time> m_AppTime;
+		Scope<Window> m_Window;
+		Scope<Time> m_AppTime;
 		Layer_ImGui *m_ImGuiLayer;
 		bool m_IsRunning = true;
 

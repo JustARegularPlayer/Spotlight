@@ -3,8 +3,6 @@
 
 #include "Spotlight/Renderer/Renderer.h"
 
-#include <GLFW/glfw3.h>
-
 namespace Spotlight
 {
 

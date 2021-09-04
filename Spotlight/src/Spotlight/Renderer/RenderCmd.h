@@ -18,7 +18,7 @@ namespace Spotlight
 			sm_API->Clear();
 		}
 
-		inline static void DrawIndexed(const std::shared_ptr<VertexArray> &vao)
+		inline static void DrawIndexed(const Ref<VertexArray> &vao)
 		{
 			sm_API->DrawIndexed(vao);
 		}
