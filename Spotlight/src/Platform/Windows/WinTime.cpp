@@ -21,7 +21,7 @@ namespace Spotlight
 
 	void WinTime::UpdateTime()
 	{
-		m_Time = glfwGetTime();
+		m_Time = (float) glfwGetTime();
 	}
 
 }
