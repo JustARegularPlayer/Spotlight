@@ -32,6 +32,8 @@ project "Spotlight"
 	{
 		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/vendor/stb_image/**.h",
+		"%{prj.name}/vendor/stb_image/**.cpp",
 		"%{prj.name}/vendor/glm/glm/**.hpp",
 		"%{prj.name}/vendor/glm/glm/**.inl",
 		"%{prj.name}/vendor/glm/glm/**.h",
@@ -49,7 +51,8 @@ project "Spotlight"
 		"%{prj.name}/vendor/Glad/include",
 		"%{prj.name}/vendor/GLFW/include",
 		"%{prj.name}/vendor/ImGui",
-		"%{prj.name}/vendor/glm"
+		"%{prj.name}/vendor/glm",
+		"%{prj.name}/vendor/stb_image"
 	}
 
 	filter "system:windows"

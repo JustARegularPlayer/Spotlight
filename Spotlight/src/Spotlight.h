@@ -17,4 +17,5 @@
 #include "Spotlight/Renderer/VertexArray.h"
 #include "Spotlight/Renderer/Buffer.h"
 #include "Spotlight/Renderer/Shader.h"
+#include "Spotlight/Renderer/Texture.h"
 #include "Spotlight/Renderer/OrthoCamera.h"

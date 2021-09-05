@@ -52,6 +52,9 @@
     <Filter Include="vendor\glm\glm\simd">
       <UniqueIdentifier>{CDE1A2E0-3943-80EE-C2B0-C6A02E11B7AD}</UniqueIdentifier>
     </Filter>
+    <Filter Include="vendor\stb_image">
+      <UniqueIdentifier>{0DA0BA59-F998-D9AB-22CB-BE300E23B9B7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h">
@@ -60,10 +63,22 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLTexture.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\Windows\WinInput.h">
+      <Filter>src\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\WinTime.h">
       <Filter>src\Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\Windows\WinWindow.h">
@@ -99,6 +114,12 @@
     <ClInclude Include="src\Spotlight\Core\MouseButtonCodes.h">
       <Filter>src\Spotlight\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Spotlight\Core\Time.h">
+      <Filter>src\Spotlight\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spotlight\Core\Timestep.h">
+      <Filter>src\Spotlight\Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\Spotlight\Core\Window.h">
       <Filter>src\Spotlight\Core</Filter>
     </ClInclude>
@@ -123,10 +144,25 @@
     <ClInclude Include="src\Spotlight\Renderer\GraphicsContext.h">
       <Filter>src\Spotlight\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Spotlight\Renderer\OrthoCamera.h">
+      <Filter>src\Spotlight\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spotlight\Renderer\RenderCmd.h">
+      <Filter>src\Spotlight\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Spotlight\Renderer\Renderer.h">
       <Filter>src\Spotlight\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Spotlight\Renderer\RendererAPI.h">
+      <Filter>src\Spotlight\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Spotlight\Renderer\Shader.h">
+      <Filter>src\Spotlight\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spotlight\Renderer\Texture.h">
+      <Filter>src\Spotlight\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spotlight\Renderer\VertexArray.h">
       <Filter>src\Spotlight\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\splpch.h">
@@ -1407,15 +1443,9 @@
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp">
       <Filter>vendor\glm\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\Spotlight\Renderer\VertexArray.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h" />
-    <ClInclude Include="src\Spotlight\Renderer\RendererAPI.h" />
-    <ClInclude Include="src\Spotlight\Renderer\RenderCmd.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
-    <ClInclude Include="src\Spotlight\Renderer\OrthoCamera.h" />
-    <ClInclude Include="src\Spotlight\Core\Timestep.h" />
-    <ClInclude Include="src\Spotlight\Core\Time.h" />
-    <ClInclude Include="src\Platform\Windows\WinTime.h" />
+    <ClInclude Include="vendor\stb_image\stb_image.h">
+      <Filter>vendor\stb_image</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1424,10 +1454,22 @@
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLTexture.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\Windows\WinInput.cpp">
+      <Filter>src\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\WinTime.cpp">
       <Filter>src\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\WinWindow.cpp">
@@ -1454,21 +1496,32 @@
     <ClCompile Include="src\Spotlight\Renderer\Buffer.cpp">
       <Filter>src\Spotlight\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Spotlight\Renderer\OrthoCamera.cpp">
+      <Filter>src\Spotlight\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spotlight\Renderer\RenderCmd.cpp">
+      <Filter>src\Spotlight\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\Spotlight\Renderer\Renderer.cpp">
+      <Filter>src\Spotlight\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spotlight\Renderer\RendererAPI.cpp">
       <Filter>src\Spotlight\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Spotlight\Renderer\Shader.cpp">
       <Filter>src\Spotlight\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Spotlight\Renderer\Texture.cpp">
+      <Filter>src\Spotlight\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spotlight\Renderer\VertexArray.cpp">
+      <Filter>src\Spotlight\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\splpch.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Spotlight\Renderer\VertexArray.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp" />
-    <ClCompile Include="src\Spotlight\Renderer\RendererAPI.cpp" />
-    <ClCompile Include="src\Spotlight\Renderer\RenderCmd.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp" />
-    <ClCompile Include="src\Spotlight\Renderer\OrthoCamera.cpp" />
-    <ClCompile Include="src\Platform\Windows\WinTime.cpp" />
+    <ClCompile Include="vendor\stb_image\stb_image.cpp">
+      <Filter>vendor\stb_image</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

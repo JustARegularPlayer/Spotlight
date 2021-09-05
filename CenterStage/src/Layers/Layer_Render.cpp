@@ -37,12 +37,12 @@ Layer_Render::Layer_Render()
 
 	m_Shader.reset(Spotlight::Shader::Create("assets/Shaders/Basic.glsl"));
 
-	float solidColorVertices[3 * 4] =
+	float solidColorVertices[5 * 4] =
 	{
-		-0.5f, -0.5f, 0.0f,
-		 0.5f, -0.5f, 0.0f,
-		 0.5f,  0.5f, 0.0f,
-		-0.5f,  0.5f, 0.0f,
+		-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+		 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+		 0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+		-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
 	};
 
 	uint32_t solidColorIndices[3 * 2] =
@@ -57,7 +57,8 @@ Layer_Render::Layer_Render()
 	SolidColorVBO.reset(Spotlight::VertexBuffer::Create(solidColorVertices, sizeof(solidColorVertices)));
 
 	SolidColorVBO->SetLayout({
-		{Spotlight::ShaderDataType::Float3, "i_Position"}
+		{Spotlight::ShaderDataType::Float3, "i_Position"},
+		{Spotlight::ShaderDataType::Float2, "i_TexCoord"}
 	});
 	m_SolidColorVAO->AddVertexBuffer(SolidColorVBO);
 
@@ -66,6 +67,12 @@ Layer_Render::Layer_Render()
 	m_SolidColorVAO->SetIndexBuffer(SolidColorIBO);
 
 	m_SolidColorShader.reset(Spotlight::Shader::Create("assets/Shaders/SolidColor.glsl"));
+	m_TextureShader.reset(Spotlight::Shader::Create("assets/Shaders/Texture.glsl"));
+
+	m_Texture = (Spotlight::Texture2D::Create("assets/Textures/pacman.png"));
+	std::dynamic_pointer_cast<Spotlight::OpenGLShader>(m_TextureShader)->Bind();
+	std::dynamic_pointer_cast<Spotlight::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
+
 	m_SolidColor = {0.8f, 0.2f, 0.3f, 1.0f};
 }
 
@@ -74,21 +81,26 @@ void Layer_Render::OnUpdate(Spotlight::Timestep ts)
 	Spotlight::RenderCmd::SetClearColor({0.08f, 0.08f, 0.08f, 1.0f});
 	Spotlight::RenderCmd::Clear();
 
-	glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
-	
 	Spotlight::Renderer::BeginScene(m_Camera);
 	{
+		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
+	
 		for (int y = 0; y < 10; y++)
 		{
 			for (int x = 0; x < 10; x++)
 			{
 				glm::vec3 pos(x * 0.11f, y * 0.11f, 0.0f);
 				glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
+				std::dynamic_pointer_cast<Spotlight::OpenGLShader>(m_SolidColorShader)->Bind();
 				std::dynamic_pointer_cast<Spotlight::OpenGLShader>(m_SolidColorShader)->UploadUniformFloat4("u_Color", m_SolidColor);
 				Spotlight::Renderer::Submit(m_SolidColorShader, m_SolidColorVAO, transform);
 
 			}
 		}
+		m_Texture->Bind(0);
+		Spotlight::Renderer::Submit(m_TextureShader, m_SolidColorVAO, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+
+
 		//Spotlight::Renderer::Submit(m_Shader, m_VAO);
 	}
 	Spotlight::Renderer::EndScene();

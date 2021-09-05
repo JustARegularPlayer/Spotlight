@@ -1,27 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="resources">
-      <UniqueIdentifier>{202B5BA7-8C95-0F1E-D5D3-C0C3417DED72}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="resources\Shaders">
-      <UniqueIdentifier>{F96FC897-6586-C62D-AEFD-514F1A5397B5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src">
-      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
+    <Filter Include="Layers">
+      <UniqueIdentifier>{157446C0-0116-7196-EAD0-84EAD611F8E6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\CenterStageApp.cpp">
-      <Filter>src</Filter>
+    <ClInclude Include="src\Layers\Layer_Render.h">
+      <Filter>Layers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\CenterStageApp.cpp" />
+    <ClCompile Include="src\Layers\Layer_Render.cpp">
+      <Filter>Layers</Filter>
     </ClCompile>
-    <ClCompile Include="src\Layers\Layer_Render.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="assets\Shaders\Basic.glsl" />
-    <None Include="assets\Shaders\SolidColor.glsl" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\Layers\Layer_Render.h" />
   </ItemGroup>
 </Project>
