@@ -15,10 +15,10 @@ namespace Spotlight
 
 		Log::LogInit();
 		
-		m_Window = std::unique_ptr<Window>(Window::Create());
+		m_Window = Window::Create();
 		m_Window->SetEventCallback(SPL_BIND_FUNC(SpotlightApp::OnEvent));
 
-		m_AppTime = std::unique_ptr<Time>(Time::Create());
+		m_AppTime = Time::Create();
 
 		m_ImGuiLayer = new Layer_ImGui();
 		PushOverlay(m_ImGuiLayer);

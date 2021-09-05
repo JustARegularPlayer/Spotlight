@@ -7,12 +7,12 @@
 
 namespace Spotlight
 {
-	VertexArray *VertexArray::Create()
+	Ref<VertexArray> VertexArray::Create()
 	{
 		switch (Renderer::GetCurrentAPI())
 		{
 			case RendererAPI::API::None:     SPL_CORE_ASSERT(false, "RendererAPI::None is currently selected!"); return nullptr;
-			case RendererAPI::API::OpenGL:   return new OpenGLVertexArray();
+			case RendererAPI::API::OpenGL:   return std::make_shared<OpenGLVertexArray>();
 		}
 
 		SPL_CORE_ASSERT(false, "Unknown value. No Renderer API is selected!");

@@ -16,9 +16,9 @@ namespace Spotlight
 		SPL_CORE_ERROR("GLFW Error ({0}): {1}", error, description);
 	}
 
-	Window* Window::Create(const WindowProperties &props)
+	Scope<Window> Window::Create(const WindowProperties &props)
 	{
-		return new WinWindow(props);
+		return std::make_unique<WinWindow>(props);
 	}
 
 	WinWindow::WinWindow(const WindowProperties &props)

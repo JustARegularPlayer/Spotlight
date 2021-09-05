@@ -7,12 +7,12 @@
 namespace Spotlight
 {
 
-	Shader* Shader::Create(const char* filepath)
+	Ref<Shader> Shader::Create(const char* filepath)
 	{
 		switch (Renderer::GetCurrentAPI())
 		{
 			case RendererAPI::API::None:    SPL_CORE_ASSERT(false, "RendererAPI::None is currently selected!"); return nullptr;
-			case RendererAPI::API::OpenGL:  return new OpenGLShader(filepath);
+			case RendererAPI::API::OpenGL:  return std::make_shared<OpenGLShader>(filepath);
 		}
 
 		SPL_CORE_ASSERT(false, "Unknown value. No Renderer API is selected!");

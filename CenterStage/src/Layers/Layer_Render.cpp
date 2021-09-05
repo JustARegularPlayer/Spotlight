@@ -20,10 +20,10 @@ Layer_Render::Layer_Render()
 
 	uint32_t indices[3 * 2] = {0, 1, 2};
 
-	m_VAO.reset(Spotlight::VertexArray::Create());
+	m_VAO = Spotlight::VertexArray::Create();
 
 	std::shared_ptr<Spotlight::VertexBuffer> VBO;
-	VBO.reset(Spotlight::VertexBuffer::Create(vertices, sizeof(vertices)));
+	VBO = Spotlight::VertexBuffer::Create(vertices, sizeof(vertices));
 
 	VBO->SetLayout({
 		{Spotlight::ShaderDataType::Float3, "i_Position", false},
@@ -32,10 +32,10 @@ Layer_Render::Layer_Render()
 	m_VAO->AddVertexBuffer(VBO);
 
 	std::shared_ptr<Spotlight::IndexBuffer> IBO;
-	IBO.reset(Spotlight::IndexBuffer::Create(indices, (uint32_t) std::size(indices)));
+	IBO = Spotlight::IndexBuffer::Create(indices, (uint32_t) std::size(indices));
 	m_VAO->SetIndexBuffer(IBO);
 
-	m_Shader.reset(Spotlight::Shader::Create("assets/Shaders/Basic.glsl"));
+	m_Shader = Spotlight::Shader::Create("assets/Shaders/Basic.glsl");
 
 	float solidColorVertices[5 * 4] =
 	{
@@ -51,10 +51,10 @@ Layer_Render::Layer_Render()
 		2, 3, 0
 	};
 
-	m_SolidColorVAO.reset(Spotlight::VertexArray::Create());
+	m_SolidColorVAO = Spotlight::VertexArray::Create();
 
 	std::shared_ptr<Spotlight::VertexBuffer> SolidColorVBO;
-	SolidColorVBO.reset(Spotlight::VertexBuffer::Create(solidColorVertices, sizeof(solidColorVertices)));
+	SolidColorVBO = Spotlight::VertexBuffer::Create(solidColorVertices, sizeof(solidColorVertices));
 
 	SolidColorVBO->SetLayout({
 		{Spotlight::ShaderDataType::Float3, "i_Position"},
@@ -63,11 +63,11 @@ Layer_Render::Layer_Render()
 	m_SolidColorVAO->AddVertexBuffer(SolidColorVBO);
 
 	std::shared_ptr<Spotlight::IndexBuffer> SolidColorIBO;
-	SolidColorIBO.reset(Spotlight::IndexBuffer::Create(solidColorIndices, (uint32_t)std::size(solidColorIndices)));
+	SolidColorIBO = Spotlight::IndexBuffer::Create(solidColorIndices, (uint32_t)std::size(solidColorIndices));
 	m_SolidColorVAO->SetIndexBuffer(SolidColorIBO);
 
-	m_SolidColorShader.reset(Spotlight::Shader::Create("assets/Shaders/SolidColor.glsl"));
-	m_TextureShader.reset(Spotlight::Shader::Create("assets/Shaders/Texture.glsl"));
+	m_SolidColorShader = Spotlight::Shader::Create("assets/Shaders/SolidColor.glsl");
+	m_TextureShader = Spotlight::Shader::Create("assets/Shaders/Texture.glsl");
 
 	m_Texture = (Spotlight::Texture2D::Create("assets/Textures/pacman.png"));
 	std::dynamic_pointer_cast<Spotlight::OpenGLShader>(m_TextureShader)->Bind();
@@ -99,7 +99,6 @@ void Layer_Render::OnUpdate(Spotlight::Timestep ts)
 		}
 		m_Texture->Bind(0);
 		Spotlight::Renderer::Submit(m_TextureShader, m_SolidColorVAO, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
-
 
 		//Spotlight::Renderer::Submit(m_Shader, m_VAO);
 	}
@@ -135,7 +134,7 @@ void Layer_Render::OnUIRender()
 {
 	ImGui::Begin("Render");
 	{
-		ImGui::Text("ONE HUNDRED SQUARES?! Damn, son!");
+		ImGui::Text("Look, it's PACMAN! HELL YEAH!");
 		ImGui::Text("Position: (%.2f, %.2f)", m_Camera.GetPosition().x, m_Camera.GetPosition().y);
 		ImGui::Text("Rotation: %.2f", m_Camera.GetRotation());
 		ImGui::Text("%.2ffps", ImGui::GetIO().Framerate);
