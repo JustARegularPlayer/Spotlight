@@ -8,6 +8,11 @@ namespace Spotlight
 	class RenderCmd
 	{
 	public:
+		inline static void Init()
+		{
+			sm_API->Init();
+		}
+
 		inline static void SetClearColor(const glm::vec4 &color)
 		{
 			sm_API->SetClearColor(color);

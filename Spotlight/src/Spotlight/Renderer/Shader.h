@@ -11,7 +11,8 @@ namespace Spotlight
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;
 
-		static Ref<Shader> Create(const char* filepath);
+		static Ref<Shader> Create(const std::string& filepath);
+		static Ref<Shader> Create(const std::string& vertex, const std::string& fragment);
 	};
 
 }

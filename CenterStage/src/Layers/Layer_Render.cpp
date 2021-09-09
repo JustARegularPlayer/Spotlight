@@ -11,32 +11,6 @@ Layer_Render::Layer_Render()
 	m_CameraPosition(m_Camera.GetPosition()), 
 	m_CameraRotation(m_Camera.GetRotation())
 {
-	float vertices[7 * 3] =
-	{
-		-0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
-		 0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
-		 0.0f,  0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-	};
-
-	uint32_t indices[3 * 2] = {0, 1, 2};
-
-	m_VAO = Spotlight::VertexArray::Create();
-
-	std::shared_ptr<Spotlight::VertexBuffer> VBO;
-	VBO = Spotlight::VertexBuffer::Create(vertices, sizeof(vertices));
-
-	VBO->SetLayout({
-		{Spotlight::ShaderDataType::Float3, "i_Position", false},
-		{Spotlight::ShaderDataType::Float4, "i_Color", false},
-	});
-	m_VAO->AddVertexBuffer(VBO);
-
-	std::shared_ptr<Spotlight::IndexBuffer> IBO;
-	IBO = Spotlight::IndexBuffer::Create(indices, (uint32_t) std::size(indices));
-	m_VAO->SetIndexBuffer(IBO);
-
-	m_Shader = Spotlight::Shader::Create("assets/Shaders/Basic.glsl");
-
 	float solidColorVertices[5 * 4] =
 	{
 		-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
@@ -67,9 +41,11 @@ Layer_Render::Layer_Render()
 	m_SolidColorVAO->SetIndexBuffer(SolidColorIBO);
 
 	m_SolidColorShader = Spotlight::Shader::Create("assets/Shaders/SolidColor.glsl");
-	m_TextureShader = Spotlight::Shader::Create("assets/Shaders/Texture.glsl");
 
+	m_TextureShader = Spotlight::Shader::Create("assets/Shaders/Texture.glsl");
 	m_Texture = (Spotlight::Texture2D::Create("assets/Textures/pacman.png"));
+
+	// I suggest not to upload the texture to the shader inside a loop, quite unnecessary and *very* slow.
 	std::dynamic_pointer_cast<Spotlight::OpenGLShader>(m_TextureShader)->Bind();
 	std::dynamic_pointer_cast<Spotlight::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
 
@@ -98,9 +74,7 @@ void Layer_Render::OnUpdate(Spotlight::Timestep ts)
 			}
 		}
 		m_Texture->Bind(0);
-		Spotlight::Renderer::Submit(m_TextureShader, m_SolidColorVAO, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
-
-		//Spotlight::Renderer::Submit(m_Shader, m_VAO);
+		Spotlight::Renderer::Submit(m_TextureShader, m_SolidColorVAO, glm::scale(glm::mat4(1.0f), glm::vec3(1.0f)));
 	}
 	Spotlight::Renderer::EndScene();
 	
@@ -138,7 +112,7 @@ void Layer_Render::OnUIRender()
 		ImGui::Text("Position: (%.2f, %.2f)", m_Camera.GetPosition().x, m_Camera.GetPosition().y);
 		ImGui::Text("Rotation: %.2f", m_Camera.GetRotation());
 		ImGui::Text("%.2ffps", ImGui::GetIO().Framerate);
-		ImGui::ColorEdit3("Solid Color", glm::value_ptr(m_SolidColor));
+		ImGui::ColorEdit3("Solid Color", &m_SolidColor.r);
 	}
 	ImGui::End();
 }

@@ -3,6 +3,8 @@
 #include "Spotlight/Renderer/Shader.h"
 #include <glm/glm.hpp>
 
+typedef unsigned int GLenum;
+
 namespace Spotlight
 {
 
@@ -15,7 +17,8 @@ namespace Spotlight
 	class OpenGLShader : public Shader
 	{
 	public:
-		OpenGLShader(const char* filepath);
+		OpenGLShader(const std::string& filepath);
+		OpenGLShader(const std::string& vertex, const std::string& fragment);
 		virtual	~OpenGLShader();
 
 		virtual void Bind() const override;
@@ -29,9 +32,10 @@ namespace Spotlight
 		void UploadUniformMat3(const std::string &name, const glm::mat3 &matrix);
 		void UploadUniformMat4(const std::string &name, const glm::mat4 &matrix);
 	private:
-		ShaderSources ParseShader(const char* filepath);
-		uint32_t CompileShader(const std::string& source, uint32_t type);
-		uint32_t CreateProgram(std::string& vertexSource, std::string& fragSource);
+		std::string ParseFile(const std::string& filepath);
+		std::unordered_map<GLenum, std::string> Preprocess(const std::string& src);
+		uint32_t CompileShader(GLenum type, const std::string& shaderSource);
+		uint32_t CreateProgram(const std::unordered_map<GLenum, std::string> sources);
 
 		int GetUniformLocation(const std::string& name);
 	private:

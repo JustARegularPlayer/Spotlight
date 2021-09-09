@@ -102,7 +102,7 @@ project "CenterStage"
 	{
 		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.cpp",
-		"%{prj.name}/resources/Shaders/**.glsl"
+		"%{prj.name}/assets/Shaders/**.glsl"
 	}
 
 	includedirs

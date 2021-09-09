@@ -9,6 +9,11 @@ namespace Spotlight
 
 	Renderer::SceneData *Renderer::sm_SceneData = new Renderer::SceneData;
 
+	void Renderer::Init()
+	{
+		RenderCmd::Init();
+	}
+
 	void Renderer::BeginScene(OrthoCamera& camera)
 	{
 		sm_SceneData->ViewProjMatrix = camera.GetViewProjMatrix();

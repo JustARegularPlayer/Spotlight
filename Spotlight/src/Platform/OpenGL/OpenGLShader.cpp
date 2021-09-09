@@ -8,18 +8,39 @@
 namespace Spotlight
 {
 
-	OpenGLShader::OpenGLShader(const char* filepath)
+	static GLenum StringToGLenum(const std::string& type)
+	{
+		if (type == "vertex")
+			return GL_VERTEX_SHADER;
+		if (type == "fragment" || type == "pixel")
+			return GL_FRAGMENT_SHADER;
+
+		SPL_CORE_ASSERT(false, "Shader type \"{}\" is unknown!", "#shader " + type);
+		return 0;
+	}
+
+	OpenGLShader::OpenGLShader(const  std::string &filepath)
 		: m_ProgramID(0)
 	{
-		ShaderSources src = ParseShader(filepath);
-		m_ProgramID = CreateProgram(src.VertexSrc, src.FragSrc);
+		std::string src = ParseFile(filepath);
+		auto shaderSources = Preprocess(src);
+		m_ProgramID = CreateProgram(shaderSources);
+	}
+
+	OpenGLShader::OpenGLShader(const std::string &vertex, const std::string &fragment)
+		: m_ProgramID(0)
+	{
+		std::unordered_map<GLenum, std::string> sources;
+		sources[GL_VERTEX_SHADER] = vertex;
+		sources[GL_FRAGMENT_SHADER] = fragment;
+		m_ProgramID = CreateProgram(sources);
 	}
 
 	OpenGLShader::~OpenGLShader()
 	{
 		glDeleteProgram(m_ProgramID);
 	}
-	
+
 	void OpenGLShader::Bind() const
 	{
 		glUseProgram(m_ProgramID);
@@ -32,46 +53,57 @@ namespace Spotlight
 
 	// SHADER PROGRAM CREATION ==================================================================
 
-	ShaderSources OpenGLShader::ParseShader(const char* filepath)
+	std::string OpenGLShader::ParseFile(const std::string &filepath)
 	{
-		enum class ShaderType
+		std::ifstream file(filepath, std::ios::in, std::ios::binary);
+		std::string source;
+
+		if (!file.is_open())
 		{
-			NONE = -1, VERTEX = 0, FRAGMENT = 1
-		};
-
-		std::ifstream file(filepath);
-		std::string line;
-		std::stringstream ss[2];
-		ShaderType type = ShaderType::NONE;
-
-		SPL_CORE_ASSERT(file.is_open(), "File cannot be opened!");
-
-		while (getline(file, line))
+			file.close();
+			SPL_CORE_WARN("File \"{}\" cannot be opened!", filepath);
+		}
+		else
 		{
-			if (line.find("#shader") != std::string::npos)
-			{
-				if (line.find("vertex") != std::string::npos)	// if the read line is "#shader vertex",
-				{												// set type into 0
-					type = ShaderType::VERTEX;
-				}
-				else if (line.find("fragment") != std::string::npos)	// if line is "#shader fragment",
-				{														// set type into 1
-					type = ShaderType::FRAGMENT;
-				}
-			}
-			else
-			{
-				ss[(int)type] << line << std::endl;	// ss[0] - Vertex shader source
-			}										// ss[1] - Fragment shader source
+			file.seekg(0, std::ios::end);
+			source.resize(file.tellg());
+			file.seekg(0, std::ios::beg);
+			file.read(&source[0], source.size());
+			file.close();
 		}
 
-		file.close();
-		return {ss[0].str(), ss[1].str()};
+		return source;
 	}
 
-	uint32_t OpenGLShader::CompileShader(const std::string& source, uint32_t type)
+	std::unordered_map<GLenum, std::string> OpenGLShader::Preprocess(const std::string &src)
 	{
-		const char* src = source.c_str(); // convert std::string to a const char* since OpenGL won't accept
+		std::unordered_map<GLenum, std::string> shaderSources;
+
+		const char *typeToken = "#shader";
+		size_t typeTokenLength = strlen(typeToken);
+		size_t pos = src.find(typeToken, 0);
+
+		while (pos != std::string::npos)
+		{
+			size_t begin = pos + typeTokenLength + 1;
+			size_t eol = src.find_first_of("\r\n", pos);
+			SPL_CORE_ASSERT(eol != std::string::npos, "Syntax error!");
+			
+			std::string shaderType = src.substr(begin, eol - begin);
+			SPL_CORE_ASSERT(StringToGLenum(shaderType), "Specified shader type is invalid!");
+
+			size_t nextLinePos = src.find_first_not_of("\r\n", eol);
+			pos = src.find(typeToken, nextLinePos);
+			shaderSources[StringToGLenum(shaderType)] = 
+				src.substr(nextLinePos, pos - (nextLinePos == std::string::npos ? src.size() - 1 : nextLinePos));
+		}
+
+		return shaderSources;
+	}
+
+	uint32_t OpenGLShader::CompileShader(GLenum type, const std::string& shaderSource)
+	{
+		const char* src = shaderSource.c_str(); // convert std::string to a const char* since OpenGL won't accept
 		uint32_t shader = glCreateShader(type);
 		glShaderSource(shader, 1, &src, nullptr);
 		glCompileShader(shader);
@@ -93,19 +125,25 @@ namespace Spotlight
 		return shader;
 	}
 
-	uint32_t OpenGLShader::CreateProgram(std::string& vertexSource, std::string& fragSource)
+	uint32_t OpenGLShader::CreateProgram(const std::unordered_map<GLenum, std::string> sources)
 	{
 		uint32_t program = glCreateProgram();
-		uint32_t vs = CompileShader(vertexSource, GL_VERTEX_SHADER);
-		uint32_t fs = CompileShader(fragSource, GL_FRAGMENT_SHADER);
-		glAttachShader(program, vs);
-		glAttachShader(program, fs);
+		std::vector<uint32_t> shaderIDs(sources.size());
+		for (auto &[key, value] : sources)
+		{
+			uint32_t shader = CompileShader(key, value);
+			glAttachShader(program, shader);
+			shaderIDs.push_back(shader);
+		}
+
 		glLinkProgram(program);
 		glValidateProgram(program);
 
-		glDeleteShader(vs);
-		glDeleteShader(fs);
-
+		for (uint32_t shader : shaderIDs)
+		{
+			glDetachShader(m_ProgramID, shader);
+			glDeleteShader(shader);
+		}
 		return program;
 	}
 

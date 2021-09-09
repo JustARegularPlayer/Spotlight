@@ -20,6 +20,8 @@ namespace Spotlight
 
 		m_AppTime = Time::Create();
 
+		Renderer::Init();
+
 		m_ImGuiLayer = new Layer_ImGui();
 		PushOverlay(m_ImGuiLayer);
 	}
