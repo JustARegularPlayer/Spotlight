@@ -11,9 +11,11 @@ public:
 	void OnEvent(Spotlight::Event &e) override;
 
 private:
+	// Temporary
+	Spotlight::ShaderLibrary m_Library;
+
 	Spotlight::Ref<Spotlight::VertexArray> m_SolidColorVAO;
 	Spotlight::Ref<Spotlight::Shader> m_SolidColorShader;
-	Spotlight::Ref<Spotlight::Shader> m_TextureShader;
 
 	Spotlight::Ref<Spotlight::Texture2D> m_Texture;
 

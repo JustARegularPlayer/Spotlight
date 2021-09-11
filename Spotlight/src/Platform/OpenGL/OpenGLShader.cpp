@@ -25,10 +25,13 @@ namespace Spotlight
 		std::string src = ParseFile(filepath);
 		auto shaderSources = Preprocess(src);
 		m_ProgramID = CreateProgram(shaderSources);
+
+		std::filesystem::path path = filepath;
+		m_Name = path.stem().string();
 	}
 
-	OpenGLShader::OpenGLShader(const std::string &vertex, const std::string &fragment)
-		: m_ProgramID(0)
+	OpenGLShader::OpenGLShader(const std::string& name, const std::string &vertex, const std::string &fragment)
+		: m_ProgramID(0), m_Name(name)
 	{
 		std::unordered_map<GLenum, std::string> sources;
 		sources[GL_VERTEX_SHADER] = vertex;
@@ -55,7 +58,7 @@ namespace Spotlight
 
 	std::string OpenGLShader::ParseFile(const std::string &filepath)
 	{
-		std::ifstream file(filepath, std::ios::in, std::ios::binary);
+		std::ifstream file(filepath, std::ios::in | std::ios::binary);
 		std::string source;
 
 		if (!file.is_open())
@@ -127,13 +130,15 @@ namespace Spotlight
 
 	uint32_t OpenGLShader::CreateProgram(const std::unordered_map<GLenum, std::string> sources)
 	{
+		SPL_CORE_ASSERT(sources.size() <= 2, "Too many shader sources!");
 		uint32_t program = glCreateProgram();
-		std::vector<uint32_t> shaderIDs(sources.size());
+		std::array<uint32_t, 2> shaderIDs;
+		int glShaderIndex = 0;
 		for (auto &[key, value] : sources)
 		{
 			uint32_t shader = CompileShader(key, value);
 			glAttachShader(program, shader);
-			shaderIDs.push_back(shader);
+			shaderIDs[glShaderIndex++] = shader;
 		}
 
 		glLinkProgram(program);

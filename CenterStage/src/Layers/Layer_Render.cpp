@@ -42,12 +42,14 @@ Layer_Render::Layer_Render()
 
 	m_SolidColorShader = Spotlight::Shader::Create("assets/Shaders/SolidColor.glsl");
 
-	m_TextureShader = Spotlight::Shader::Create("assets/Shaders/Texture.glsl");
+	m_Library.Load("assets/Shaders/Texture.glsl");
 	m_Texture = (Spotlight::Texture2D::Create("assets/Textures/pacman.png"));
 
+	auto textureShader = m_Library.Get("Texture");
+
 	// I suggest not to upload the texture to the shader inside a loop, quite unnecessary and *very* slow.
-	std::dynamic_pointer_cast<Spotlight::OpenGLShader>(m_TextureShader)->Bind();
-	std::dynamic_pointer_cast<Spotlight::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
+	std::dynamic_pointer_cast<Spotlight::OpenGLShader>(textureShader)->Bind();
+	std::dynamic_pointer_cast<Spotlight::OpenGLShader>(textureShader)->UploadUniformInt("u_Texture", 0);
 
 	m_SolidColor = {0.8f, 0.2f, 0.3f, 1.0f};
 }
@@ -56,6 +58,7 @@ void Layer_Render::OnUpdate(Spotlight::Timestep ts)
 {
 	Spotlight::RenderCmd::SetClearColor({0.08f, 0.08f, 0.08f, 1.0f});
 	Spotlight::RenderCmd::Clear();
+
 
 	Spotlight::Renderer::BeginScene(m_Camera);
 	{
@@ -73,8 +76,9 @@ void Layer_Render::OnUpdate(Spotlight::Timestep ts)
 
 			}
 		}
-		m_Texture->Bind(0);
-		Spotlight::Renderer::Submit(m_TextureShader, m_SolidColorVAO, glm::scale(glm::mat4(1.0f), glm::vec3(1.0f)));
+		auto textureShader = m_Library.Get("Texture");
+		m_Texture->Bind();
+		Spotlight::Renderer::Submit(textureShader, m_SolidColorVAO, glm::scale(glm::mat4(1.0f), glm::vec3(1.0f)));
 	}
 	Spotlight::Renderer::EndScene();
 	
