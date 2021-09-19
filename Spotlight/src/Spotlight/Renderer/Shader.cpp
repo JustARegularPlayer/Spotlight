@@ -31,7 +31,7 @@ namespace Spotlight
 		return nullptr;
 	}
 
-	// Add shader to library
+	// Add existing shader to library
 	
 	void ShaderLibrary::Add(const std::string &name, const Ref<Shader> &shader)
 	{
@@ -45,22 +45,24 @@ namespace Spotlight
 		Add(name, shader);
 	}
 
-	// Load shader
+	// Load a new shader into library
 
 	Ref<Shader> ShaderLibrary::Load(const std::string &name, const std::string &filepath)
 	{
-		auto shader = Shader::Create(filepath);
+		auto &shader = Shader::Create(filepath);
 		Add(name, shader);
 		return shader;
 	}
 
-
 	Ref<Shader> ShaderLibrary::Load(const std::string &filepath)
 	{
-		auto shader = Shader::Create(filepath);
+		auto &shader = Shader::Create(filepath);
 		Add(shader);
 		return shader;
 	}
+
+	// Get shader from library (must be loaded first or added already)
+
 	Ref<Shader> ShaderLibrary::Get(const std::string &name)
 	{
 		SPL_CORE_ASSERT(m_Shaders.find(name) != m_Shaders.end(), "Shader not found!");

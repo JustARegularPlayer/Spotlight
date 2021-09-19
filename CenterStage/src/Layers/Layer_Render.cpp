@@ -7,9 +7,7 @@
 #include "Platform/OpenGL/OpenGLShader.h"
 
 Layer_Render::Layer_Render()
-	: m_Camera({-1.6f, 1.6f, -0.9f, 0.9f}), 
-	m_CameraPosition(m_Camera.GetPosition()), 
-	m_CameraRotation(m_Camera.GetRotation())
+	: m_CameraController(1366.0f / 768.0f, true)
 {
 	float solidColorVertices[5 * 4] =
 	{
@@ -56,11 +54,14 @@ Layer_Render::Layer_Render()
 
 void Layer_Render::OnUpdate(Spotlight::Timestep ts)
 {
+	// Updates from external components
+	m_CameraController.OnUpdate(ts);
+
+	// Rendering
 	Spotlight::RenderCmd::SetClearColor({0.08f, 0.08f, 0.08f, 1.0f});
 	Spotlight::RenderCmd::Clear();
 
-
-	Spotlight::Renderer::BeginScene(m_Camera);
+	Spotlight::Renderer::BeginScene(m_CameraController.GetCamera());
 	{
 		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 	
@@ -82,45 +83,25 @@ void Layer_Render::OnUpdate(Spotlight::Timestep ts)
 	}
 	Spotlight::Renderer::EndScene();
 	
-	// CONTROLS ========================================
-
-	float speed = m_CameraMoveSpeed;
-	if (Spotlight::Input::IsKeyPressed(SPL_KEY_LEFT_SHIFT))
-		speed *= 2;
-
-	if(Spotlight::Input::IsKeyPressed(SPL_KEY_W))
-		m_CameraPosition.y += speed * ts;
-	if(Spotlight::Input::IsKeyPressed(SPL_KEY_S))
-		m_CameraPosition.y -= speed * ts;
-	
-	if(Spotlight::Input::IsKeyPressed(SPL_KEY_A))
-		m_CameraPosition.x -= speed * ts;
-	if(Spotlight::Input::IsKeyPressed(SPL_KEY_D))
-		m_CameraPosition.x += speed * ts;
-
-	m_Camera.SetPosition(m_CameraPosition);
-
-	if (Spotlight::Input::IsKeyPressed(SPL_KEY_Q))
-		m_CameraRotation -= m_CameraRotateSpeed * ts;
-	if (Spotlight::Input::IsKeyPressed(SPL_KEY_E))
-		m_CameraRotation += m_CameraRotateSpeed * ts;
-
-	m_Camera.SetRotation(m_CameraRotation);
 }
 
 void Layer_Render::OnUIRender()
 {
+	ImGui::Begin("Solid Color");
+		ImGui::ColorEdit3("Solid Color", &m_SolidColor.r);
+	ImGui::End();
+
 	ImGui::Begin("Render");
 	{
 		ImGui::Text("Look, it's PACMAN! HELL YEAH!");
-		ImGui::Text("Position: (%.2f, %.2f)", m_Camera.GetPosition().x, m_Camera.GetPosition().y);
-		ImGui::Text("Rotation: %.2f", m_Camera.GetRotation());
+		ImGui::Text("Position: (%.2f, %.2f)", m_CameraController.GetCamera().GetPosition().x, m_CameraController.GetCamera().GetPosition().y);
+		ImGui::Text("Rotation: %.2f", m_CameraController.GetCamera().GetRotation());
 		ImGui::Text("%.2ffps", ImGui::GetIO().Framerate);
-		ImGui::ColorEdit3("Solid Color", &m_SolidColor.r);
 	}
 	ImGui::End();
 }
 
 void Layer_Render::OnEvent(Spotlight::Event &e)
 {
+	m_CameraController.OnEvent(e);
 }

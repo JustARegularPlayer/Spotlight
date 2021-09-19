@@ -9,7 +9,8 @@ namespace Spotlight
 	{
 	public:
 		OrthoCamera(float left, float right, float bottom, float top);
-		
+		void SetProj(float left, float right, float bottom, float top);
+
 		const glm::vec3 &GetPosition() const { return m_Position;; }
 		void SetPosition(const glm::vec3 &pos) { m_Position = pos; RecalculateView(); }
 

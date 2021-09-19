@@ -14,6 +14,11 @@ namespace Spotlight
 		RenderCmd::Init();
 	}
 
+	void Renderer::OnWindowResized(uint32_t width, uint32_t height)
+	{
+		RenderCmd::SetViewport(0, 0, width, height);
+	}
+
 	void Renderer::BeginScene(OrthoCamera& camera)
 	{
 		sm_SceneData->ViewProjMatrix = camera.GetViewProjMatrix();

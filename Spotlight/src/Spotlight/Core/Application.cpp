@@ -34,6 +34,8 @@ namespace Spotlight
 	{
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<Event_WindowClosed>(SPL_BIND_FUNC(SpotlightApp::OnWindowClose));
+		dispatcher.Dispatch<Event_WindowResized>(SPL_BIND_FUNC(SpotlightApp::OnWindowResized));
+
 		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
 		{
 			(*--it)->OnEvent(e);
@@ -50,15 +52,18 @@ namespace Spotlight
 			Timestep timestep = m_AppTime->GetTime() - m_LastFrameTime;
 			m_LastFrameTime = m_AppTime->GetTime();
 
-			for (Layer* layer : m_LayerStack)
-				layer->OnUpdate(timestep);
-
-			m_ImGuiLayer->Begin();
+			if (!m_Minimized)
 			{
-				for (Layer* layer : m_LayerStack)
-					layer->OnUIRender();
+				for (Layer *layer : m_LayerStack)
+					layer->OnUpdate(timestep);
+
+				m_ImGuiLayer->Begin();
+				{
+					for (Layer *layer : m_LayerStack)
+						layer->OnUIRender();
+				}
+				m_ImGuiLayer->End();
 			}
-			m_ImGuiLayer->End();
 
 			m_Window->OnUpdate();
 		}
@@ -80,6 +85,19 @@ namespace Spotlight
 	{
 		m_IsRunning = false;
 		return true;
+	}
+
+	bool SpotlightApp::OnWindowResized(Event_WindowResized &e)
+	{
+		if (e.GetWidth() == 0 || e.GetHeight() == 0)
+		{
+			m_Minimized = true;
+			return false;
+		}
+
+		m_Minimized = false;
+		Renderer::OnWindowResized(e.GetWidth(), e.GetHeight());
+		return false;
 	}
 
 }

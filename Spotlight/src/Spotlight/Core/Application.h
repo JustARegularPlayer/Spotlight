@@ -31,6 +31,7 @@ namespace Spotlight
 		static inline SpotlightApp &Get() { return *sm_Instance; }
 	private:
 		bool OnWindowClose(Event_WindowClosed &e);
+		bool OnWindowResized(Event_WindowResized &e);
 	private:
 		static SpotlightApp *sm_Instance;
 
@@ -38,6 +39,7 @@ namespace Spotlight
 		Scope<Time> m_AppTime;
 		Layer_ImGui *m_ImGuiLayer;
 		bool m_IsRunning = true;
+		bool m_Minimized = false;
 
 		LayerStack m_LayerStack;
 

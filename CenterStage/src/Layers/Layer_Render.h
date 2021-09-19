@@ -19,11 +19,7 @@ private:
 
 	Spotlight::Ref<Spotlight::Texture2D> m_Texture;
 
-	Spotlight::OrthoCamera m_Camera;
-	glm::vec3 m_CameraPosition;
-	float m_CameraRotation;
-	float m_CameraMoveSpeed = 2.5f;
-	float m_CameraRotateSpeed = 45.0f;
+	Spotlight::OrthoCameraController m_CameraController;
 
 	glm::vec4 m_SolidColor;
 };
