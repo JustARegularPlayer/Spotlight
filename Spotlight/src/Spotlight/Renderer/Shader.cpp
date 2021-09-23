@@ -12,7 +12,7 @@ namespace Spotlight
 		switch (Renderer::GetCurrentAPI())
 		{
 			case RendererAPI::API::None:    SPL_CORE_ASSERT(false, "RendererAPI::None is currently selected!"); return nullptr;
-			case RendererAPI::API::OpenGL:  return std::make_shared<OpenGLShader>(filepath);
+			case RendererAPI::API::OpenGL:  return CreateRef<OpenGLShader>(filepath);
 		}
 
 		SPL_CORE_ASSERT(false, "Unknown value. No Renderer API is selected!");
@@ -24,7 +24,7 @@ namespace Spotlight
 		switch (Renderer::GetCurrentAPI())
 		{
 			case RendererAPI::API::None:    SPL_CORE_ASSERT(false, "RendererAPI::None is currently selected!"); return nullptr;
-			case RendererAPI::API::OpenGL:  return std::make_shared<OpenGLShader>(name, vertex, fragment);
+			case RendererAPI::API::OpenGL:  return CreateRef<OpenGLShader>(name, vertex, fragment);
 		}
 
 		SPL_CORE_ASSERT(false, "Unknown value. No Renderer API is selected!");

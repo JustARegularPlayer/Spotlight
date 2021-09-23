@@ -18,8 +18,8 @@ namespace Spotlight
 		// Primitives
 		static void DrawQuad(const glm::vec2 &position, float angle, const glm::vec2 &size, const glm::vec4 &color);
 		static void DrawQuad(const glm::vec3 &position, float angle, const glm::vec2 &size, const glm::vec4 &color);
-		static void DrawQuad(const glm::vec2 &position, float angle, const glm::vec2 &size, const Ref<Texture2D> &texture, float tileCount = 1.0f);
-		static void DrawQuad(const glm::vec3 &position, float angle, const glm::vec2 &size, const Ref<Texture2D> &texture, float tileCount = 1.0f);
+		static void DrawQuad(const glm::vec2 &position, float angle, const glm::vec2 &size, const Ref<Texture2D> &texture, float texScale = 1.0f);
+		static void DrawQuad(const glm::vec3 &position, float angle, const glm::vec2 &size, const Ref<Texture2D> &texture, float texScale = 1.0f);
 	};
 
 }

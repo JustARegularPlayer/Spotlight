@@ -18,7 +18,7 @@ namespace Spotlight
 
 	Scope<Window> Window::Create(const WindowProperties &props)
 	{
-		return std::make_unique<WinWindow>(props);
+		return CreateScope<WinWindow>(props);
 	}
 
 	WinWindow::WinWindow(const WindowProperties &props)

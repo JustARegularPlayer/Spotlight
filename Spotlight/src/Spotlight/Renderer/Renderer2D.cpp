@@ -14,8 +14,8 @@ namespace Spotlight
 	struct Renderer2DData
 	{
 		Ref<VertexArray> QuadVAO;
-		Ref<Shader> SolidColorShader;
-		Ref<Shader> TextureShader;
+		Ref<Shader> QuadShader;
+		Ref<Texture2D> BlankTexture;
 	};
 
 	static Renderer2DData *sm_Data;
@@ -49,10 +49,13 @@ namespace Spotlight
 		Ref<IndexBuffer> m_IBO = IndexBuffer::Create(indices, (uint32_t) std::size(indices));
 		sm_Data->QuadVAO->SetIndexBuffer(m_IBO);
 
-		sm_Data->SolidColorShader = Shader::Create("assets/Shaders/SolidColor.glsl");
-		sm_Data->TextureShader= Shader::Create("assets/Shaders/Texture.glsl");
-		sm_Data->TextureShader->Bind();
-		sm_Data->TextureShader->SetInt("u_Texture", 0);
+		sm_Data->BlankTexture = Texture2D::Create(1, 1);
+		uint32_t whiteTexData = 0xffffffff;
+		sm_Data->BlankTexture->SetData(&whiteTexData, sizeof(uint32_t));
+
+		sm_Data->QuadShader = Shader::Create("assets/Shaders/Texture.glsl");
+		sm_Data->QuadShader->Bind();
+		sm_Data->QuadShader->SetInt("u_Texture", 0);
 	}
 
 	void Renderer2D::Shutdown()
@@ -62,11 +65,8 @@ namespace Spotlight
 
 	void Renderer2D::BeginScene(const OrthoCamera &camera)
 	{
-		sm_Data->SolidColorShader->Bind();
-		sm_Data->SolidColorShader->SetMat4("u_ViewProj", camera.GetViewProjMatrix());
-
-		sm_Data->TextureShader->Bind();
-		sm_Data->TextureShader->SetMat4("u_ViewProj", camera.GetViewProjMatrix());
+		sm_Data->QuadShader->Bind();
+		sm_Data->QuadShader->SetMat4("u_ViewProj", camera.GetViewProjMatrix());
 	}
 
 	void Renderer2D::EndScene()
@@ -82,35 +82,37 @@ namespace Spotlight
 
 	void Renderer2D::DrawQuad(const glm::vec3 &position, float angle, const glm::vec2 &size, const glm::vec4 &color)
 	{
-		sm_Data->SolidColorShader->Bind();
-		sm_Data->SolidColorShader->SetFloat4("u_Color", color);
+		sm_Data->QuadShader->Bind();
+		sm_Data->QuadShader->SetFloat4("u_Color", color);
+		sm_Data->BlankTexture->Bind();
 
 		glm::mat4 T = glm::translate(glm::mat4(1.0f), position);                // Transform
 		glm::mat4 TR = glm::rotate(T, glm::radians(angle), glm::vec3(0, 0, 1)); // Transform * Rotation (no S yet)
 		glm::mat4 TRS = glm::scale(TR, {size.x, size.y, 1.0f});                 // Transform * Rotation * Scale (Process done)
-		sm_Data->SolidColorShader->SetMat4("u_Transform", TRS);                 // Send to SolidColorShader
+		sm_Data->QuadShader->SetMat4("u_Transform", TRS);                       // Send to SolidColorShader
 
-		sm_Data->QuadVAO->Bind(); 
+		sm_Data->QuadVAO->Bind();
 		RenderCmd::DrawIndexed(sm_Data->QuadVAO);
 	}
 
-	void Renderer2D::DrawQuad(const glm::vec2 &position, float angle, const glm::vec2 &size, const Ref<Texture2D> &texture, float tileCount)
+	void Renderer2D::DrawQuad(const glm::vec2 &position, float angle, const glm::vec2 &size, const Ref<Texture2D> &texture, float texScale)
 	{
-		DrawQuad({position.x, position.y, 0.0f}, angle, size, texture, tileCount);
+		DrawQuad({position.x, position.y, 0.0f}, angle, size, texture, texScale);
 	}
 
-	void Renderer2D::DrawQuad(const glm::vec3 &position, float angle, const glm::vec2 &size, const Ref<Texture2D> &texture, float tileCount)
+	void Renderer2D::DrawQuad(const glm::vec3 &position, float angle, const glm::vec2 &size, const Ref<Texture2D> &texture, float texScale)
 	{
-		sm_Data->TextureShader->Bind();
+		sm_Data->QuadShader->Bind();
+		sm_Data->QuadShader->SetFloat4("u_Color", glm::vec4(1.0f));
+		texture->Bind();
 
 		glm::mat4 T = glm::translate(glm::mat4(1.0f), position);                // Transform
 		glm::mat4 TR = glm::rotate(T, glm::radians(angle), glm::vec3(0, 0, 1)); // Transform * Rotation (no S yet)
 		glm::mat4 TRS = glm::scale(TR, {size.x, size.y, 1.0f});                 // Transform * Rotation * Scale (Process done)
-		sm_Data->TextureShader->SetMat4("u_Transform", TRS);                    // Send to TextureShader
-		sm_Data->TextureShader->SetFloat("u_TileCount", tileCount);
+		sm_Data->QuadShader->SetMat4("u_Transform", TRS);                    // Send to TextureShader
+		sm_Data->QuadShader->SetFloat("u_TexScale", texScale);
 
-		texture->Bind();
-		sm_Data->QuadVAO->Bind(); 
+		sm_Data->QuadVAO->Bind();
 		RenderCmd::DrawIndexed(sm_Data->QuadVAO);
 	}
 

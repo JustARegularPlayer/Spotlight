@@ -4,10 +4,10 @@
 layout(location = 0) in vec3 i_Position;
 layout(location = 1) in vec2 i_TexCoord;
 
+out vec2 v_TexCoord;
+
 uniform mat4 u_ViewProj;
 uniform mat4 u_Transform;
-
-out vec2 v_TexCoord;
 
 void main()
 {
@@ -20,12 +20,13 @@ void main()
 
 layout(location = 0) out vec4 o_Color;
 
-uniform sampler2D u_Texture;
-uniform float u_TileCount = 1.0f;
-
 in vec2 v_TexCoord;
+
+uniform vec4 u_Color;
+uniform sampler2D u_Texture;
+uniform float u_TexScale = 1.0f;
 
 void main()
 {
-	o_Color = texture(u_Texture, v_TexCoord * u_TileCount);
+	o_Color = texture(u_Texture, v_TexCoord * u_TexScale) * u_Color;
 }

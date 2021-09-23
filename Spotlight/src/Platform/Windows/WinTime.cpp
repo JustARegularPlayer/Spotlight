@@ -8,7 +8,7 @@ namespace Spotlight
 
 	Scope<Time> Time::Create()
 	{
-		return std::make_unique<WinTime>();
+		return CreateScope<WinTime>();
 	}
 
 	WinTime::WinTime()
