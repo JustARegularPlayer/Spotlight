@@ -14,6 +14,10 @@
 #include "Spotlight/Core/Log.h"
 #include <imgui.h>
 
-#if defined SPL_PLATFORM_WINDOWS
+#if defined _WIN32
 	#include <Windows.h>
+#elif defined defined(__APPLE__) || defined(__MACH__)
+	#include <TargetConditionals.h>
+#else
+	#error "Unknown platform!"
 #endif

@@ -2,9 +2,6 @@
 #include "Renderer.h"
 #include "Renderer2D.h"
 
-// Temporary includes
-#include "Platform/OpenGL/OpenGLShader.h"
-
 namespace Spotlight
 {
 
@@ -35,8 +32,8 @@ namespace Spotlight
 						  const glm::mat4& transform)
 	{
 		shader->Bind();
-		std::dynamic_pointer_cast<OpenGLShader>(shader)->UploadUniformMat4("u_ViewProj", sm_SceneData->ViewProjMatrix);
-		std::dynamic_pointer_cast<OpenGLShader>(shader)->UploadUniformMat4("u_Transform", transform);
+		shader->SetMat4("u_ViewProj", sm_SceneData->ViewProjMatrix);
+		shader->SetMat4("u_Transform", transform);
 		vao->Bind();
 		RenderCmd::DrawIndexed(vao);
 	}

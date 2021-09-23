@@ -10,6 +10,8 @@ Sandbox2D::Sandbox2D()
 void Sandbox2D::OnAttach()
 {
 	Spotlight::Renderer2D::Init();
+
+	m_Texture = Spotlight::Texture2D::Create("assets/Textures/pacman.png");
 }
 
 void Sandbox2D::OnDetach()
@@ -27,7 +29,8 @@ void Sandbox2D::OnUpdate(Spotlight::Timestep ts)
 	Spotlight::RenderCmd::Clear();
 
 	Spotlight::Renderer2D::BeginScene(m_Controller.GetCamera());
-	Spotlight::Renderer2D::DrawQuad({0.0f, 0.0f, 0.0f}, {1.0f, 1.0f}, m_Color);
+	Spotlight::Renderer2D::DrawQuad({0.0f, 0.0f, 0.0f}, 0.0f, {20.0f, 20.0f}, m_Texture, 5.0f);
+	Spotlight::Renderer2D::DrawQuad({0.0f, 0.0f, 0.1f}, 0.0f, {1.0f, 1.0f}, m_Color);
 	Spotlight::Renderer2D::EndScene();
 }
 
