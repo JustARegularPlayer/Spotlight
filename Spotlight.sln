@@ -1,9 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.31424.327
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CenterStage", "CenterStage\CenterStage.vcxproj", "{3AC6EAF4-A67B-63EA-2F70-5DC19B245AEE}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sandbox", "Sandbox\Sandbox.vcxproj", "{F4C124E3-60A1-A37E-69B9-2E55D5170AE0}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GLFW", "Spotlight\vendor\GLFW\GLFW.vcxproj", "{154B857C-0182-860D-AA6E-6C109684020F}"
 EndProject
@@ -13,8 +11,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ImGui", "Spotlight\vendor\I
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spotlight", "Spotlight\Spotlight.vcxproj", "{43BF368A-AF29-EB00-F867-9CA66411C955}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencies", "{557D71FE-9B17-423C-9084-3EC290DBD0F9}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -22,12 +18,12 @@ Global
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3AC6EAF4-A67B-63EA-2F70-5DC19B245AEE}.Debug|x64.ActiveCfg = Debug|x64
-		{3AC6EAF4-A67B-63EA-2F70-5DC19B245AEE}.Debug|x64.Build.0 = Debug|x64
-		{3AC6EAF4-A67B-63EA-2F70-5DC19B245AEE}.Dist|x64.ActiveCfg = Dist|x64
-		{3AC6EAF4-A67B-63EA-2F70-5DC19B245AEE}.Dist|x64.Build.0 = Dist|x64
-		{3AC6EAF4-A67B-63EA-2F70-5DC19B245AEE}.Release|x64.ActiveCfg = Release|x64
-		{3AC6EAF4-A67B-63EA-2F70-5DC19B245AEE}.Release|x64.Build.0 = Release|x64
+		{F4C124E3-60A1-A37E-69B9-2E55D5170AE0}.Debug|x64.ActiveCfg = Debug|x64
+		{F4C124E3-60A1-A37E-69B9-2E55D5170AE0}.Debug|x64.Build.0 = Debug|x64
+		{F4C124E3-60A1-A37E-69B9-2E55D5170AE0}.Dist|x64.ActiveCfg = Dist|x64
+		{F4C124E3-60A1-A37E-69B9-2E55D5170AE0}.Dist|x64.Build.0 = Dist|x64
+		{F4C124E3-60A1-A37E-69B9-2E55D5170AE0}.Release|x64.ActiveCfg = Release|x64
+		{F4C124E3-60A1-A37E-69B9-2E55D5170AE0}.Release|x64.Build.0 = Release|x64
 		{154B857C-0182-860D-AA6E-6C109684020F}.Debug|x64.ActiveCfg = Debug|x64
 		{154B857C-0182-860D-AA6E-6C109684020F}.Debug|x64.Build.0 = Debug|x64
 		{154B857C-0182-860D-AA6E-6C109684020F}.Dist|x64.ActiveCfg = Dist|x64
@@ -55,13 +51,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{154B857C-0182-860D-AA6E-6C109684020F} = {557D71FE-9B17-423C-9084-3EC290DBD0F9}
-		{BDD6857C-A90D-870D-52FA-6C103E10030F} = {557D71FE-9B17-423C-9084-3EC290DBD0F9}
-		{C0FF640D-2C14-8DBE-F595-301E616989EF} = {557D71FE-9B17-423C-9084-3EC290DBD0F9}
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {BA4D9F1F-77CE-4265-91A0-9D767379527D}
 	EndGlobalSection
 EndGlobal

@@ -11,11 +11,12 @@
 #include "Spotlight/Core/Input.h"
 #include "Spotlight/Core/KeyCodes.h"
 #include "Spotlight/Core/MouseButtonCodes.h"
-#include "Spotlight/Core/OrthoCameraController.h"
+#include "Spotlight/Renderer/OrthoCameraController.h"
 
 // RENDERER
 
 #include "Spotlight/Renderer/Renderer.h"
+#include "Spotlight/Renderer/Renderer2D.h"
 #include "Spotlight/Renderer/RendererAPI.h"
 #include "Spotlight/Renderer/RenderCmd.h"
 
@@ -25,3 +26,5 @@
 #include "Spotlight/Renderer/Texture.h"
 
 #include "Spotlight/Renderer/OrthoCamera.h"
+
+#include <imgui.h>

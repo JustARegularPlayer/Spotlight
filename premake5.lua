@@ -1,6 +1,6 @@
 workspace "Spotlight"
 	architecture "x64"
-	startproject "CenterStage"
+	startproject "Sandbox"
 
 	configurations
 	{
@@ -60,8 +60,6 @@ project "Spotlight"
 
 		defines
 		{
-			"SPL_PLATFORM_WINDOWS",
-			"SPL_BUILD_DLL",
 			"GLFW_INCLUDE_NONE"
 		}
 
@@ -88,8 +86,8 @@ project "Spotlight"
 		runtime "Release"
 		optimize "on"
 
-project "CenterStage"
-	location "CenterStage"
+project "Sandbox"
+	location "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
 	cppdialect "C++17"
@@ -120,11 +118,6 @@ project "CenterStage"
 
 	filter "system:windows"
 		systemversion "latest"
-
-		defines
-		{
-			"SPL_PLATFORM_WINDOWS"
-		}
 		
 	filter "configurations:Debug"
 		defines "SPL_DEBUG"

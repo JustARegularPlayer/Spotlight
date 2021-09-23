@@ -28,6 +28,7 @@ namespace Spotlight
 
 	SpotlightApp::~SpotlightApp()
 	{
+		PopOverlay(m_ImGuiLayer);
 	}
 
 	void SpotlightApp::OnEvent(Event& e)
@@ -72,13 +73,21 @@ namespace Spotlight
 	void SpotlightApp::PushLayer(Layer* layer)
 	{
 		m_LayerStack.PushLayer(layer);
-		layer->OnAttach();
 	}
 
 	void SpotlightApp::PushOverlay(Layer* overlay)
 	{
 		m_LayerStack.PushOverlay(overlay);
-		overlay->OnAttach();
+	}
+
+	void SpotlightApp::PopLayer(Layer *layer)
+	{
+		layer->OnDetach();
+	}
+
+	void SpotlightApp::PopOverlay(Layer *overlay)
+	{
+		overlay->OnDetach();
 	}
 
 	bool SpotlightApp::OnWindowClose(Event_WindowClosed &e)

@@ -1,5 +1,6 @@
 #include "splpch.h"
 #include "Renderer.h"
+#include "Renderer2D.h"
 
 // Temporary includes
 #include "Platform/OpenGL/OpenGLShader.h"
@@ -12,6 +13,7 @@ namespace Spotlight
 	void Renderer::Init()
 	{
 		RenderCmd::Init();
+		Renderer2D::Init();
 	}
 
 	void Renderer::OnWindowResized(uint32_t width, uint32_t height)

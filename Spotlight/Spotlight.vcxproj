@@ -76,7 +76,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>splpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;SPL_PLATFORM_WINDOWS;SPL_BUILD_DLL;GLFW_INCLUDE_NONE;SPL_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLFW_INCLUDE_NONE;SPL_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\Glad\include;vendor\GLFW\include;vendor\ImGui;vendor\glm;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -96,7 +96,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>splpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;SPL_PLATFORM_WINDOWS;SPL_BUILD_DLL;GLFW_INCLUDE_NONE;SPL_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLFW_INCLUDE_NONE;SPL_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\Glad\include;vendor\GLFW\include;vendor\ImGui;vendor\glm;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -120,7 +120,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>splpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;SPL_PLATFORM_WINDOWS;SPL_BUILD_DLL;GLFW_INCLUDE_NONE;SPL_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLFW_INCLUDE_NONE;SPL_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\Glad\include;vendor\GLFW\include;vendor\ImGui;vendor\glm;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -140,7 +140,6 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Spotlight\Core\OrthoCameraController.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
@@ -171,8 +170,10 @@
     <ClInclude Include="src\Spotlight\Renderer\Buffer.h" />
     <ClInclude Include="src\Spotlight\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Spotlight\Renderer\OrthoCamera.h" />
+    <ClInclude Include="src\Spotlight\Renderer\OrthoCameraController.h" />
     <ClInclude Include="src\Spotlight\Renderer\RenderCmd.h" />
     <ClInclude Include="src\Spotlight\Renderer\Renderer.h" />
+    <ClInclude Include="src\Spotlight\Renderer\Renderer2D.h" />
     <ClInclude Include="src\Spotlight\Renderer\RendererAPI.h" />
     <ClInclude Include="src\Spotlight\Renderer\Shader.h" />
     <ClInclude Include="src\Spotlight\Renderer\Texture.h" />
@@ -606,7 +607,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Spotlight\Core\OrthoCameraController.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp" />
@@ -624,8 +624,12 @@
     <ClCompile Include="src\Spotlight\ImGui\Layer_ImGui.cpp" />
     <ClCompile Include="src\Spotlight\Renderer\Buffer.cpp" />
     <ClCompile Include="src\Spotlight\Renderer\OrthoCamera.cpp" />
+    <ClCompile Include="src\Spotlight\Renderer\OrthoCameraController.cpp">
+      <ObjectFileName>$(IntDir)\OrthoCameraController1.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="src\Spotlight\Renderer\RenderCmd.cpp" />
     <ClCompile Include="src\Spotlight\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Spotlight\Renderer\Renderer2D.cpp" />
     <ClCompile Include="src\Spotlight\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\Spotlight\Renderer\Shader.cpp" />
     <ClCompile Include="src\Spotlight\Renderer\Texture.cpp" />

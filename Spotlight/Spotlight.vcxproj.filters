@@ -147,10 +147,16 @@
     <ClInclude Include="src\Spotlight\Renderer\OrthoCamera.h">
       <Filter>src\Spotlight\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Spotlight\Renderer\OrthoCameraController.h">
+      <Filter>src\Spotlight\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Spotlight\Renderer\RenderCmd.h">
       <Filter>src\Spotlight\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Spotlight\Renderer\Renderer.h">
+      <Filter>src\Spotlight\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spotlight\Renderer\Renderer2D.h">
       <Filter>src\Spotlight\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Spotlight\Renderer\RendererAPI.h">
@@ -1446,7 +1452,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Spotlight\Core\OrthoCameraController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1500,10 +1505,16 @@
     <ClCompile Include="src\Spotlight\Renderer\OrthoCamera.cpp">
       <Filter>src\Spotlight\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Spotlight\Renderer\OrthoCameraController.cpp">
+      <Filter>src\Spotlight\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\Spotlight\Renderer\RenderCmd.cpp">
       <Filter>src\Spotlight\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Spotlight\Renderer\Renderer.cpp">
+      <Filter>src\Spotlight\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spotlight\Renderer\Renderer2D.cpp">
       <Filter>src\Spotlight\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Spotlight\Renderer\RendererAPI.cpp">
@@ -1524,6 +1535,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Spotlight\Core\OrthoCameraController.cpp" />
   </ItemGroup>
 </Project>

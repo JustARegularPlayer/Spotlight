@@ -1,14 +1,14 @@
 #include <Spotlight.h>
 #include <Spotlight/Core/EntryPoint.h>
 
-#include "Layers/Layer_Render.h"
+#include "Layers/Sandbox2D.h"
 
 class CenterStage : public Spotlight::SpotlightApp
 {
 public:
 	CenterStage()
 	{
-		PushLayer(new Layer_Render());
+		PushLayer(new Sandbox2D());
 	}
 
 	~CenterStage()
