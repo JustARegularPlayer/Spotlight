@@ -25,7 +25,7 @@ namespace Spotlight
 		sm_Data = new Renderer2DData();
 		sm_Data->QuadVAO = VertexArray::Create();
 
-		float vertices[4 * 5] =
+		float quadVertices[4 * 5] =
 		{
 			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
 			 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
@@ -33,20 +33,20 @@ namespace Spotlight
 			-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
 		};
 
-		uint32_t indices[3 * 2] =
+		uint32_t quadIndices[3 * 2] =
 		{
 			0, 1, 2,
 			2, 3, 0
 		};
 
-		Ref<VertexBuffer> m_VBO = VertexBuffer::Create(vertices, sizeof(vertices));
+		Ref<VertexBuffer> m_VBO = VertexBuffer::Create(quadVertices, sizeof(quadVertices));
 		m_VBO->SetLayout({
 			{ShaderDataType::Float3, "i_Position"},
 			{ShaderDataType::Float2, "i_TexCoord"}
 		});
 		sm_Data->QuadVAO->AddVertexBuffer(m_VBO);
 
-		Ref<IndexBuffer> m_IBO = IndexBuffer::Create(indices, (uint32_t) std::size(indices));
+		Ref<IndexBuffer> m_IBO = IndexBuffer::Create(quadIndices, (uint32_t) std::size(quadIndices));
 		sm_Data->QuadVAO->SetIndexBuffer(m_IBO);
 
 		sm_Data->BlankTexture = Texture2D::Create(1, 1);
@@ -89,7 +89,7 @@ namespace Spotlight
 		glm::mat4 T = glm::translate(glm::mat4(1.0f), position);                // Transform
 		glm::mat4 TR = glm::rotate(T, glm::radians(angle), glm::vec3(0, 0, 1)); // Transform * Rotation (no S yet)
 		glm::mat4 TRS = glm::scale(TR, {size.x, size.y, 1.0f});                 // Transform * Rotation * Scale (Process done)
-		sm_Data->QuadShader->SetMat4("u_Transform", TRS);                       // Send to SolidColorShader
+		sm_Data->QuadShader->SetMat4("u_Transform", TRS);                       // Send to QuadShader
 
 		sm_Data->QuadVAO->Bind();
 		RenderCmd::DrawIndexed(sm_Data->QuadVAO);
@@ -109,7 +109,7 @@ namespace Spotlight
 		glm::mat4 T = glm::translate(glm::mat4(1.0f), position);                // Transform
 		glm::mat4 TR = glm::rotate(T, glm::radians(angle), glm::vec3(0, 0, 1)); // Transform * Rotation (no S yet)
 		glm::mat4 TRS = glm::scale(TR, {size.x, size.y, 1.0f});                 // Transform * Rotation * Scale (Process done)
-		sm_Data->QuadShader->SetMat4("u_Transform", TRS);                    // Send to TextureShader
+		sm_Data->QuadShader->SetMat4("u_Transform", TRS);                       // Send to QuadShader
 		sm_Data->QuadShader->SetFloat("u_TexScale", texScale);
 
 		sm_Data->QuadVAO->Bind();
