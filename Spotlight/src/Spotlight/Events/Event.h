@@ -56,6 +56,8 @@ namespace Spotlight
 		template<typename T>
 		bool Dispatch(const EventFunc<T>& func)
 		{
+			SPL_PROFILE_FUNC();
+
 			if (m_Event.GetEventType() == T::GetStaticType())
 			{
 				m_Event.IsHandled = func(*(T*)&m_Event);

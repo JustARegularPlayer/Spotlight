@@ -35,27 +35,37 @@ namespace Spotlight
 	OpenGLVertexArray::OpenGLVertexArray()
 		: m_ArrayID(0), m_VertexBuffers(0), m_IBO(nullptr)
 	{
+		SPL_PROFILE_FUNC();
+
 		glGenVertexArrays(1, &m_ArrayID);
 		glBindVertexArray(m_ArrayID);
 	}
 
 	OpenGLVertexArray::~OpenGLVertexArray()
 	{
+		SPL_PROFILE_FUNC();
+
 		glDeleteVertexArrays(1, &m_ArrayID);
 	}
 
 	void OpenGLVertexArray::Bind() const
 	{
+		SPL_PROFILE_FUNC();
+
 		glBindVertexArray(m_ArrayID);
 	}
 
 	void OpenGLVertexArray::Unbind() const
 	{
+		SPL_PROFILE_FUNC();
+
 		glBindVertexArray(0);
 	}
 
 	void OpenGLVertexArray::AddVertexBuffer(const Ref<VertexBuffer> &vbo)
 	{
+		SPL_PROFILE_FUNC();
+
 		glBindVertexArray(m_ArrayID);
 		vbo->Bind();
 
@@ -80,6 +90,8 @@ namespace Spotlight
 
 	void OpenGLVertexArray::SetIndexBuffer(const Ref<IndexBuffer> &ibo)
 	{
+		SPL_PROFILE_FUNC();
+
 		glBindVertexArray(m_ArrayID);
 		ibo->Bind();
 

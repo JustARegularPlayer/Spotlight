@@ -22,6 +22,8 @@ namespace Spotlight
 
 	void Renderer2D::Init()
 	{
+		SPL_PROFILE_FUNC();
+
 		sm_Data = new Renderer2DData();
 		sm_Data->QuadVAO = VertexArray::Create();
 
@@ -60,11 +62,15 @@ namespace Spotlight
 
 	void Renderer2D::Shutdown()
 	{
+		SPL_PROFILE_FUNC();
+
 		delete sm_Data;
 	}
 
 	void Renderer2D::BeginScene(const OrthoCamera &camera)
 	{
+		SPL_PROFILE_FUNC();
+
 		sm_Data->QuadShader->Bind();
 		sm_Data->QuadShader->SetMat4("u_ViewProj", camera.GetViewProjMatrix());
 	}
@@ -82,6 +88,8 @@ namespace Spotlight
 
 	void Renderer2D::DrawQuad(const glm::vec3 &position, float angle, const glm::vec2 &size, const glm::vec4 &color)
 	{
+		SPL_PROFILE_FUNC();
+
 		sm_Data->QuadShader->Bind();
 		sm_Data->QuadShader->SetFloat4("u_Color", color);
 		sm_Data->BlankTexture->Bind();
@@ -102,6 +110,8 @@ namespace Spotlight
 
 	void Renderer2D::DrawQuad(const glm::vec3 &position, float angle, const glm::vec2 &size, const Ref<Texture2D> &texture, float texScale)
 	{
+		SPL_PROFILE_FUNC();
+
 		sm_Data->QuadShader->Bind();
 		sm_Data->QuadShader->SetFloat4("u_Color", glm::vec4(1.0f));
 		texture->Bind();

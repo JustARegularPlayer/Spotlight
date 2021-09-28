@@ -16,6 +16,8 @@ namespace Spotlight
 
 	void OrthoCameraController::OnUpdate(Timestep ts)
 	{
+		SPL_PROFILE_FUNC();
+
 		if (Input::IsKeyPressed(SPL_KEY_W))
 			m_CameraPosition.y += m_CameraTranslationSpeed * ts;
 		if (Input::IsKeyPressed(SPL_KEY_S))
@@ -41,6 +43,8 @@ namespace Spotlight
 
 	void OrthoCameraController::OnEvent(Event &e)
 	{
+		SPL_PROFILE_FUNC();
+
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<Event_MouseScrolled>(SPL_BIND_FUNC(OrthoCameraController::OnMouseScrolled));
 		dispatcher.Dispatch<Event_WindowResized>(SPL_BIND_FUNC(OrthoCameraController::OnWindowResized));
@@ -48,6 +52,8 @@ namespace Spotlight
 
 	bool OrthoCameraController::OnMouseScrolled(Event_MouseScrolled &e)
 	{
+		SPL_PROFILE_FUNC();
+
 		m_ZoomLevel -= e.GetYOffset() * 0.5f;
 		m_ZoomLevel = (m_ZoomLevel < 0.3f ? 0.3f : m_ZoomLevel);
 		m_Camera.SetProj(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
@@ -56,6 +62,8 @@ namespace Spotlight
 
 	bool OrthoCameraController::OnWindowResized(Event_WindowResized &e)
 	{
+		SPL_PROFILE_FUNC();
+
 		m_AspectRatio = (float) e.GetWidth() / (float) e.GetHeight();
 		m_Camera.SetProj(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
 		return false;

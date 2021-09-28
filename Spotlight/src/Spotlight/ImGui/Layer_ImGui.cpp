@@ -22,6 +22,8 @@ namespace Spotlight
 
 	void Layer_ImGui::OnAttach()
 	{
+		SPL_PROFILE_FUNC();
+
 		ImGui::CreateContext();
 		ImGui::StyleColorsDark();
 
@@ -40,6 +42,8 @@ namespace Spotlight
 
 	void Layer_ImGui::OnDetach()
 	{
+		SPL_PROFILE_FUNC();
+
 		ImGui_ImplOpenGL3_Shutdown();
 		ImGui_ImplGlfw_Shutdown();
 		ImGui::DestroyContext();
@@ -47,18 +51,17 @@ namespace Spotlight
 	
 	void Layer_ImGui::Begin()
 	{
+		SPL_PROFILE_FUNC();
 
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 	}
 
-	void Layer_ImGui::OnUIRender()
-	{
-	}
-
 	void Layer_ImGui::End()
 	{
+		SPL_PROFILE_FUNC();
+
 		ImGuiIO& io = ImGui::GetIO();
 		SpotlightApp& app = SpotlightApp::Get();
 		io.DisplaySize = ImVec2((float) app.GetWindow().GetWidth(), (float) app.GetWindow().GetHeight());

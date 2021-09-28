@@ -12,6 +12,7 @@
 #include <array>
 
 #include "Spotlight/Core/Log.h"
+#include "Spotlight/Debug/Instrumentor.h"
 #include <imgui.h>
 
 #if defined _WIN32

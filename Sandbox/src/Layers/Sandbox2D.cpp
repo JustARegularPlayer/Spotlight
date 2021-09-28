@@ -2,15 +2,14 @@
 
 #include <glm/gtc/type_ptr.hpp>
 
-#define PROFILE_SCOPE(name) Spotlight::Timer timer##__LINE__(name, [&](ProfileResults profileResult) { m_ProfileResults.push_back(profileResult); })
 
 Sandbox2D::Sandbox2D()
-	: m_Controller(16.0f / 9.0f, true)
-{
-}
+	: m_Controller(16.0f / 9.0f, true) {}
 
 void Sandbox2D::OnAttach()
 {
+	SPL_PROFILE_FUNC();
+
 	Spotlight::Renderer2D::Init();
 
 	m_Texture = Spotlight::Texture2D::Create("assets/Textures/default.png");
@@ -18,16 +17,18 @@ void Sandbox2D::OnAttach()
 
 void Sandbox2D::OnDetach()
 {
+	SPL_PROFILE_FUNC();
+
 	Spotlight::Renderer2D::Shutdown();
 }
 
 void Sandbox2D::OnUpdate(Spotlight::Timestep ts)
 {
-	PROFILE_SCOPE("Sandbox2D::OnUpdate");
+	SPL_PROFILE_FUNC();
+
 	// Updating external components
-	{
-		m_Controller.OnUpdate(ts);
-	}
+	m_Controller.OnUpdate(ts);
+
 	// Rendering
 	Spotlight::RenderCmd::SetClearColor({0.1f, 0.1f, 0.1f, 1.0f});
 	Spotlight::RenderCmd::Clear();
@@ -41,6 +42,8 @@ void Sandbox2D::OnUpdate(Spotlight::Timestep ts)
 
 void Sandbox2D::OnUIRender()
 {
+	SPL_PROFILE_FUNC();
+
 	ImGui::Begin("Quad");
 	{
 		ImGui::SliderFloat("Texture Tiles", &m_Tiles, 1.0f, 20.0f, "%f Tiles", 1.0f);
@@ -49,21 +52,11 @@ void Sandbox2D::OnUIRender()
 		ImGui::Text("FPS: %.2f", ImGui::GetIO().Framerate);
 	}
 	ImGui::End();
-	ImGui::Begin("Profiler");
-	{
-		for (auto result : m_ProfileResults)
-		{
-			char label[50];
-			strcpy(label, "%.3fms - ");
-			strcat(label, result.Name);
-			ImGui::Text(label, result.Time);
-		}
-		m_ProfileResults.clear();
-	}
-	ImGui::End();
 }
 
 void Sandbox2D::OnEvent(Spotlight::Event &e)
 {
+	SPL_PROFILE_FUNC();
+
 	m_Controller.OnEvent(e);
 }

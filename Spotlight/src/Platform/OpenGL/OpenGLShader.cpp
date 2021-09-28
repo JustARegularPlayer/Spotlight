@@ -22,6 +22,8 @@ namespace Spotlight
 	OpenGLShader::OpenGLShader(const  std::string &filepath)
 		: m_ProgramID(0)
 	{
+		SPL_PROFILE_FUNC();
+
 		std::string src = ParseFile(filepath);
 		auto shaderSources = Preprocess(src);
 		m_ProgramID = CreateProgram(shaderSources);
@@ -33,6 +35,8 @@ namespace Spotlight
 	OpenGLShader::OpenGLShader(const std::string& name, const std::string &vertex, const std::string &fragment)
 		: m_ProgramID(0), m_Name(name)
 	{
+		SPL_PROFILE_FUNC();
+
 		std::unordered_map<GLenum, std::string> sources;
 		sources[GL_VERTEX_SHADER] = vertex;
 		sources[GL_FRAGMENT_SHADER] = fragment;
@@ -41,16 +45,22 @@ namespace Spotlight
 
 	OpenGLShader::~OpenGLShader()
 	{
+		SPL_PROFILE_FUNC();
+
 		glDeleteProgram(m_ProgramID);
 	}
 
 	void OpenGLShader::Bind() const
 	{
+		SPL_PROFILE_FUNC();
+
 		glUseProgram(m_ProgramID);
 	}
 
 	void OpenGLShader::Unbind() const
 	{
+		SPL_PROFILE_FUNC();
+
 		glUseProgram(0);
 	}
 
@@ -88,6 +98,8 @@ namespace Spotlight
 
 	std::string OpenGLShader::ParseFile(const std::string &filepath)
 	{
+		SPL_PROFILE_FUNC();
+
 		std::ifstream file(filepath, std::ios::in | std::ios::binary);
 		std::string source;
 
@@ -110,6 +122,8 @@ namespace Spotlight
 
 	std::unordered_map<GLenum, std::string> OpenGLShader::Preprocess(const std::string &src)
 	{
+		SPL_PROFILE_FUNC();
+
 		std::unordered_map<GLenum, std::string> shaderSources;
 
 		const char *typeToken = "#shader";
@@ -136,6 +150,8 @@ namespace Spotlight
 
 	uint32_t OpenGLShader::CompileShader(GLenum type, const std::string& shaderSource)
 	{
+		SPL_PROFILE_FUNC();
+
 		const char* src = shaderSource.c_str(); // convert std::string to a const char* since OpenGL won't accept
 		uint32_t shader = glCreateShader(type);
 		glShaderSource(shader, 1, &src, nullptr);
@@ -160,6 +176,8 @@ namespace Spotlight
 
 	uint32_t OpenGLShader::CreateProgram(const std::unordered_map<GLenum, std::string> sources)
 	{
+		SPL_PROFILE_FUNC();
+
 		SPL_CORE_ASSERT(sources.size() <= 2, "Too many shader sources!");
 		uint32_t program = glCreateProgram();
 		std::array<uint32_t, 2> shaderIDs;
@@ -221,6 +239,8 @@ namespace Spotlight
 
 	int OpenGLShader::GetUniformLocation(const std::string& name)
 	{
+		SPL_PROFILE_FUNC();
+
 		if (m_UniformLocations.find(name) != m_UniformLocations.end())
 			return m_UniformLocations[name];
 

@@ -162,6 +162,7 @@
     <ClInclude Include="src\Spotlight\Core\Time.h" />
     <ClInclude Include="src\Spotlight\Core\Timestep.h" />
     <ClInclude Include="src\Spotlight\Core\Window.h" />
+    <ClInclude Include="src\Spotlight\Debug\Instrumentor.h" />
     <ClInclude Include="src\Spotlight\Events\AppEvent.h" />
     <ClInclude Include="src\Spotlight\Events\Event.h" />
     <ClInclude Include="src\Spotlight\Events\KeyEvent.h" />
@@ -624,9 +625,7 @@
     <ClCompile Include="src\Spotlight\ImGui\Layer_ImGui.cpp" />
     <ClCompile Include="src\Spotlight\Renderer\Buffer.cpp" />
     <ClCompile Include="src\Spotlight\Renderer\OrthoCamera.cpp" />
-    <ClCompile Include="src\Spotlight\Renderer\OrthoCameraController.cpp">
-      <ObjectFileName>$(IntDir)\OrthoCameraController1.obj</ObjectFileName>
-    </ClCompile>
+    <ClCompile Include="src\Spotlight\Renderer\OrthoCameraController.cpp" />
     <ClCompile Include="src\Spotlight\Renderer\RenderCmd.cpp" />
     <ClCompile Include="src\Spotlight\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Spotlight\Renderer\Renderer2D.cpp" />

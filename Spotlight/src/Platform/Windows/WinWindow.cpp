@@ -22,12 +22,17 @@ namespace Spotlight
 	}
 
 	WinWindow::WinWindow(const WindowProperties &props)
-		: m_Data(props) {
+		: m_Data(props)
+	{
+		SPL_PROFILE_FUNC();
+
 		Init();
 	}
 
 	WinWindow::~WinWindow()
 	{
+		SPL_PROFILE_FUNC();
+
 		Shutdown();
 		if (s_GLFWInitialized)
 		{
@@ -38,8 +43,12 @@ namespace Spotlight
 
 	void WinWindow::Init()
 	{
+		SPL_PROFILE_FUNC();
+
 		if (!s_GLFWInitialized)
 		{
+			SPL_PROFILE_SCOPE("glfwInit()");
+
 			SPL_CORE_ASSERT(glfwInit(), "Could not initialize GLFW!");
 			glfwSetErrorCallback(GLFWErrorCallback);
 			s_GLFWInitialized = true;
@@ -50,11 +59,17 @@ namespace Spotlight
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 		SPL_CORE_INFO("Creating {0} ({1}, {2})", m_Data.Title, m_Data.Width, m_Data.Height);
+		{
+			SPL_PROFILE_SCOPE("glfwCreateWindow");
 
-		m_Window = glfwCreateWindow(m_Data.Width, m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
+			m_Window = glfwCreateWindow(m_Data.Width, m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
+		}
+		{
+			SPL_PROFILE_SCOPE("new OpenGLContext");
 
-		m_Context = new OpenGLContext(m_Window);
-		m_Context->Init();
+			m_Context = new OpenGLContext(m_Window);
+			m_Context->Init();
+		}
 
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
@@ -159,21 +174,28 @@ namespace Spotlight
 
 	void WinWindow::Shutdown()
 	{
+		SPL_PROFILE_FUNC();
+
 		glfwDestroyWindow(m_Window);
 	}
 
 	void WinWindow::OnUpdate()
 	{
+		SPL_PROFILE_FUNC();
+
 		glfwPollEvents();
 		m_Context->SwapBuffers();
 	}
 
 	void WinWindow::SetVSync(bool isEnabled)
 	{
+		SPL_PROFILE_FUNC();
+
 		if (isEnabled)
 			glfwSwapInterval(1);
 		else
 			glfwSwapInterval(0);
+
 		m_Data.VSync = isEnabled;
 	}
 

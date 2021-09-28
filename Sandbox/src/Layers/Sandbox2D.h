@@ -19,12 +19,4 @@ private:
 
 	Spotlight::Ref<Spotlight::Texture2D> m_Texture;
 	float m_Tiles = 5.0f;
-
-	struct ProfileResults
-	{
-		const char *Name;
-		float Time;
-	};
-
-	std::vector<ProfileResults> m_ProfileResults;
 };

@@ -9,6 +9,8 @@ namespace Spotlight
 
 	void Renderer::Init()
 	{
+		SPL_PROFILE_FUNC();
+
 		RenderCmd::Init();
 		Renderer2D::Init();
 	}

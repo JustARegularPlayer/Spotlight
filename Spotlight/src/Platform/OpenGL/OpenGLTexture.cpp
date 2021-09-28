@@ -10,6 +10,8 @@ namespace Spotlight
 	OpenGLTexture2D::OpenGLTexture2D(uint32_t width, uint32_t height, bool isRGBA)
 		: m_Width(width), m_Height(height), m_TextureID(0)
 	{
+		SPL_PROFILE_FUNC();
+
 		if (isRGBA)
 		{
 			m_InternalFormat = GL_RGBA8;
@@ -34,11 +36,18 @@ namespace Spotlight
 	OpenGLTexture2D::OpenGLTexture2D(const std::string &filepath)
 		: m_Filepath(filepath), m_Width(0), m_Height(0), m_TextureID(0), m_InternalFormat(0), m_DataFormat(0)
 	{
-		int width, height, channels;
+		SPL_PROFILE_FUNC();
 
-		stbi_set_flip_vertically_on_load(1);
-		stbi_uc *data = stbi_load(filepath.c_str(), &width, &height, &channels, 0);
+		int width, height, channels;
+		stbi_uc *data;
+		{
+			SPL_PROFILE_SCOPE("stbi_load()");
+
+			stbi_set_flip_vertically_on_load(1);
+			data = stbi_load(filepath.c_str(), &width, &height, &channels, 0);
+		}
 		SPL_CORE_ASSERT(data, "Failed to load specified path or image: {}", filepath);
+
 		m_Width = width;
 		m_Height = height;
 
@@ -72,11 +81,15 @@ namespace Spotlight
 
 	OpenGLTexture2D::~OpenGLTexture2D()
 	{
+		SPL_PROFILE_FUNC();
+
 		glDeleteTextures(1, &m_TextureID);
 	}
 
 	void OpenGLTexture2D::SetData(void *data, uint32_t size)
 	{
+		SPL_PROFILE_FUNC();
+
 		uint32_t bpp = m_DataFormat == GL_RGBA ? 4 : 3;
 		SPL_CORE_ASSERT(size == m_Width * m_Height * bpp, "Data must be entire texture!");
 		glBindTexture(GL_TEXTURE_2D, m_TextureID);
@@ -85,6 +98,8 @@ namespace Spotlight
 
 	void OpenGLTexture2D::Bind(uint32_t slot) const
 	{
+		SPL_PROFILE_FUNC();
+
 		glActiveTexture(GL_TEXTURE0 + slot);
 		glBindTexture(GL_TEXTURE_2D, m_TextureID);
 	}

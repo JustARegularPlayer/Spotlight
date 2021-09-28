@@ -19,6 +19,9 @@
     <Filter Include="src\Spotlight\Core">
       <UniqueIdentifier>{B205EDE2-9EE9-AD38-074A-A88BF34C98BA}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Spotlight\Debug">
+      <UniqueIdentifier>{10179A40-7C78-774E-05E6-BD007146AE0D}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Spotlight\Events">
       <UniqueIdentifier>{BE4B6757-AADA-F020-53F9-041C3F6701C7}</UniqueIdentifier>
     </Filter>
@@ -122,6 +125,9 @@
     </ClInclude>
     <ClInclude Include="src\Spotlight\Core\Window.h">
       <Filter>src\Spotlight\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spotlight\Debug\Instrumentor.h">
+      <Filter>src\Spotlight\Debug</Filter>
     </ClInclude>
     <ClInclude Include="src\Spotlight\Events\AppEvent.h">
       <Filter>src\Spotlight\Events</Filter>
