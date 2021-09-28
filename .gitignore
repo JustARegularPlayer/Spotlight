@@ -1,6 +1,7 @@
 #DIRECTORIES
 .vs/
-bin/
+**bin/
+!vendor/bin/premake5/
 bin-int/
 
 #EXTENSIONS
