@@ -14,7 +14,7 @@ namespace Spotlight
     {
         std::string Name;
         long long Start, End;
-        uint32_t ThreadID;
+        size_t ThreadID;
     };
 
     struct InstrumentationSession
@@ -38,6 +38,7 @@ namespace Spotlight
         {
             m_OutputStream.open(filepath);
             WriteHeader();
+            SPL_CORE_ASSERT(!m_CurrentSession, "A profiling session is currently ongoing!");
             m_CurrentSession = new InstrumentationSession{name};
         }
 
@@ -112,7 +113,7 @@ namespace Spotlight
             long long start = std::chrono::time_point_cast<std::chrono::microseconds>(m_StartTimepoint).time_since_epoch().count();
             long long end = std::chrono::time_point_cast<std::chrono::microseconds>(endTimepoint).time_since_epoch().count();
 
-            uint32_t threadID = std::hash<std::thread::id>{}(std::this_thread::get_id());
+            size_t threadID = std::hash<std::thread::id>{}(std::this_thread::get_id());
             Instrumentor::Get().WriteProfile({m_Name, start, end, threadID});
 
             m_Stopped = true;
