@@ -138,7 +138,6 @@
     <ClCompile Include="src\SandboxApp.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="assets\Shaders\Basic.glsl" />
     <None Include="assets\Shaders\SolidColor.glsl" />
     <None Include="assets\Shaders\Texture.glsl" />
   </ItemGroup>

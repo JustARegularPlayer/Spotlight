@@ -15,6 +15,8 @@ namespace Spotlight
 
 	void OpenGLContext::Init()
 	{
+		SPL_PROFILE_FUNC();
+
 		glfwMakeContextCurrent(m_Handle);
 		int success = gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
 		SPL_CORE_ASSERT(success, "Could not initialize Glad!");
@@ -27,6 +29,8 @@ namespace Spotlight
 
 	void OpenGLContext::SwapBuffers()
 	{
+		SPL_PROFILE_FUNC();
+
 		glfwSwapBuffers(m_Handle);
 	}
 

@@ -56,20 +56,21 @@ namespace Spotlight
 
 		while (m_IsRunning)
 		{
+			SPL_PROFILE_SCOPE("Render Frame - SpotlightApp::Run()");
+
 			m_AppTime->UpdateTime();
 			Timestep timestep = m_AppTime->GetTime() - m_LastFrameTime;
 			m_LastFrameTime = m_AppTime->GetTime();
 
 			if (!m_Minimized)
 			{
-
 				SPL_PROFILE_SCOPE("Layer OnUpdate()");
 				for (Layer *layer : m_LayerStack)
 					layer->OnUpdate(timestep);
 			}
 
-			SPL_PROFILE_SCOPE("Layer OnUIRender()");
 			{
+				SPL_PROFILE_SCOPE("Layer OnUIRender()");
 				m_ImGuiLayer->Begin();
 				for (Layer *layer : m_LayerStack)
 					layer->OnUIRender();

@@ -77,50 +77,51 @@ namespace Spotlight
 
 	void Renderer2D::EndScene()
 	{
+		SPL_PROFILE_FUNC();
 	}
 
-	// Primitives
+	// Primitives //////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	// - Quad ---------------------------------------------------------------------------------------------
 
-	void Renderer2D::DrawQuad(const glm::vec2 &position, float angle, const glm::vec2 &size, const glm::vec4 &color)
-	{
-		DrawQuad({position.x, position.y, 0.0f}, angle, size, color);
-	}
-
-	void Renderer2D::DrawQuad(const glm::vec3 &position, float angle, const glm::vec2 &size, const glm::vec4 &color)
+	void Renderer2D::DrawQuad(const ColorQuad &quad)
 	{
 		SPL_PROFILE_FUNC();
 
 		sm_Data->QuadShader->Bind();
-		sm_Data->QuadShader->SetFloat4("u_Color", color);
+		sm_Data->QuadShader->SetFloat4("u_Color", quad.Color);
 		sm_Data->BlankTexture->Bind();
 
-		glm::mat4 T = glm::translate(glm::mat4(1.0f), position);                // Transform
-		glm::mat4 TR = glm::rotate(T, glm::radians(angle), glm::vec3(0, 0, 1)); // Transform * Rotation (no S yet)
-		glm::mat4 TRS = glm::scale(TR, {size.x, size.y, 1.0f});                 // Transform * Rotation * Scale (Process done)
-		sm_Data->QuadShader->SetMat4("u_Transform", TRS);                       // Send to QuadShader
+		{
+			SPL_PROFILE_SCOPE("Transform Matrix Computation - Renderer2D::DrawQuad()");
+
+			glm::mat4 Transform = glm::translate(glm::mat4(1.0f), quad.Position);                // Position
+			Transform = glm::rotate(Transform, glm::radians(quad.Rotation), glm::vec3(0, 0, 1)); // Position * Rotation
+			Transform = glm::scale(Transform, {quad.Scale.x, quad.Scale.y, 1.0f});               // Position * Rotation * Scale (Process done)
+			sm_Data->QuadShader->SetMat4("u_Transform", Transform);                              // Send to QuadShader
+		}
 
 		sm_Data->QuadVAO->Bind();
 		RenderCmd::DrawIndexed(sm_Data->QuadVAO);
 	}
 
-	void Renderer2D::DrawQuad(const glm::vec2 &position, float angle, const glm::vec2 &size, const Ref<Texture2D> &texture, float texScale)
-	{
-		DrawQuad({position.x, position.y, 0.0f}, angle, size, texture, texScale);
-	}
-
-	void Renderer2D::DrawQuad(const glm::vec3 &position, float angle, const glm::vec2 &size, const Ref<Texture2D> &texture, float texScale)
+	void Renderer2D::DrawQuad(const TextureQuad &quad)
 	{
 		SPL_PROFILE_FUNC();
 
 		sm_Data->QuadShader->Bind();
-		sm_Data->QuadShader->SetFloat4("u_Color", glm::vec4(1.0f));
-		texture->Bind();
+		sm_Data->QuadShader->SetFloat4("u_Color", quad.Tint);
+		quad.Texture->Bind();
 
-		glm::mat4 T = glm::translate(glm::mat4(1.0f), position);                // Transform
-		glm::mat4 TR = glm::rotate(T, glm::radians(angle), glm::vec3(0, 0, 1)); // Transform * Rotation (no S yet)
-		glm::mat4 TRS = glm::scale(TR, {size.x, size.y, 1.0f});                 // Transform * Rotation * Scale (Process done)
-		sm_Data->QuadShader->SetMat4("u_Transform", TRS);                       // Send to QuadShader
-		sm_Data->QuadShader->SetFloat("u_TexScale", texScale);
+		{
+			SPL_PROFILE_SCOPE("Transform Matrix Computation - Renderer2D::DrawQuad()");
+
+			glm::mat4 Transform = glm::translate(glm::mat4(1.0f), quad.Position);                // Position
+			Transform = glm::rotate(Transform, glm::radians(quad.Rotation), glm::vec3(0, 0, 1)); // Position * Rotation
+			Transform = glm::scale(Transform, {quad.Scale.x, quad.Scale.y, 1.0f});               // Position * Rotation * Scale (Process done)
+			sm_Data->QuadShader->SetMat4("u_Transform", Transform);                              // Send to QuadShader
+			sm_Data->QuadShader->SetFloat("u_TileFactor", quad.TileFactor);
+		}
 
 		sm_Data->QuadVAO->Bind();
 		RenderCmd::DrawIndexed(sm_Data->QuadVAO);

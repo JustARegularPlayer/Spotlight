@@ -28,9 +28,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="assets\Shaders\Basic.glsl">
-      <Filter>assets\Shaders</Filter>
-    </None>
     <None Include="assets\Shaders\SolidColor.glsl">
       <Filter>assets\Shaders</Filter>
     </None>

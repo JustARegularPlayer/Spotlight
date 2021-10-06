@@ -204,36 +204,50 @@ namespace Spotlight
 
 	void OpenGLShader::UploadUniformInt(const std::string &name, int value)
 	{
+		SPL_PROFILE_FUNC();
+
 		glUniform1i(GetUniformLocation(name), value);
 	}
 
 	void OpenGLShader::UploadUniformFloat(const std::string &name, float value)
 	{
+		SPL_PROFILE_FUNC();
+
 		glUniform1f(GetUniformLocation(name), value);
 	}
 
 	void OpenGLShader::UploadUniformFloat2(const std::string &name, const glm::vec2 &values)
 	{
+		SPL_PROFILE_FUNC();
+
 		glUniform2f(GetUniformLocation(name), values.x, values.y);
 	}
 
 	void OpenGLShader::UploadUniformFloat3(const std::string &name, const glm::vec3 &values)
 	{
+		SPL_PROFILE_FUNC();
+
 		glUniform3f(GetUniformLocation(name), values.x, values.y, values.z);
 	}
 
 	void OpenGLShader::UploadUniformFloat4(const std::string& name, const glm::vec4& values)
 	{
+		SPL_PROFILE_FUNC();
+
 		glUniform4f(GetUniformLocation(name), values.x, values.y, values.z, values.w);
 	}
 
 	void OpenGLShader::UploadUniformMat3(const std::string &name, const glm::mat3 &matrix)
 	{
+		SPL_PROFILE_FUNC();
+
 		glUniformMatrix3fv(GetUniformLocation(name), 1, GL_FALSE, glm::value_ptr(matrix));
 	}
 
 	void OpenGLShader::UploadUniformMat4(const std::string &name, const glm::mat4 &matrix)
 	{
+		SPL_PROFILE_FUNC();
+
 		glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, glm::value_ptr(matrix));
 	}
 
