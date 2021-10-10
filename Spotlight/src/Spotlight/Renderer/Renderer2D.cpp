@@ -21,8 +21,8 @@ namespace Spotlight
 	struct Renderer2DData
 	{
 		const uint32_t MaxQuads = 10000;
-		const uint32_t MaxVertices = MaxQuads * 4;
-		const uint32_t MaxIndices = MaxQuads * 6;
+		const uint32_t MaxQuadVertices = MaxQuads * 4;
+		const uint32_t MaxQuadIndices = MaxQuads * 6;
 
 		Ref<VertexArray> QuadVAO;
 		Ref<VertexBuffer> QuadVBO;
@@ -42,7 +42,7 @@ namespace Spotlight
 
 		s_Data.QuadVAO = VertexArray::Create();
 
-		s_Data.QuadVBO = VertexBuffer::Create(s_Data.MaxVertices * sizeof(QuadVertex));
+		s_Data.QuadVBO = VertexBuffer::Create(s_Data.MaxQuadVertices * sizeof(QuadVertex));
 		s_Data.QuadVBO->SetLayout({
 			{ShaderDataType::Float3, "i_Position"},
 			{ShaderDataType::Float4, "i_Color"},
@@ -51,13 +51,13 @@ namespace Spotlight
 		s_Data.QuadVAO->AddVertexBuffer(s_Data.QuadVBO);
 
 		// Dynamic array of vertices.
-		s_Data.QuadVertexBufferLowerBound = new QuadVertex[s_Data.MaxVertices];
+		s_Data.QuadVertexBufferLowerBound = new QuadVertex[s_Data.MaxQuadVertices];
 
 		// Static array of indices.
-		uint32_t *quadIndices = new uint32_t[s_Data.MaxIndices];
+		uint32_t *quadIndices = new uint32_t[s_Data.MaxQuadIndices];
 
 		uint32_t offset = 0;
-		for (uint32_t i = 0; i < s_Data.MaxIndices; i += 6)
+		for (uint32_t i = 0; i < s_Data.MaxQuadIndices; i += 6)
 		{
 			quadIndices[i + 0] = offset + 0;
 			quadIndices[i + 1] = offset + 1;
@@ -70,7 +70,7 @@ namespace Spotlight
 			offset += 4;
 		}
 		
-		Ref<IndexBuffer> quadIBO = IndexBuffer::Create(quadIndices, s_Data.MaxIndices);
+		Ref<IndexBuffer> quadIBO = IndexBuffer::Create(quadIndices, s_Data.MaxQuadIndices);
 		s_Data.QuadVAO->SetIndexBuffer(quadIBO);
 		delete[] quadIndices;
 		// Delete static array of indices.
@@ -105,16 +105,16 @@ namespace Spotlight
 	{
 		SPL_PROFILE_FUNC();
 		
-		// Get the size of data in bytes rather than, by default, the amount of vertices.
-		size_t dataSize = (uint8_t *)s_Data.QuadVertexBufferPtr - (uint8_t *)s_Data.QuadVertexBufferLowerBound;
-		s_Data.QuadVBO->SetData(s_Data.QuadVertexBufferLowerBound, dataSize);
-
 		Flush();
 	}
 
 	void Renderer2D::Flush()
 	{
 		SPL_PROFILE_FUNC();
+
+		// Get the size of data in bytes rather than, by default, the amount of vertices.
+		size_t dataSize = (uint8_t *)s_Data.QuadVertexBufferPtr - (uint8_t *)s_Data.QuadVertexBufferLowerBound;
+		s_Data.QuadVBO->SetData(s_Data.QuadVertexBufferLowerBound, dataSize);
 
 		RenderCmd::DrawIndexed(s_Data.QuadVAO, s_Data.QuadIndexCount);
 	}
@@ -125,7 +125,13 @@ namespace Spotlight
 
 	void Renderer2D::DrawQuad(const ColorQuad &quad)
 	{
-		SPL_PROFILE_FUNC();
+		if (s_Data.QuadVertexBufferPtr >= s_Data.QuadVertexBufferLowerBound + s_Data.MaxQuadVertices)
+		{
+			Flush();
+
+			s_Data.QuadIndexCount = 0;
+			s_Data.QuadVertexBufferPtr = s_Data.QuadVertexBufferLowerBound;
+		}
 
 		s_Data.QuadVertexBufferPtr->Position = quad.Position;
 		s_Data.QuadVertexBufferPtr->Color = quad.Color;
@@ -167,7 +173,13 @@ namespace Spotlight
 
 	void Renderer2D::DrawQuad(const TextureQuad &quad)
 	{
-		SPL_PROFILE_FUNC();
+		if (s_Data.QuadVertexBufferPtr >= s_Data.QuadVertexBufferLowerBound + s_Data.MaxQuadVertices)
+		{
+			Flush();
+
+			s_Data.QuadIndexCount = 0;
+			s_Data.QuadVertexBufferPtr = s_Data.QuadVertexBufferLowerBound;
+		}
 
 		s_Data.QuadVertexBufferPtr->Position = quad.Position;
 		s_Data.QuadVertexBufferPtr->Color = quad.Tint;
