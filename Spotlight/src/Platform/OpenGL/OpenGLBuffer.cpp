@@ -8,7 +8,17 @@ namespace Spotlight
 
 	// VERTEX BUFFER =================================================================
 
-	OpenGLVertexBuffer::OpenGLVertexBuffer(float* vertices, uint32_t size)
+	OpenGLVertexBuffer::OpenGLVertexBuffer(size_t size)
+		: m_BufferID(0)
+	{
+		SPL_PROFILE_FUNC();
+
+		glGenBuffers(1, &m_BufferID);
+		glBindBuffer(GL_ARRAY_BUFFER, m_BufferID);
+		glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_DYNAMIC_DRAW);
+	}
+
+	OpenGLVertexBuffer::OpenGLVertexBuffer(float* vertices, size_t size)
 		: m_BufferID(0)
 	{
 		SPL_PROFILE_FUNC();
@@ -37,6 +47,12 @@ namespace Spotlight
 		SPL_PROFILE_FUNC();
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
+
+	void OpenGLVertexBuffer::SetData(const void *data, size_t size)
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, m_BufferID);
+		glBufferSubData(GL_ARRAY_BUFFER, 0, size, data);
 	}
 
 	// INDEX BUFFER ==================================================================

@@ -28,9 +28,9 @@ namespace Spotlight
 			sm_API->Clear();
 		}
 
-		inline static void DrawIndexed(const Ref<VertexArray> &vao)
+		inline static void DrawIndexed(const Ref<VertexArray> &vao, uint32_t count = 0)
 		{
-			sm_API->DrawIndexed(vao);
+			sm_API->DrawIndexed(vao, count);
 		}
 	private:
 		static RendererAPI *sm_API;

@@ -17,6 +17,7 @@ namespace Spotlight
 
 		static void BeginScene(const OrthoCamera &camera);
 		static void EndScene();
+		static void Flush();
 
 		// Primitives
 		static void DrawQuad(const ColorQuad &quad);     // Quads

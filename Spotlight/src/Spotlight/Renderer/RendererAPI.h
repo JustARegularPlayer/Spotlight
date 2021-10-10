@@ -23,7 +23,7 @@ namespace Spotlight
 
 		static API GetAPI() { return sm_API; }
 
-		virtual void DrawIndexed(const Ref<VertexArray>& vao) = 0;
+		virtual void DrawIndexed(const Ref<VertexArray>& vao, uint32_t indexCount = 0) = 0;
 	private:
 		static API sm_API;
 	};

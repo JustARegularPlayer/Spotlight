@@ -35,7 +35,7 @@ void Sandbox2D::OnUpdate(Spotlight::Timestep ts)
 
 	Spotlight::Renderer2D::BeginScene(m_Controller.GetCamera());
 	{
-		Spotlight::Renderer2D::DrawQuad({ { 0.0f,  0.0f, 0.0f}, 0.0f, {20.0f, 20.0f}, m_Texture, m_Tiles });
+		//Spotlight::Renderer2D::DrawQuad({ { 0.0f,  0.0f, 0.0f}, 0.0f, {20.0f, 20.0f}, m_Texture, m_Tiles });
 		Spotlight::Renderer2D::DrawQuad({ { 2.0f,  1.3f, 0.1f}, 0.0f, { 1.0f,  1.0f}, m_Color1 });
 		Spotlight::Renderer2D::DrawQuad({ {-1.5f, -0.3f, 0.2f}, 0.0f, { 1.0f,  1.0f}, m_Color2 });
 	}

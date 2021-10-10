@@ -10,7 +10,19 @@ namespace Spotlight
 
 	// VERTEX BUFFER =================================================================
 
-	Ref<VertexBuffer> VertexBuffer::Create(float* vertices, uint32_t size)
+	Ref<VertexBuffer> VertexBuffer::Create(size_t size)
+	{
+		switch (Renderer::GetCurrentAPI())
+		{
+			case RendererAPI::API::None:    SPL_CORE_ASSERT(false, "RendererAPI::None is currently selected!"); return nullptr;
+			case RendererAPI::API::OpenGL:  return CreateRef<OpenGLVertexBuffer>(size);
+		}
+
+		SPL_CORE_ASSERT(false, "Unknown value. No Renderer API is selected!");
+		return nullptr;
+	}
+
+	Ref<VertexBuffer> VertexBuffer::Create(float* vertices, size_t size)
 	{
 		switch (Renderer::GetCurrentAPI())
 		{
