@@ -253,8 +253,6 @@ namespace Spotlight
 
 	int OpenGLShader::GetUniformLocation(const std::string& name)
 	{
-		SPL_PROFILE_FUNC();
-
 		if (m_UniformLocations.find(name) != m_UniformLocations.end())
 			return m_UniformLocations[name];
 

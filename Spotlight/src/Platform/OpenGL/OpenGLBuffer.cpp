@@ -51,6 +51,8 @@ namespace Spotlight
 
 	void OpenGLVertexBuffer::SetData(const void *data, size_t size)
 	{
+		SPL_PROFILE_FUNC();
+
 		glBindBuffer(GL_ARRAY_BUFFER, m_BufferID);
 		glBufferSubData(GL_ARRAY_BUFFER, 0, size, data);
 	}

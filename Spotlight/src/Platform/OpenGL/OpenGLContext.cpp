@@ -29,8 +29,6 @@ namespace Spotlight
 
 	void OpenGLContext::SwapBuffers()
 	{
-		SPL_PROFILE_FUNC();
-
 		glfwSwapBuffers(m_Handle);
 	}
 
