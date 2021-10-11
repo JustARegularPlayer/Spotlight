@@ -19,9 +19,9 @@ namespace Spotlight
 	{
 	}
 
-	void WinTime::UpdateTime()
+	float WinTime::GetTime()
 	{
-		m_Time = (float) glfwGetTime();
+		return glfwGetTime();
 	}
 
 }

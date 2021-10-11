@@ -58,9 +58,9 @@ namespace Spotlight
 		{
 			SPL_PROFILE_SCOPE("Render Frame - SpotlightApp::Run()");
 
-			m_AppTime->UpdateTime();
-			Timestep timestep = m_AppTime->GetTime() - m_LastFrameTime;
-			m_LastFrameTime = m_AppTime->GetTime();
+			float time = m_AppTime->GetTime();
+			Timestep timestep = time - m_LastFrameTime;
+			m_LastFrameTime = time;
 
 			if (!m_Minimized)
 			{

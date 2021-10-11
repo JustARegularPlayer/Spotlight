@@ -11,10 +11,7 @@ namespace Spotlight
 		WinTime();
 		~WinTime();
 
-		virtual void UpdateTime() override;
-		virtual float GetTime() override { return m_Time; }
-	private:
-		float m_Time = 0.0f;
+		virtual float GetTime() override;
 	};
 
 }

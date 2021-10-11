@@ -11,7 +11,6 @@ namespace Spotlight
 	public:
 		virtual ~Time() {}
 
-		virtual void UpdateTime() = 0;
 		virtual float GetTime() = 0;
 
 		static Scope<Time> Create();
