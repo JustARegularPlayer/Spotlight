@@ -5,4 +5,5 @@
 bin-int/
 
 #EXTENSIONS
+imgui.ini
 *.user
