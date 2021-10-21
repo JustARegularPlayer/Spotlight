@@ -10,6 +10,7 @@ namespace Spotlight
 		None = 0, Bool,
 		Float, Float2, Float3, Float4,
 		Int, Int2, Int3, Int4,
+		uInt, uInt2, uInt3, uInt4,
 		Byte, Byte2, Byte3, Byte4,
 		Mat3, Mat4
 	};
@@ -27,6 +28,10 @@ namespace Spotlight
 			case ShaderDataType::Int2:   return 4 * 2;
 			case ShaderDataType::Int3:   return 4 * 3;
 			case ShaderDataType::Int4:   return 4 * 4;
+			case ShaderDataType::uInt:   return 4;
+			case ShaderDataType::uInt2:  return 4 * 2;
+			case ShaderDataType::uInt3:  return 4 * 3;
+			case ShaderDataType::uInt4:  return 4 * 4;
 			case ShaderDataType::Byte:   return 1;
 			case ShaderDataType::Byte2:  return 1 * 2;
 			case ShaderDataType::Byte3:  return 1 * 3;
@@ -111,7 +116,7 @@ namespace Spotlight
 			for (auto& element : m_Elements)
 			{
 				element.Offset = offset;
-				offset = element.Size;
+				offset += element.Size;
 				m_Stride += element.Size;
 			}
 		}
