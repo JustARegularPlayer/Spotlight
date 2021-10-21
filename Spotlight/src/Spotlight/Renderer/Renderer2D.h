@@ -39,7 +39,7 @@ namespace Spotlight
 		glm::vec2 Scale;
 
 		Ref<Texture2D> Texture;
-		float TileFactor = 1.0f;
+		float TilingFactor = 1.0f;
 
 		glm::vec4 Tint = { 1.0f, 1.0f, 1.0f, 1.0f };
 	};

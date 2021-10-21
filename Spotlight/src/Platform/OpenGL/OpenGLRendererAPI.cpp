@@ -33,7 +33,12 @@ namespace Spotlight
 	{
 		uint32_t count = indexCount ? indexCount : vao->GetIndexBuffer()->GetCount();
 		glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr);
-		glBindTexture(GL_TEXTURE_2D, 0);
+		
+		for (uint32_t i = 0; i < 32; i++)
+		{
+			glActiveTexture(GL_TEXTURE0 + i);
+			glBindTexture(GL_TEXTURE_2D, 0);
+		}
 	}
 
 }

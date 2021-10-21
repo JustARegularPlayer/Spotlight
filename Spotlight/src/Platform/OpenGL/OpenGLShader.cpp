@@ -52,21 +52,62 @@ namespace Spotlight
 
 	void OpenGLShader::Bind() const
 	{
-		SPL_PROFILE_FUNC();
-
 		glUseProgram(m_ProgramID);
 	}
 
 	void OpenGLShader::Unbind() const
 	{
-		SPL_PROFILE_FUNC();
-
 		glUseProgram(0);
 	}
 
-	void OpenGLShader::SetInt(const std::string &name, int value)
+	void OpenGLShader::SetInt(const std::string &name, int32_t value)
 	{
 		UploadUniformInt(name, value);
+	}
+
+	void OpenGLShader::SetInt2(const std::string &name, glm::ivec2 values)
+	{
+		UploadUniformInt2(name, values);
+	}
+
+	void OpenGLShader::SetInt3(const std::string & name, glm::ivec3 values)
+	{
+		UploadUniformInt3(name, values);
+	}
+
+	void OpenGLShader::SetInt4(const std::string & name, glm::ivec4 values)
+	{
+		UploadUniformInt4(name, values);
+	}
+
+	void OpenGLShader::SetIntArray(const std::string &name, uint32_t count, int32_t *values)
+	{
+		UploadUniformIntArray(name, count, values);
+	}
+
+	void OpenGLShader::SetUInt(const std::string &name, uint32_t value)
+	{
+		UploadUniformUInt(name, value);
+	}
+
+	void OpenGLShader::SetUInt2(const std::string & name, glm::uvec2 values)
+	{
+		UploadUniformUInt2(name, values);
+	}
+
+	void OpenGLShader::SetUInt3(const std::string & name, glm::uvec3 values)
+	{
+		UploadUniformUInt3(name, values);
+	}
+
+	void OpenGLShader::SetUInt4(const std::string & name, glm::uvec4 values)
+	{
+		UploadUniformUInt4(name, values);
+	}
+
+	void OpenGLShader::SetUIntArray(const std::string & name, uint32_t count, uint32_t * values)
+	{
+		UploadUniformUIntArray(name, count, values);
 	}
 
 	void OpenGLShader::SetFloat(const std::string &name, float value)
@@ -87,6 +128,11 @@ namespace Spotlight
 	void OpenGLShader::SetFloat4(const std::string &name, const glm::vec4 &values)
 	{
 		UploadUniformFloat4(name, values);
+	}
+
+	void OpenGLShader::SetMat3(const std::string &name, const glm::mat3 &matrix)
+	{
+		UploadUniformMat3(name, matrix);
 	}
 
 	void OpenGLShader::SetMat4(const std::string &name, const glm::mat4 &matrix)
@@ -156,21 +202,6 @@ namespace Spotlight
 		uint32_t shader = glCreateShader(type);
 		glShaderSource(shader, 1, &src, nullptr);
 		glCompileShader(shader);
-
-		int success;
-		glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-		if (!success)
-		{
-			int length;
-			glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &length);
-
-			std::vector<char> log(length);
-			glGetShaderInfoLog(shader, length, &length, &log[0]);
-
-			SPL_ERROR("Shader type: {}", (type == GL_VERTEX_SHADER ? "VertexShader" : "FragmentShader"));
-			SPL_ERROR("\t- {}", &log[0]);
-			SPL_CORE_ASSERT(false, "OpenGL shader compilation error! (See message above for details)");
-		}
 		return shader;
 	}
 
@@ -194,7 +225,7 @@ namespace Spotlight
 
 		for (uint32_t shader : shaderIDs)
 		{
-			glDetachShader(m_ProgramID, shader);
+			glDetachShader(program, shader);
 			glDeleteShader(shader);
 		}
 		return program;
@@ -202,52 +233,83 @@ namespace Spotlight
 
 	// UNIFORMS =================================================================================
 
-	void OpenGLShader::UploadUniformInt(const std::string &name, int value)
+	void OpenGLShader::UploadUniformInt(const std::string &name, int32_t value)
 	{
-		SPL_PROFILE_FUNC();
-
 		glUniform1i(GetUniformLocation(name), value);
+	}
+
+	void OpenGLShader::UploadUniformInt2(const std::string &name, const glm::ivec2 values)
+	{
+		glUniform2i(GetUniformLocation(name), values.x, values.y);
+	}
+
+	void OpenGLShader::UploadUniformInt3(const std::string & name, const glm::ivec3 values)
+	{
+		glUniform3i(GetUniformLocation(name), values.x, values.y, values.z);
+	}
+
+	void OpenGLShader::UploadUniformInt4(const std::string & name, const glm::ivec4 values)
+	{
+		glUniform4i(GetUniformLocation(name), values.x, values.y, values.z, values.w);
+	}
+
+	void OpenGLShader::UploadUniformIntArray(const std::string &name, uint32_t count, int32_t *values)
+	{
+		glUniform1iv(GetUniformLocation(name), count, values);
+	}
+
+	void OpenGLShader::UploadUniformUInt(const std::string &name, uint32_t value)
+	{
+		glUniform1ui(GetUniformLocation(name), value);
+	}
+
+	void OpenGLShader::UploadUniformUInt2(const std::string & name, const glm::uvec2 values)
+	{
+		glUniform2ui(GetUniformLocation(name), values.x, values.y);
+	}
+
+	void OpenGLShader::UploadUniformUInt3(const std::string & name, const glm::uvec3 values)
+	{
+		glUniform3ui(GetUniformLocation(name), values.x, values.y, values.z);
+	}
+
+	void OpenGLShader::UploadUniformUInt4(const std::string & name, const glm::uvec4 values)
+	{
+		glUniform4ui(GetUniformLocation(name), values.x, values.y, values.z, values.w);
+	}
+
+	void OpenGLShader::UploadUniformUIntArray(const std::string & name, uint32_t count, uint32_t * values)
+	{
+		glUniform1uiv(GetUniformLocation(name), count, values);
 	}
 
 	void OpenGLShader::UploadUniformFloat(const std::string &name, float value)
 	{
-		SPL_PROFILE_FUNC();
-
 		glUniform1f(GetUniformLocation(name), value);
 	}
 
 	void OpenGLShader::UploadUniformFloat2(const std::string &name, const glm::vec2 &values)
 	{
-		SPL_PROFILE_FUNC();
-
 		glUniform2f(GetUniformLocation(name), values.x, values.y);
 	}
 
 	void OpenGLShader::UploadUniformFloat3(const std::string &name, const glm::vec3 &values)
 	{
-		SPL_PROFILE_FUNC();
-
 		glUniform3f(GetUniformLocation(name), values.x, values.y, values.z);
 	}
 
 	void OpenGLShader::UploadUniformFloat4(const std::string& name, const glm::vec4& values)
 	{
-		SPL_PROFILE_FUNC();
-
 		glUniform4f(GetUniformLocation(name), values.x, values.y, values.z, values.w);
 	}
 
 	void OpenGLShader::UploadUniformMat3(const std::string &name, const glm::mat3 &matrix)
 	{
-		SPL_PROFILE_FUNC();
-
 		glUniformMatrix3fv(GetUniformLocation(name), 1, GL_FALSE, glm::value_ptr(matrix));
 	}
 
 	void OpenGLShader::UploadUniformMat4(const std::string &name, const glm::mat4 &matrix)
 	{
-		SPL_PROFILE_FUNC();
-
 		glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, glm::value_ptr(matrix));
 	}
 

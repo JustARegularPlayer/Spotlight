@@ -98,8 +98,6 @@ namespace Spotlight
 
 	void OpenGLTexture2D::Bind(uint32_t slot) const
 	{
-		SPL_PROFILE_FUNC();
-
 		glActiveTexture(GL_TEXTURE0 + slot);
 		glBindTexture(GL_TEXTURE_2D, m_TextureID);
 	}

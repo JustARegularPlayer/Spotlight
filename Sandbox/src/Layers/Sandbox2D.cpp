@@ -10,9 +10,7 @@ void Sandbox2D::OnAttach()
 {
 	SPL_PROFILE_FUNC();
 
-	Spotlight::Renderer2D::Init();
-
-	m_Texture = Spotlight::Texture2D::Create("assets/Textures/default.png");
+	m_Texture = Spotlight::Texture2D::Create("assets/Textures/checkerboard.png");
 }
 
 void Sandbox2D::OnDetach()
@@ -37,17 +35,10 @@ void Sandbox2D::OnUpdate(Spotlight::Timestep ts)
 	{
 		SPL_PROFILE_SCOPE("Sandbox2D Scene");
 
-		Spotlight::Renderer2D::DrawQuad({ { 0.0f,  0.0f, 0.0f}, 0.0f, {20.0f, 20.0f}, m_Texture, m_Tiles });
-		Spotlight::Renderer2D::DrawQuad({ { 2.0f,  1.3f, 0.2f}, 0.0f, { 1.0f,  1.0f}, m_Color1 });
-		Spotlight::Renderer2D::DrawQuad({ {-1.5f, -0.3f, 0.2f}, 0.0f, { 1.0f,  1.0f}, m_Color2 });
-
-		for (float j = 0; j < 100; j++)
-		{
-			for (float i = 0; i < 100; i++)
-			{
-				Spotlight::Renderer2D::DrawQuad({ { i - 50.0f, j - 50.0f, 0.1f }, 0.0f, { 0.95f, 0.95f }, { i, j, 0.3, 1.0f } });
-			}
-		}
+		//Spotlight::Renderer2D::DrawQuad({ {-10.0f, -10.0f, 0.0f}, 0.0f, {20.0f, 20.0f}, m_Texture, m_Tiles });
+		Spotlight::Renderer2D::DrawQuad({ { -0.5f,  -0.5f, 0.0f }, 0.0f, { 1.0f,  1.0f }, m_Texture, m_Tiles });
+		Spotlight::Renderer2D::DrawQuad({ {  0.8f,   0.3f, 0.1f }, 0.0f, { 0.8f,  0.8f }, m_Color1 });
+		Spotlight::Renderer2D::DrawQuad({ { -1.0f, -0.35f, 0.2f }, 0.0f, { 0.7f,  0.7f }, m_Color2 });
 	}
 	Spotlight::Renderer2D::EndScene();
 }

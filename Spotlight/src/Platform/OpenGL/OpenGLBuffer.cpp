@@ -37,15 +37,11 @@ namespace Spotlight
 
 	void OpenGLVertexBuffer::Bind() const
 	{
-		SPL_PROFILE_FUNC();
-
 		glBindBuffer(GL_ARRAY_BUFFER, m_BufferID);
 	}
 
 	void OpenGLVertexBuffer::Unbind() const
 	{
-		SPL_PROFILE_FUNC();
-
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 
@@ -78,15 +74,11 @@ namespace Spotlight
 
 	void OpenGLIndexBuffer::Bind() const
 	{
-		SPL_PROFILE_FUNC();
-
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_BufferID);
 	}
 
 	void OpenGLIndexBuffer::Unbind() const
 	{
-		SPL_PROFILE_FUNC();
-
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 

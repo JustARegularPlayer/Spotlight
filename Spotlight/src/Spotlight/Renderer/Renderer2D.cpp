@@ -16,6 +16,8 @@ namespace Spotlight
 		glm::vec3 Position;
 		glm::vec4 Color;
 		glm::vec2 TexCoord;
+		float TexIndex;
+		float TilingFactor;
 	};
 
 	struct Renderer2DData
@@ -32,6 +34,10 @@ namespace Spotlight
 		uint32_t QuadIndexCount = 0;
 		QuadVertex *QuadVertexBufferLowerBound = nullptr;
 		QuadVertex *QuadVertexBufferPtr = nullptr;
+
+		static const uint32_t MaxTextureSlots = 32;
+		std::array<Ref<Texture2D>, MaxTextureSlots> TextureSlots;
+		uint32_t TextureSlotIndex = 1;
 	};
 
 	static Renderer2DData s_Data;
@@ -46,7 +52,9 @@ namespace Spotlight
 		s_Data.QuadVBO->SetLayout({
 			{ShaderDataType::Float3, "i_Position"},
 			{ShaderDataType::Float4, "i_Color"},
-			{ShaderDataType::Float2, "i_TexCoord"}
+			{ShaderDataType::Float2, "i_TexCoord"},
+			{ShaderDataType::Float , "i_TexIndex"},
+			{ShaderDataType::Float , "i_TilingFactor"}
 		});
 		s_Data.QuadVAO->AddVertexBuffer(s_Data.QuadVBO);
 
@@ -75,14 +83,20 @@ namespace Spotlight
 		delete[] quadIndices;
 		// Delete static array of indices.
 
-		s_Data.BlankTexture = Texture2D::Create(1, 1);
+		s_Data.BlankTexture = Texture2D::Create(1, 1, true);
 		uint32_t whiteTexData = 0xffffffff;
-		s_Data.BlankTexture->Bind(0);
 		s_Data.BlankTexture->SetData(&whiteTexData, sizeof(uint32_t));
+
+		int32_t samplers[s_Data.MaxTextureSlots];
+		for (int32_t i = 0; i < s_Data.MaxTextureSlots; i++)
+			samplers[i] = i;
 
 		s_Data.QuadShader = Shader::Create("assets/Shaders/Texture.glsl");
 		s_Data.QuadShader->Bind();
-		//s_Data.QuadShader->SetInt("u_Texture", 0);
+		s_Data.QuadShader->SetIntArray("u_Textures", s_Data.MaxTextureSlots, samplers);
+		
+		// Set default blank texture to Slot 0.
+		s_Data.TextureSlots[0] = s_Data.BlankTexture;
 	}
 
 	void Renderer2D::Shutdown()
@@ -99,6 +113,8 @@ namespace Spotlight
 
 		s_Data.QuadIndexCount = 0;
 		s_Data.QuadVertexBufferPtr = s_Data.QuadVertexBufferLowerBound;
+
+		s_Data.TextureSlotIndex = 1;
 	}
 
 	void Renderer2D::EndScene()
@@ -116,10 +132,16 @@ namespace Spotlight
 		size_t dataSize = (uint8_t *)s_Data.QuadVertexBufferPtr - (uint8_t *)s_Data.QuadVertexBufferLowerBound;
 		s_Data.QuadVBO->SetData(s_Data.QuadVertexBufferLowerBound, dataSize);
 
+		// Bind all textures in use before drawing
+		for (uint32_t i = 0; i < s_Data.TextureSlotIndex; i++)
+			s_Data.TextureSlots[i]->Bind(i);
+
 		RenderCmd::DrawIndexed(s_Data.QuadVAO, s_Data.QuadIndexCount);
 	}
 
-	// Primitives //////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// PRIMITIVES //////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// Quick note: Do not use profilers inside the following primitives, not good for performance. 
+	//                                                                              (Why did I even do that?)
 	
 	// - Quad ---------------------------------------------------------------------------------------------
 
@@ -131,26 +153,39 @@ namespace Spotlight
 
 			s_Data.QuadIndexCount = 0;
 			s_Data.QuadVertexBufferPtr = s_Data.QuadVertexBufferLowerBound;
+
+			s_Data.TextureSlotIndex = 1;
 		}
+
+		// ALWAYS use the blank texture for this draw.
+		const float textureIndex = 0.0f;
 
 		s_Data.QuadVertexBufferPtr->Position = quad.Position;
 		s_Data.QuadVertexBufferPtr->Color = quad.Color;
 		s_Data.QuadVertexBufferPtr->TexCoord = { 0.0f, 0.0f };
+		s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
+		s_Data.QuadVertexBufferPtr->TilingFactor = 1.0f;
 		s_Data.QuadVertexBufferPtr++;
 		
 		s_Data.QuadVertexBufferPtr->Position = { quad.Position.x + quad.Scale.x, quad.Position.y, quad.Position.z };
 		s_Data.QuadVertexBufferPtr->Color = quad.Color;
 		s_Data.QuadVertexBufferPtr->TexCoord = { 1.0f, 0.0f };
+		s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
+		s_Data.QuadVertexBufferPtr->TilingFactor = 1.0f;
 		s_Data.QuadVertexBufferPtr++;
 		
 		s_Data.QuadVertexBufferPtr->Position =  { quad.Position.x + quad.Scale.x, quad.Position.y + quad.Scale.y, quad.Position.z };
 		s_Data.QuadVertexBufferPtr->Color = quad.Color;
 		s_Data.QuadVertexBufferPtr->TexCoord = { 1.0f, 1.0f };
+		s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
+		s_Data.QuadVertexBufferPtr->TilingFactor = 1.0f;
 		s_Data.QuadVertexBufferPtr++;
 		
 		s_Data.QuadVertexBufferPtr->Position =  { quad.Position.x, quad.Position.y + quad.Scale.y, quad.Position.z };
 		s_Data.QuadVertexBufferPtr->Color = quad.Color;
 		s_Data.QuadVertexBufferPtr->TexCoord = { 0.0f, 1.0f };
+		s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
+		s_Data.QuadVertexBufferPtr->TilingFactor = 1.0f;
 		s_Data.QuadVertexBufferPtr++;
 
 		s_Data.QuadIndexCount += 6;
@@ -179,26 +214,54 @@ namespace Spotlight
 
 			s_Data.QuadIndexCount = 0;
 			s_Data.QuadVertexBufferPtr = s_Data.QuadVertexBufferLowerBound;
+
+			s_Data.TextureSlotIndex = 1;
+		}
+
+		float textureIndex = 0.0f;
+		for (uint32_t i = 1; i < s_Data.TextureSlotIndex; i++)
+		{
+			// THE PROBLEM: If statement not working
+			if (*s_Data.TextureSlots[i].get() == *quad.Texture.get())
+			{
+				textureIndex = (float)i;
+				break;
+			}
+		}
+			
+		if (textureIndex == 0.0f)
+		{
+			textureIndex = (float)s_Data.TextureSlotIndex;
+			s_Data.TextureSlots[s_Data.TextureSlotIndex] = quad.Texture;
+			s_Data.TextureSlotIndex++;
 		}
 
 		s_Data.QuadVertexBufferPtr->Position = quad.Position;
 		s_Data.QuadVertexBufferPtr->Color = quad.Tint;
 		s_Data.QuadVertexBufferPtr->TexCoord = { 0.0f, 0.0f };
+		s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
+		s_Data.QuadVertexBufferPtr->TilingFactor = quad.TilingFactor;
 		s_Data.QuadVertexBufferPtr++;
 
 		s_Data.QuadVertexBufferPtr->Position = { quad.Position.x + quad.Scale.x, quad.Position.y, quad.Position.z };
 		s_Data.QuadVertexBufferPtr->Color = quad.Tint;
-		s_Data.QuadVertexBufferPtr->TexCoord = { 1.0f * quad.TileFactor, 0.0f };
+		s_Data.QuadVertexBufferPtr->TexCoord = { 1.0f, 0.0f };
+		s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
+		s_Data.QuadVertexBufferPtr->TilingFactor = quad.TilingFactor;
 		s_Data.QuadVertexBufferPtr++;
 
 		s_Data.QuadVertexBufferPtr->Position =  { quad.Position.x + quad.Scale.x, quad.Position.y + quad.Scale.y, quad.Position.z };
 		s_Data.QuadVertexBufferPtr->Color = quad.Tint;
-		s_Data.QuadVertexBufferPtr->TexCoord = { 1.0f * quad.TileFactor, 1.0f * quad.TileFactor };
+		s_Data.QuadVertexBufferPtr->TexCoord = { 1.0f, 1.0f };
+		s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
+		s_Data.QuadVertexBufferPtr->TilingFactor = quad.TilingFactor;
 		s_Data.QuadVertexBufferPtr++;
 
 		s_Data.QuadVertexBufferPtr->Position =  { quad.Position.x, quad.Position.y + quad.Scale.y, quad.Position.z };
 		s_Data.QuadVertexBufferPtr->Color = quad.Tint;
-		s_Data.QuadVertexBufferPtr->TexCoord = { 0.0f, 1.0f * quad.TileFactor };
+		s_Data.QuadVertexBufferPtr->TexCoord = { 0.0f, 1.0f };
+		s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
+		s_Data.QuadVertexBufferPtr->TilingFactor = quad.TilingFactor;
 		s_Data.QuadVertexBufferPtr++;
 
 		s_Data.QuadIndexCount += 6;

@@ -75,7 +75,7 @@ namespace Spotlight
 
 		glEnable(GL_DEBUG_OUTPUT);
 		glDebugMessageCallback(OnError, 0);
-		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, 0, true);
+		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, 0, GL_TRUE);
 
 		SPL_CORE_INFO("OpenGL Driver Details:");
 		SPL_CORE_INFO("\t- Vendor: {}", glGetString(GL_VENDOR));
